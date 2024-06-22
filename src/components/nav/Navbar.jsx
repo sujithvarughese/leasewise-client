@@ -45,7 +45,7 @@ const Navbar = () => {
   ]
 
   const [links, setLinks] = useState(publicLinks)
-  const { role } = useAuthProvider()
+  const { role, signOutUser } = useAuthProvider()
 
   useEffect(() => {
     if (role === "management") {
@@ -153,7 +153,7 @@ const Navbar = () => {
               }}
             >
               {role ?
-                <Button color="primary" variant="contained" size="small">
+                <Button color="primary" variant="contained" size="small" onClick={signOutUser}>
                   Log Out
                 </Button>
                 :
@@ -164,7 +164,7 @@ const Navbar = () => {
                   <Button color="primary" variant="contained" size="small" component="a" href="/sign-up">
                     Sign up
                   </Button>
-                  <DemoButton />
+                  <DemoButton setOpen={setOpen}/>
                 </>
               }
             </Box>
@@ -212,7 +212,7 @@ const Navbar = () => {
 
                     {role ?
                       <MenuItem>
-                        <Button color="primary" variant="contained" sx={{ width: '100%' }}>
+                        <Button color="primary" variant="contained" sx={{ width: '100%' }} onClick={signOutUser}>
                           Log Out
                         </Button>
                       </MenuItem>
@@ -229,7 +229,7 @@ const Navbar = () => {
                           </Button>
                         </MenuItem>
                         <MenuItem>
-                          <DemoButton />
+                          <DemoButton closeDrawer={() => setOpen(false)}/>
                         </MenuItem>
                       </>
                     }

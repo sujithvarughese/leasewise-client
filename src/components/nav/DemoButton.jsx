@@ -10,10 +10,11 @@ const credentials = {
   password: import.meta.env.VITE_ADMIN_PASSWORD
 }
 
-const DemoButton = () => {
+const DemoButton = ({ closeDrawer }) => {
   const { signInUser } = useAuthProvider()
   const { response, error, loading, submitData } = useAxios()
   const handleSubmit = async (values, actions) => {
+    closeDrawer()
     try {
       await submitData({
         method: "post",
