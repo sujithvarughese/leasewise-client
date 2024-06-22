@@ -11,10 +11,10 @@ const credentials = {
 }
 
 const DemoButton = ({ closeDrawer }) => {
+
   const { signInUser } = useAuthProvider()
   const { response, error, loading, submitData } = useAxios()
   const handleSubmit = async (values, actions) => {
-    closeDrawer()
     try {
       await submitData({
         method: "post",
@@ -64,7 +64,10 @@ const DemoButton = ({ closeDrawer }) => {
             sx={{ width: '100%', display: { sm: '', md: 'none' } }}
             color="secondary"
             variant="outlined"
-            onClick={()=>handleSubmit(credentials, props)}
+            onClick={()=>{
+              closeDrawer()
+              handleSubmit(credentials, props)
+            }}
           >
             Tour
           </Button>
