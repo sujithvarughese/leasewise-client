@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
+import DemoButton from './DemoButton.jsx'
 
 const logoStyle = {
   width: '140px',
@@ -152,15 +153,9 @@ const Navbar = () => {
               >
                 Sign up
               </Button>
-              <Button
-                color="secondary"
-                variant="contained"
-                size="small"
-                component="a"
-                href="/sign-up"
-              >
-                Tour
-              </Button>
+
+              <DemoButton />
+
             </Box>
             <Box sx={{ display: { sm: '', md: 'none' } }}>
               <Button
@@ -226,15 +221,7 @@ const Navbar = () => {
                     </Button>
                   </MenuItem>
                   <MenuItem>
-                    <Button
-                      color="secondary"
-                      variant="outlined"
-                      component="a"
-                      href="sign-in"
-                      sx={{ width: '100%' }}
-                    >
-                      Tour
-                    </Button>
+                    <DemoButton />
                   </MenuItem>
                 </Box>
               </Drawer>
