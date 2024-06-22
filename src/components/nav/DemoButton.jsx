@@ -28,7 +28,7 @@ const DemoButton = () => {
   }
 
   useEffect(() => {
-    if (response) signInUser(response.user)
+    if (response) signInUser(response.data)
   }, [response])
 
 

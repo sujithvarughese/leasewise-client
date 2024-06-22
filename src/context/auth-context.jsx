@@ -2,19 +2,24 @@ import {createContext, useContext, useReducer} from "react";
 import useAxios from '../hooks/useAxios.js'
 
 const initialState = {
+  account: "",
+  role: "",
   user: null
 }
 const authReducer = (state, action) => {
   if (action.type === "SIGN_IN_USER") {
-    console.log("Logged in!")
     return {
       ...state,
+      account: action.payload.account,
+      role: action.payload.role,
       user: action.payload.user
     }
   }
   if (action.type === "SIGN_UP_USER") {
     return {
       ...state,
+      account: action.payload.account,
+      role: action.payload.role,
       user: action.payload.user
     }
   }
@@ -28,9 +33,8 @@ const AuthProvider = ({ children }) => {
 
   const [authState, dispatch] = useReducer(authReducer, initialState)
 
-  const { response, error, loading, submitData } = useAxios()
-  const signInUser = (user) => {
-    dispatch({ type: "SIGN_IN_USER", payload: user })
+  const signInUser = (data) => {
+    dispatch({ type: "SIGN_IN_USER", payload: data })
   }
   const signUpUser = () => {
     dispatch({ type: "SIGN_UP_USER" })
@@ -43,6 +47,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{
+      ...authState,
       signInUser,
       signUpUser,
       signOutUser

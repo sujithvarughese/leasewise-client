@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,6 +10,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import DemoButton from './DemoButton.jsx'
+import { useAuthProvider } from '../../context/auth-context.jsx'
+import { useNavigate } from 'react-router-dom'
 
 const logoStyle = {
   width: '140px',
@@ -22,6 +24,39 @@ const credentials = {
   password: import.meta.env.VITE_ADMIN_PASSWORD
 }
 const Navbar = () => {
+  const navigate = useNavigate()
+  const managementLinks = [
+    { name: "Units", action: () => navigate("/units") },
+    { name: "Accounting", action: () => navigate("/accounting") },
+    { name: "Messages", action: () => navigate("/messages") },
+    { name: "Research", action: () => navigate("/research") }
+  ]
+
+  const tenantLinks = [
+    { name: "Home", action: () => navigate("/home") },
+    { name: "Messages", action: () => navigate("/messages") },
+    { name: "Payments", action: () => navigate("/payments") },
+  ]
+
+  const publicLinks = [
+    { name: "Features", action: () => scrollToSection('features') },
+    { name: "Highlights", action: () => scrollToSection('highlights') },
+    { name: "Pricing", action: () => scrollToSection('pricing') },
+  ]
+
+  const [links, setLinks] = useState(publicLinks)
+  const { role } = useAuthProvider()
+
+  useEffect(() => {
+    if (role === "management") {
+      setLinks(managementLinks)
+    } else if (role === "tenant") {
+      setLinks(tenantLinks)
+    } else {
+      setLinks(publicLinks)
+    }
+  }, [role])
+
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
@@ -38,9 +73,10 @@ const Navbar = () => {
         top: targetScroll,
         behavior: 'smooth',
       });
-      setOpen(false);
     }
+    setOpen(false)
   };
+
 
   return (
     <div>
@@ -93,38 +129,19 @@ const Navbar = () => {
                 alt="logo of sitemark"
               />
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                <MenuItem
-                  onClick={() => scrollToSection('features')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Features
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('testimonials')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Testimonials
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('highlights')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Highlights
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('pricing')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Pricing
-                  </Typography>
-                </MenuItem>
+                {links.map(link => {
+                  return (
+                    <MenuItem
+                      key={link.name}
+                      onClick={link.action}
+                      sx={{ py: '6px', px: '12px' }}
+                    >
+                      <Typography variant="body2" color="text.primary">
+                        {link.name}
+                      </Typography>
+                    </MenuItem>
+                  )
+                })}
 
               </Box>
             </Box>
@@ -135,28 +152,23 @@ const Navbar = () => {
                 alignItems: 'center',
               }}
             >
-              <Button
-                color="primary"
-                variant="text"
-                size="small"
-                component="a"
-                href="/sign-in"
-              >
-                Sign in
-              </Button>
-              <Button
-                color="primary"
-                variant="contained"
-                size="small"
-                component="a"
-                href="/sign-up"
-              >
-                Sign up
-              </Button>
-
-              <DemoButton />
-
+              {role ?
+                <Button color="primary" variant="contained" size="small">
+                  Log Out
+                </Button>
+                :
+                <>
+                  <Button color="primary" variant="text" size="small" component="a" href="/sign-in">
+                    Sign in
+                  </Button>
+                  <Button color="primary" variant="contained" size="small" component="a" href="/sign-up">
+                    Sign up
+                  </Button>
+                  <DemoButton />
+                </>
+              }
             </Box>
+
             <Box sx={{ display: { sm: '', md: 'none' } }}>
               <Button
                 variant="text"
@@ -185,44 +197,42 @@ const Navbar = () => {
                     }}
                   >
                   </Box>
-                  <MenuItem onClick={() => scrollToSection('features')}>
-                    Features
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection('testimonials')}>
-                    Testimonials
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection('highlights')}>
-                    Highlights
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection('pricing')}>
-                    Pricing
-                  </MenuItem>
+
+                  {links.map(link => {
+                    return (
+                      <MenuItem
+                        key={link.name}
+                        onClick={link.action}
+                      >
+                        {link.name}
+                      </MenuItem>
+                    )
+                  })}
                   <Divider />
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      component="a"
-                      href="/sign-up"
-                      sx={{ width: '100%' }}
-                    >
-                      Sign up
-                    </Button>
-                  </MenuItem>
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="outlined"
-                      component="a"
-                      href="sign-in"
-                      sx={{ width: '100%' }}
-                    >
-                      Sign in
-                    </Button>
-                  </MenuItem>
-                  <MenuItem>
-                    <DemoButton />
-                  </MenuItem>
+
+                    {role ?
+                      <MenuItem>
+                        <Button color="primary" variant="contained" sx={{ width: '100%' }}>
+                          Log Out
+                        </Button>
+                      </MenuItem>
+                      :
+                      <>
+                        <MenuItem>
+                          <Button color="primary" variant="contained" component="a" href="/sign-up" sx={{ width: '100%' }}>
+                            Sign Up
+                          </Button>
+                        </MenuItem>
+                        <MenuItem>
+                          <Button color="primary" variant="outlined" component="a" href="sign-in" sx={{ width: '100%' }}>
+                            Sign In
+                          </Button>
+                        </MenuItem>
+                        <MenuItem>
+                          <DemoButton />
+                        </MenuItem>
+                      </>
+                    }
                 </Box>
               </Drawer>
             </Box>
@@ -232,5 +242,8 @@ const Navbar = () => {
     </div>
   );
 };
+
+
+
 
 export default Navbar;
