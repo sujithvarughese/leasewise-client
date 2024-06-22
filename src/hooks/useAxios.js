@@ -9,6 +9,7 @@ const UseAxios = () => {
   const [loading, setLoading] = useState(false)
 
   const submitData = async (configObject) => {
+    console.log(configObject)
     setResponse(null)
     setError("")
     setLoading(true)
