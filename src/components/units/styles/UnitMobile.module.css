@@ -1,0 +1,38 @@
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 0.5rem;
+}
+.image {
+    height: 200px;
+    width: 100%;
+}
+.info {
+    text-align: center;
+    color: var(--COLOR-DARK)
+}
+.addressLine1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+.addressLine2 {
+    font-size: 18px;
+}
+.buttons {
+    display: flex;
+    justify-content: space-around;
+}
+.button {
+    width: 140px;
+}
+.link {
+    text-decoration: none;
+}
+.link:hover {
+    color: var(--COLOR-ALT);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}

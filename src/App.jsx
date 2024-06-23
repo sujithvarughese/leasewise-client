@@ -5,6 +5,7 @@ import SignIn from "./pages/SignIn.jsx";
 import ManagementDashboard from './pages/ManagementDashboard.jsx'
 import Layout from './Layout.jsx'
 import Error from './pages/Error.jsx'
+import Units, { unitsLoader } from './pages/Units.jsx'
 const App = () => {
 
   const router = createBrowserRouter([
@@ -17,8 +18,8 @@ const App = () => {
         { path: "/sign-up", element: <SignUp /> },
         { path: "/sign-in", element: < SignIn /> },
         { path: "/management", element: <ManagementDashboard /> },
+        { path: "/units", element: <Units />, loader: unitsLoader },
         /*
-        { path: "units", element: <Units />, loader: unitsLoader },
         { path: "home", element: <MyUnit />, loader: myUnitLoader },
         { path: "payments", element: <MyPayments /> },
         { path: "messages", element: <Messages />, loader: myMessagesLoader },

@@ -20,6 +20,9 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems.jsx';
 
 const drawerWidth = 240;
+
+
+
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     '& .MuiDrawer-paper': {
@@ -67,9 +70,9 @@ const SideBar = () => {
       </Toolbar>
       <Divider />
       <List component="nav">
-        {/* mainListItems */}
+        {mainListItems}
         <Divider sx={{ my: 1 }} />
-        { /*secondaryListItems */}
+        {secondaryListItems}
       </List>
     </Drawer>
   )

@@ -1,0 +1,107 @@
+
+.content {
+    display: grid;
+    grid-template-columns: 2fr 3fr 0.1fr;
+    gap: 0.5rem;
+    color: var(--COLOR-DARKER);
+    align-items: center;
+}
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.image {
+    width: 200px;
+    height: 150px;
+}
+.addressContainer {
+    display: flex;
+}
+.userContainer {
+    display: flex;
+}
+.address {
+    font-size: 18px;
+    line-height: 2rem;
+}
+.addressLine1 {
+    font-weight: 600;
+    font-size: 22px;
+}
+.addressLine2 {
+    display: flex;
+    align-items: center;
+}
+.tenantName {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+.details {
+    display: none;
+}
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+    align-self: center;
+}
+.link {
+    text-decoration: none;
+    transition: 0.2s ease-in-out all;
+}
+.link:hover {
+    color: var(--COLOR-ALT);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+.image:hover {
+    color: var(--COLOR-ALT);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+.rent {
+    font-weight: 600;
+}
+.messageIcon {
+    font-size: 56px;
+}
+@media (min-width: 800px) {
+    .content {
+        grid-template-columns: 3fr 5fr 2fr 0.1fr;
+    }
+    .details {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+    .addressLine1 {
+        font-size: 28px;
+    }
+    .tenantName {
+        font-size: 18px;
+    }
+    .tenant {
+        font-size: 16px;
+    }
+}
+@media (min-width: 1000px) {
+    .content {
+        grid-template-columns: 3fr 5fr 2fr 0.1fr;
+    }
+    .addressLine1 {
+        font-size: 32px;
+    }
+    .addressLine2 {
+        font-size: 20px;
+    }
+
+}

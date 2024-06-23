@@ -1,0 +1,39 @@
+.container {
+    margin: 4rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+    gap: 1rem;
+
+}
+.addressLine1 {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 0.3rem;
+
+}
+.addressLine2 {
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    gap: 0.3rem;
+}
+.info {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.3rem;
+}
+.buttons {
+    width: 300px;
+    margin: 0 auto;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+.imageUpload {
+    padding: 0 1rem;
+}
+
+
