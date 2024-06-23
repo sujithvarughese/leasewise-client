@@ -32,19 +32,13 @@ const PublicNavbar = () => {
     { name: "Pricing", action: () => scrollToSection('pricing') },
   ]
 
-  const { role, signOutUser } = useAuthProvider()
+  const { user, signOutUser } = useAuthProvider()
 
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
-
-  const navigate = useNavigate()
-  useEffect(() => {
-    navigate("/")
-  }, [role])
-
 
   const scrollToSection = (sectionId) => {
     const sectionElement = document.getElementById(sectionId);
@@ -135,7 +129,7 @@ const PublicNavbar = () => {
                 alignItems: 'center',
               }}
             >
-              {role ?
+              {user ?
                 <Button color="primary" variant="contained" size="small" onClick={signOutUser}>
                   Log Out
                 </Button>
@@ -193,7 +187,7 @@ const PublicNavbar = () => {
                   })}
                   <Divider />
 
-                    {role ?
+                    {user ?
                       <MenuItem>
                         <Button color="primary" variant="contained" sx={{ width: '100%' }} onClick={signOutUser}>
                           Log Out

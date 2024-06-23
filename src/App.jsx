@@ -3,7 +3,7 @@ import { Routes, Route, useNavigate, BrowserRouter, RouterProvider, createBrowse
 import SignUp from "./pages/SignUp.jsx";
 import SignIn from "./pages/SignIn.jsx";
 import ManagementDashboard from './pages/ManagementDashboard.jsx'
-import Layout from './components/nav/Layout.jsx'
+import PrivateLayout from './components/nav/PrivateLayout.jsx'
 import Error from './pages/Error.jsx'
 import Units, { unitsLoader } from './pages/Units.jsx'
 import { useAuthProvider } from './context/auth-context.jsx'
@@ -32,7 +32,7 @@ const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout />,
+      element: <PrivateLayout />,
       errorElement: <Error />,
       children: [
         { index: true, element: <ManagementDashboard /> },
