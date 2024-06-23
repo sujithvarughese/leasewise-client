@@ -1,29 +1,43 @@
-
 import Landing from "./pages/Landing.jsx";
-import {Container} from "@mui/material";
-import Navbar from "./components/nav/Navbar.jsx";
-import { useEffect, useState } from 'react'
-import {Routes, Route} from "react-router-dom";
+import { Routes, Route, useNavigate, BrowserRouter, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import SignUp from "./pages/SignUp.jsx";
 import SignIn from "./pages/SignIn.jsx";
-import { AuthProvider, useAuthProvider } from './context/auth-context.jsx'
+import ManagementDashboard from './pages/ManagementDashboard.jsx'
+import Layout from './Layout.jsx'
+import Error from './pages/Error.jsx'
 const App = () => {
 
-  const { user } = useAuthProvider()
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      errorElement: <Error />,
+      children: [
+        { index: true, element: <Landing /> },
+        { path: "/sign-up", element: <SignUp /> },
+        { path: "/sign-in", element: < SignIn /> },
+        { path: "/management", element: <ManagementDashboard /> },
+        /*
+        { path: "units", element: <Units />, loader: unitsLoader },
+        { path: "home", element: <MyUnit />, loader: myUnitLoader },
+        { path: "payments", element: <MyPayments /> },
+        { path: "messages", element: <Messages />, loader: myMessagesLoader },
+        { path: "admin", element: <AdminAccess />, loader: adminAccessLoader},
+        { path: "accounting", element: <Accounting />,
+          errorElement: <Error />,
+          children: [
+            { index: true, element: <FinancesTotal />, loader: financialSummaryLoader },
+            { path: ":id", element: <FinancesUnit />, loader: unitFinancialsLoader },
+          ]
+        }*/
+      ]
+    }
+  ])
 
-  useEffect(() => {
-
-  }, [user])
 
   return (
-    <Container>
-      <Navbar />
-      <Routes>
-        <Route path="" element={<Landing />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/sign-in" element={<SignIn />} />
-      </Routes>
-    </Container>
+    <RouterProvider router={router} />
+
   )
 }
 
