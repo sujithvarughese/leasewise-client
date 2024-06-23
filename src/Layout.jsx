@@ -4,6 +4,7 @@ import { Outlet, useNavigation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import Navbar from './components/nav/Navbar.jsx'
 import AppBar from './components/nav/AppBar.jsx'
+import Landing from './pages/Landing.jsx'
 
 const Layout = () => {
 
@@ -20,15 +21,13 @@ const Layout = () => {
   return (
     <div>
       {role === "management" || role === "tenant" && user ?
+        <AppBar /> :
         <>
-          <AppBar />
-          <SideBar />
+          <Navbar />
+          <Landing />
         </>
-          :
-        <Navbar />
-      }
 
-      <Outlet />
+      }
     </div>
   )
 }

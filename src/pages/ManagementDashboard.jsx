@@ -8,9 +8,9 @@ import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 
 
-// import Chart from './Chart';
-// import Deposits from './Deposits';
-// import Orders from './Orders';
+import Chart from '../components/dashboard/Chart';
+import Deposits from '../components/dashboard/Deposits.jsx';
+import Orders from '../components/dashboard/Orders';
 
 function Copyright(props) {
   return (
@@ -55,7 +55,7 @@ const ManagementDashboard = () => {
                     height: 240,
                   }}
                 >
-                  {/* <Chart /> */}
+                  {<Chart />}
                 </Paper>
               </Grid>
               {/* Recent Deposits */}
@@ -68,13 +68,13 @@ const ManagementDashboard = () => {
                     height: 240,
                   }}
                 >
-                  {/* <Deposits /> */}
+                  {<Deposits />}
                 </Paper>
               </Grid>
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  {/* <Orders /> */}
+                  {<Orders />}
                 </Paper>
               </Grid>
             </Grid>
