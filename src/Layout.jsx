@@ -3,6 +3,7 @@ import { useAuthProvider } from './context/auth-context.jsx'
 import { Outlet, useNavigation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import Navbar from './components/nav/Navbar.jsx'
+import AppBar from './components/nav/AppBar.jsx'
 
 const Layout = () => {
 
@@ -18,7 +19,15 @@ const Layout = () => {
 
   return (
     <div>
-      <Navbar />
+      {role === "management" || role === "tenant" && user ?
+        <>
+          <AppBar />
+          <SideBar />
+        </>
+          :
+        <Navbar />
+      }
+
       <Outlet />
     </div>
   )
