@@ -3,10 +3,31 @@ import { Routes, Route, useNavigate, BrowserRouter, RouterProvider, createBrowse
 import SignUp from "./pages/SignUp.jsx";
 import SignIn from "./pages/SignIn.jsx";
 import ManagementDashboard from './pages/ManagementDashboard.jsx'
-import Layout from './Layout.jsx'
+import Layout from './components/nav/Layout.jsx'
 import Error from './pages/Error.jsx'
 import Units, { unitsLoader } from './pages/Units.jsx'
+import { useAuthProvider } from './context/auth-context.jsx'
+import PublicNavbar from './components/nav/PublicNavbar.jsx'
+import { useEffect } from 'react'
+import PublicLayout from './components/nav/PublicLayout.jsx'
 const App = () => {
+
+  const { user } = useAuthProvider()
+
+
+  const publicRouter = createBrowserRouter([
+    {
+      path: "/",
+      element: <PublicLayout />,
+      errorElement: <Error />,
+      children: [
+        { index: true, element: <Landing /> },
+        { path: "/sign-up", element: <SignUp /> },
+        { path: "/sign-in", element: < SignIn /> },
+      ]
+    }
+  ])
+
 
   const router = createBrowserRouter([
     {
@@ -14,9 +35,7 @@ const App = () => {
       element: <Layout />,
       errorElement: <Error />,
       children: [
-        { index: true, element: <Landing /> },
-        { path: "/sign-up", element: <SignUp /> },
-        { path: "/sign-in", element: < SignIn /> },
+        { index: true, element: <ManagementDashboard /> },
         { path: "/management", element: <ManagementDashboard /> },
         { path: "/units", element: <Units />, loader: unitsLoader },
         /*
@@ -37,7 +56,7 @@ const App = () => {
 
 
   return (
-    <RouterProvider router={router} />
+    <RouterProvider router={user ? router : publicRouter} />
 
   )
 }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Outlet } from "react-router-dom"
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -23,45 +24,27 @@ const credentials = {
   email: import.meta.env.VITE_ADMIN_LOGIN,
   password: import.meta.env.VITE_ADMIN_PASSWORD
 }
-const Navbar = () => {
-  const navigate = useNavigate()
-  const managementLinks = [
-    { name: "Units", action: () => navigate("/units") },
-    { name: "Accounting", action: () => navigate("/accounting") },
-    { name: "Messages", action: () => navigate("/messages") },
-    { name: "Research", action: () => navigate("/research") }
-  ]
+const PublicNavbar = () => {
 
-  const tenantLinks = [
-    { name: "Home", action: () => navigate("/home") },
-    { name: "Messages", action: () => navigate("/messages") },
-    { name: "Payments", action: () => navigate("/payments") },
-  ]
-
-  const publicLinks = [
+  const links = [
     { name: "Features", action: () => scrollToSection('features') },
     { name: "Highlights", action: () => scrollToSection('highlights') },
     { name: "Pricing", action: () => scrollToSection('pricing') },
   ]
 
-  const [links, setLinks] = useState(publicLinks)
   const { role, signOutUser } = useAuthProvider()
-
-  useEffect(() => {
-    if (role === "management") {
-      setLinks(managementLinks)
-    } else if (role === "tenant") {
-      setLinks(tenantLinks)
-    } else {
-      setLinks(publicLinks)
-    }
-  }, [role])
 
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    navigate("/")
+  }, [role])
+
 
   const scrollToSection = (sectionId) => {
     const sectionElement = document.getElementById(sectionId);
@@ -246,4 +229,4 @@ const Navbar = () => {
 
 
 
-export default Navbar;
+export default PublicNavbar;
