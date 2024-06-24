@@ -8,6 +8,10 @@ import { ImUserPlus } from "react-icons/im";
 import { MdOutgoingMail } from "react-icons/md";
 import Card from '@mui/material/Card'
 import Button from '@mui/material/Button'
+import Paper from '@mui/material/Paper'
+import Stack from '@mui/material/Stack'
+import Box from '@mui/material/Box'
+import { Typography } from '@mui/material'
 
 
 const Unit = ({ unit }) => {
@@ -21,10 +25,8 @@ const Unit = ({ unit }) => {
 	const [showMessageForm, setShowMessageForm] = useState(false)
 
 	return (
-		<div className={classes.container}>
-			<Card>
+			<Paper>
 				<div className={classes.content}>
-
 					{/* clicking image or address navigates to FinancesUnit */}
 					<NavLink
 						to={{ pathname: `../accounting/${unit._id }`}}
@@ -38,57 +40,27 @@ const Unit = ({ unit }) => {
 						{ showEditUserForm && <EditUserForm cancel={()=>setShowEditUserForm(false)} userID={user} tenant={tenant}/> }
 						{
 							!showEditUnitForm && !showEditUserForm &&
-							<div className={classes.addressContainer}>
-								<div className={classes.address}>
+								<Stack>
 									<NavLink
 										to={{ pathname: `../accounting/${unit._id }`}}
 										state={{ houseNumber, street, apartmentNumber, city, state, zip, tenant, user }}
 										className={classes.link}
 									>
-										<div className={classes.addressLine1}>
-											<span>{houseNumber} </span>
-											<span>{street} </span>
-											<span>{apartmentNumber}</span>
-										</div>
+
+										<Typography>{houseNumber} {street} {apartmentNumber}</Typography>
 									</NavLink>
-
-									<div className={classes.addressLine2}>
-										<div>
-											<span>{city}, </span>
-											<span>{state} </span>
-											<span>{zip}</span>
-										</div>
-										<Button
-											onClick={()=>setShowEditUnitForm(true)}
-											fontSize="14px"
-										>[Edit]
-										</Button>
-									</div>
-								</div>
-
-
-							</div>
+									<Typography>{city}, {state} {zip}</Typography>
+									{ /*<Button onClick={()=>setShowEditUnitForm(true)} fontSize="14px">[Edit]</Button> */}
+								</Stack>
 						}
 						{
 							user && !showEditUserForm && !showEditUnitForm &&
 							<div className={classes.userContainer}>
 								<div className={classes.tenant}>
-									<div className={classes.tenantName}>
-										<div>
-											Tenant: {tenant.firstName} {tenant.lastName}
-										</div>
-										<Button
-											onClick={()=>setShowEditUserForm(true)}
-											fontSize="14px"
-										>[Edit]
-										</Button>
-									</div>
-									<div className={classes.tenantEmail}>
-										{tenant.email}
-									</div>
-									<div className={classes.tenantPhone}>
-										{tenant.phone}
-									</div>
+
+									<Typography>Tenant: {tenant.firstName} {tenant.lastName}</Typography>
+									<Typography>{tenant.email}</Typography>
+									<Typography>{tenant.phone}</Typography>
 								</div>
 							</div>
 						}
@@ -108,31 +80,15 @@ const Unit = ({ unit }) => {
 						}
 
 					</div>
-
-					{
-						// if occupied show message user icon, else show create user button
-						user ?
-						<div className={classes.actions}>
-
-							<Button
-								onClick={()=>setShowMessageForm(prevState => !prevState)}
-								fontSize="42px"
-							>
-								<MdOutgoingMail />
-							</Button>
-
-						</div>
-							:
-
-
-						<div className={classes.actions}>
-							<Button
-								onClick={()=>setShowCreateUserForm(true)}
-								fontSize="48px"
-							>
-								<ImUserPlus />
-							</Button>
-						</div>
+					{// if occupied show message user icon, else show create user button
+					user ?
+					<Button onClick={()=>setShowMessageForm(prevState => !prevState)} fontSize="42px">
+						<MdOutgoingMail />
+					</Button>
+					:
+					<Button onClick={()=>setShowCreateUserForm(true)} fontSize="48px">
+						<ImUserPlus />
+					</Button>
 					}
 				</div>
 
@@ -151,8 +107,7 @@ const Unit = ({ unit }) => {
 						/>
 					*/}
 				</div>
-			</Card>
-		</div>
+			</Paper>
 
 	);
 };

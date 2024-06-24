@@ -3,7 +3,6 @@
     display: grid;
     grid-template-columns: 2fr 3fr 0.1fr;
     gap: 0.5rem;
-    color: var(--COLOR-DARKER);
     align-items: center;
 }
 .info {
@@ -56,13 +55,13 @@
     transition: 0.2s ease-in-out all;
 }
 .link:hover {
-    color: var(--COLOR-ALT);
+
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
     cursor: pointer;
 }
 .image:hover {
-    color: var(--COLOR-ALT);
+
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
     cursor: pointer;
