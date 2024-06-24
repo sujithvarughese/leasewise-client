@@ -62,7 +62,7 @@ function preventDefault(event) {
 export default function UpcomingPayments() {
   return (
     <React.Fragment>
-      <Title>Recent Orders</Title>
+      <Title>Upcoming Payments</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
