@@ -3,6 +3,7 @@ import { axiosHUD } from "../utilities/axios.js";
 import { useState } from "react";
 import { Form } from 'formik'
 import { Select } from '@mui/material'
+import MenuItem from '@mui/material/MenuItem'
 const Research = () => {
 
   const [counties, setCounties] = useState([])
@@ -49,6 +50,7 @@ const Research = () => {
           const zipCodes = response.data.data.basicdata
           // form will only display zip codes to user once state array is populated
           setFmrByZip(zipCodes)
+          console.log(zipCodes)
         }
       } catch (error) {
         console.log(error);
@@ -93,7 +95,13 @@ const Research = () => {
                 name="state"
                 list={states}
                 onChange={handleChangeStateCode}
-              ></Select>
+              >
+                {states.map(state => {
+                return (
+                  <MenuItem key={state} value={state}>{state}</MenuItem>
+                )
+              })}
+              </Select>
 
             {
               counties.length > 0 &&
@@ -104,7 +112,13 @@ const Research = () => {
                 name="county"
                 list={counties}
                 onChange={handleChangeCounty}
-              ></Select>
+              >
+                {counties.map(county => {
+                  return (
+                    <MenuItem key={county} value={county.value}>{county.text}</MenuItem>
+                  )
+                })}
+              </Select>
               </>
 
             }
@@ -117,7 +131,13 @@ const Research = () => {
                     name="zip"
                     list={fmrByZip.map(zip => zip.zip_code)}
                     onChange={handleSelectZipCode}
-                  ></Select>
+                  >
+                    {fmrByZip.map(zip => {
+                      return (
+                        <MenuItem key={zip.zip_code} value={zip.zip_code}>{zip.zip_code}</MenuItem>
+                      )
+                    })}
+                  </Select>
               </>
 
             }
