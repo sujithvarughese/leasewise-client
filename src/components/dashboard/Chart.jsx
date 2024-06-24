@@ -29,7 +29,7 @@ export default function Chart() {
 
   return (
     <React.Fragment>
-      <Title>Today</Title>
+      <Title>Year-to-Date</Title>
       <div style={{ width: '100%', flexGrow: 1, overflow: 'hidden' }}>
         <LineChart
           dataset={data}
@@ -49,7 +49,7 @@ export default function Chart() {
           ]}
           yAxis={[
             {
-              label: 'Profit ($)',
+              label: 'Profit',
               labelStyle: {
                 ...theme.typography.body1,
                 fill: theme.palette.text.primary,
@@ -70,7 +70,7 @@ export default function Chart() {
             [`.${axisClasses.root} line`]: { stroke: theme.palette.text.secondary },
             [`.${axisClasses.root} text`]: { fill: theme.palette.text.secondary },
             [`& .${axisClasses.left} .${axisClasses.label}`]: {
-              transform: 'translateX(-25px)',
+              transform: 'translateX(-30px)',
             },
           }}
         />
