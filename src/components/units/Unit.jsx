@@ -2,7 +2,7 @@ import classes from "./styles/Unit.module.css";
 import { EditUnitForm, } from "../";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { convertToUSD } from "../../utilities/financeCalcs.js";
+import { convertToUSD } from "../../utilities/financeCalculations.js";
 import { BiMessageSquareEdit } from "react-icons/bi"
 import { ImUserPlus } from "react-icons/im";
 import { MdOutgoingMail } from "react-icons/md";

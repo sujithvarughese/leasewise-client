@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import { useLoaderData } from "react-router-dom";
 import { axiosDB } from "../utilities/axios.js";
 import { Unit, SearchUnits, CreateUnitForm } from "../components";
-import UnitCard from '../components/gallery/UnitCard.jsx'
+import UnitCard from '../components/units/UnitCard.jsx'
 
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'

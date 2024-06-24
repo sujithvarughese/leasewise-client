@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100vw;
+}
+.title {
+    margin: 0 auto;
+    text-align: center;
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.links {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+}
+.links > * {
+    font-size: 20px;
+}
+.table {
+    margin: 0 auto;
+    width: 95%;
+}
+.tr {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: var(--COLOR-LIGHT) 2px solid;
+
+    margin: 0 auto;
+}
+.td {
+    padding: 0.5rem 0;
+}
+
+.addressCol {
+    font-size: 16px;
+    text-align: center;
+    width: 30%;
+}
+.shaded {
+    background-color: var(--COLOR-LIGHTER);
+}
+.total {
+    width: 90%;
+    margin: 0 auto;
+}

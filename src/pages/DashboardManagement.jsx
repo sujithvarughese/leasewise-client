@@ -11,6 +11,8 @@ import Link from '@mui/material/Link';
 import Chart from '../components/dashboard/Chart';
 import Deposits from '../components/dashboard/Deposits.jsx';
 import UpcomingPayments from '../components/dashboard/UpcomingPayments.jsx';
+import { useManagementProvider } from '../context/management-context.jsx'
+import { useEffect } from 'react'
 
 function Copyright(props) {
   return (
@@ -25,8 +27,15 @@ function Copyright(props) {
   );
 }
 
-const ManagementDashboard = () => {
+const DashboardManagement = () => {
   window.scrollTo(0, 0)
+
+  const { fetchUnits } = useManagementProvider()
+
+  useEffect(() => {
+    fetchUnits()
+  }, [])
+
   return (
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
@@ -85,4 +94,4 @@ const ManagementDashboard = () => {
   );
 }
 
-export default ManagementDashboard
+export default DashboardManagement

@@ -1,0 +1,38 @@
+
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.address {
+    display: none;
+}
+.date {
+    width: 150px;
+}
+.year {
+    max-width: 280px;
+    margin: 0 auto;
+}
+.details {
+    display: flex;
+    gap: 2rem;
+}
+.button {
+    width: 180px;
+    margin: 0 auto;
+}
+
+@media (min-width: 800px) {
+    .address {
+        display: block;
+    }
+    .button {
+        width: auto;
+    }
+    .year {
+        max-width: none;
+        margin: 0;
+        padding-bottom: 1.8rem;
+    }
+}
