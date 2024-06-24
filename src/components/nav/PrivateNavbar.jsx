@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
 import MuiAppBar from '@mui/material/AppBar'
@@ -87,6 +87,13 @@ const PrivateNavbar = () => {
     navigate("/")
   }
 
+  const [heading, setHeading] = useState("Dashboard")
+  const setHeadingAndNavigate = (name, url) => {
+    setHeading(name)
+    navigate(url)
+
+  }
+
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -116,7 +123,7 @@ const PrivateNavbar = () => {
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            Dashboard
+            {heading}
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -147,7 +154,7 @@ const PrivateNavbar = () => {
         <Divider />
         <List component="nav">
           {managementLinks.map(link =>
-            <ListItemButton key={link.name} onClick={() => navigate(link.url)}>
+            <ListItemButton key={link.name} onClick={() => setHeadingAndNavigate(link.name, link.url)}>
               <ListItemIcon>
                 {link.icon}
               </ListItemIcon>
