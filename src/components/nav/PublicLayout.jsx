@@ -6,11 +6,6 @@ import { useAuthProvider } from '../../context/auth-context.jsx'
 
 const PublicLayout = () => {
 
-  const { user } = useAuthProvider()
-  const navigate = useNavigate()
-  useEffect(() => {
-    navigate("/")
-  }, [user])
 
   return (
     <>

@@ -9,6 +9,8 @@ import { BiMessageSquareEdit } from "react-icons/bi"
 import { TfiControlBackward } from "react-icons/tfi"
 import Button from '@mui/material/Button'
 import { useAuthProvider } from '../context/auth-context.jsx'
+import Box from '@mui/material/Box'
+import CssBaseline from '@mui/material/CssBaseline'
 
 const Messages = () => {
   // messages = { inbox, outbox }	// message = { sender: { lastName, firstName, _id }, recipient, subject, body, read, flag, date, previousMessage
@@ -121,133 +123,85 @@ const Messages = () => {
   }, [messagesState]);
 
   return (
-    <div className={classes.container}>
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <Box
+        component="main"
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === 'light'
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          flexGrow: 1,
+          height: '100vh',
+          overflow: 'auto',
+        }}
+      >
+        <div className={classes.container}>
 
-      {
-        // render create message modal when triggered
-        showCreateMessageForm &&
-        <CreateMessageForm
-          cancel={()=>setShowCreateMessageForm(false)}
-          addressBook={addressBook}
-          getMessages={getMessages}
-        />
-      }
-
-      <div className={classes.nav}>
-        {
-          // Create new message icon is hidden in mobile when message is expanded
-          // Back button is only displayed in mobile when message is expanded
-          !mobileExpanded
-          &&
-          <Button
-            onClick={()=>setShowCreateMessageForm(prevState => !prevState)}
-            fontSize="56px"
-          >
-            <BiMessageSquareEdit />
-          </Button>
-        }
-
-        <div className={classes.links}>
-          <div className={currentLink === "all" ? classes.active : classes.link}>
-            <Button
-              onClick= {()=> {
-                setExpandedMessage(null)
-                setCurrentMailbox(myMessages)
-                setCurrentLink("all")
-              }
-              }>All</Button>
-          </div>
-          <div className={currentLink === "incoming" ? classes.active : classes.link}>
-            <Button
-              onClick= {()=> {
-                setExpandedMessage(null)
-                setCurrentMailbox(myIncoming)
-                setCurrentLink("incoming")
-              }
-              }>Incoming</Button>
-          </div>
-
-          <div className={currentLink === "outgoing" ? classes.active : classes.link}>
-            <Button
-              onClick={() => {
-                setExpandedMessage(null)
-                setCurrentMailbox(myOutgoing)
-                setCurrentLink("outgoing")
-              }
-              }>Outgoing</Button>
-          </div>
-
-        </div>
-
-      </div>
-
-      <div className={classes.mailbox}>
-        {/* collapsed and expanded classes hidden on small screens */}
-
-        <div className={classes.largeScreen}>
-          <div className={classes.collapsed}>
-            {
-              currentMailbox.length > 0 ?
-                currentMailbox.map(message =>
-                  <MessageCollapsed
-                    key={message._id}
-                    message={message}
-                    setExpandedMessage={setExpandedMessage}
-                    markMessageRead={markMessageRead}
-                    toggleFlag={toggleFlag}
-                    showExpanded={()=>{}}
-                    userID={user.userID}
-                    closeReply={()=>setShowCreateReply(false)}
-                  />)
-                :
-                <div className={classes.empty}>No Messages in this Mailbox</div>
-            }
-          </div>
-          <div className={classes.expanded}>
-            {
-              expandedMessage ?
-                <MessageExpanded
-                  message={expandedMessage}
-                  messages={messages}
-                  toggleFlag={toggleFlag}
-                  userID={user.userID}
-                  markMessageUnread={markMessageUnread}
-                  showCreateReply={showCreateReply}
-                  setShowCreateReply={setShowCreateReply}
-                  getMessages={getMessages}
-                  setMobileExpanded={setMobileExpanded}
-                />
-                :
-                <div className={classes.noMessage}>
-                  No Message Selected
-                </div>
-            }
-          </div>
-        </div>
-
-        <div className={classes.mobile}>
           {
-            mobileExpanded ?
-              // when message is expanded in mobile, component will be rendered full screen
-              <div className={classes.mobileExpanded}>
-                {
-                  expandedMessage &&
-                  <MessageExpanded
-                    message={expandedMessage}
-                    messages={messages}
-                    toggleFlag={toggleFlag}
-                    userID={user.userID}
-                    markMessageUnread={markMessageUnread}
-                    showCreateReply={showCreateReply}
-                    setShowCreateReply={setShowCreateReply}
-                    getMessages={getMessages}
-                    setMobileExpanded={setMobileExpanded}
-                  />
-                }
+            // render create message modal when triggered
+            showCreateMessageForm &&
+            <CreateMessageForm
+              cancel={()=>setShowCreateMessageForm(false)}
+              addressBook={addressBook}
+              getMessages={getMessages}
+            />
+          }
+
+          <div className={classes.nav}>
+            {
+              // Create new message icon is hidden in mobile when message is expanded
+              // Back button is only displayed in mobile when message is expanded
+              !mobileExpanded
+              &&
+              <Button
+                onClick={()=>setShowCreateMessageForm(prevState => !prevState)}
+                fontSize="56px"
+              >
+                <BiMessageSquareEdit />
+              </Button>
+            }
+
+            <div className={classes.links}>
+              <div className={currentLink === "all" ? classes.active : classes.link}>
+                <Button
+                  onClick= {()=> {
+                    setExpandedMessage(null)
+                    setCurrentMailbox(myMessages)
+                    setCurrentLink("all")
+                  }
+                  }>All</Button>
               </div>
-              :
-              // mobileExpanded=true when message is open, so only show collapsed list when no msg selected
-              <div className={classes.mobileCollapsed}>
+              <div className={currentLink === "incoming" ? classes.active : classes.link}>
+                <Button
+                  onClick= {()=> {
+                    setExpandedMessage(null)
+                    setCurrentMailbox(myIncoming)
+                    setCurrentLink("incoming")
+                  }
+                  }>Incoming</Button>
+              </div>
+
+              <div className={currentLink === "outgoing" ? classes.active : classes.link}>
+                <Button
+                  onClick={() => {
+                    setExpandedMessage(null)
+                    setCurrentMailbox(myOutgoing)
+                    setCurrentLink("outgoing")
+                  }
+                  }>Outgoing</Button>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div className={classes.mailbox}>
+            {/* collapsed and expanded classes hidden on small screens */}
+
+            <div className={classes.largeScreen}>
+              <div className={classes.collapsed}>
                 {
                   currentMailbox.length > 0 ?
                     currentMailbox.map(message =>
@@ -257,18 +211,84 @@ const Messages = () => {
                         setExpandedMessage={setExpandedMessage}
                         markMessageRead={markMessageRead}
                         toggleFlag={toggleFlag}
-                        showExpanded={()=>setMobileExpanded(true)}
+                        showExpanded={()=>{}}
                         userID={user.userID}
                         closeReply={()=>setShowCreateReply(false)}
                       />)
                     :
-                    <div>No Messages in this Mailbox</div>
+                    <div className={classes.empty}>No Messages in this Mailbox</div>
                 }
               </div>
-          }
+              <div className={classes.expanded}>
+                {
+                  expandedMessage ?
+                    <MessageExpanded
+                      message={expandedMessage}
+                      messages={messages}
+                      toggleFlag={toggleFlag}
+                      userID={user.userID}
+                      markMessageUnread={markMessageUnread}
+                      showCreateReply={showCreateReply}
+                      setShowCreateReply={setShowCreateReply}
+                      getMessages={getMessages}
+                      setMobileExpanded={setMobileExpanded}
+                    />
+                    :
+                    <div className={classes.noMessage}>
+                      No Message Selected
+                    </div>
+                }
+              </div>
+            </div>
+
+            <div className={classes.mobile}>
+              {
+                mobileExpanded ?
+                  // when message is expanded in mobile, component will be rendered full screen
+                  <div className={classes.mobileExpanded}>
+                    {
+                      expandedMessage &&
+                      <MessageExpanded
+                        message={expandedMessage}
+                        messages={messages}
+                        toggleFlag={toggleFlag}
+                        userID={user.userID}
+                        markMessageUnread={markMessageUnread}
+                        showCreateReply={showCreateReply}
+                        setShowCreateReply={setShowCreateReply}
+                        getMessages={getMessages}
+                        setMobileExpanded={setMobileExpanded}
+                      />
+                    }
+                  </div>
+                  :
+                  // mobileExpanded=true when message is open, so only show collapsed list when no msg selected
+                  <div className={classes.mobileCollapsed}>
+                    {
+                      currentMailbox.length > 0 ?
+                        currentMailbox.map(message =>
+                          <MessageCollapsed
+                            key={message._id}
+                            message={message}
+                            setExpandedMessage={setExpandedMessage}
+                            markMessageRead={markMessageRead}
+                            toggleFlag={toggleFlag}
+                            showExpanded={()=>setMobileExpanded(true)}
+                            userID={user.userID}
+                            closeReply={()=>setShowCreateReply(false)}
+                          />)
+                        :
+                        <div>No Messages in this Mailbox</div>
+                    }
+                  </div>
+              }
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </Box>
+
+    </Box>
+
   );
 };
 

@@ -15,36 +15,43 @@ function createData(id, date, name, shipTo, paymentMethod, amount) {
 const rows = [
   createData(
     0,
-    '16 Mar, 2019',
-    'Elvis Presley',
-    'Tupelo, MS',
-    'VISA ⠀•••• 3719',
-    312.44,
+    '15 Jul, 2024',
+    'Insurance Premium',
+    'Countrywide Insurance',
+    'Checking ⠀•••• 3719',
+    3120.44,
   ),
   createData(
     1,
-    '16 Mar, 2019',
-    'Paul McCartney',
+    '30 Jul, 2024',
+    "Homeowner's Association Fee",
     'London, UK',
-    'VISA ⠀•••• 2574',
+    'Checking ⠀•••• 3719',
     866.99,
   ),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
+  createData(
+    2,
+    '1 Aug, 2024',
+    'Lawn Care',
+    'Wack Your Lawn Co.',
+    'MC ⠀•••• 1253',
+    100.81
+  ),
   createData(
     3,
-    '16 Mar, 2019',
-    'Michael Jackson',
-    'Gary, IN',
+    '16 Sep, 2024',
+    'Kicthen Renovation',
+    'We do Kitchens and Co.',
     'AMEX ⠀•••• 2000',
-    654.39,
+    8540.39,
   ),
   createData(
     4,
-    '15 Mar, 2019',
-    'Bruce Springsteen',
-    'Long Branch, NJ',
-    'VISA ⠀•••• 5919',
-    212.79,
+    '30 Nov, 2024',
+    'Tax',
+    'Miami-Dade County',
+    'Checking ⠀•••• 3719',
+    14120.79,
   ),
 ];
 
@@ -52,7 +59,7 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function Orders() {
+export default function UpcomingPayments() {
   return (
     <React.Fragment>
       <Title>Recent Orders</Title>
@@ -61,9 +68,9 @@ export default function Orders() {
           <TableRow>
             <TableCell>Date</TableCell>
             <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
+            <TableCell>Pay To</TableCell>
             <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
+            <TableCell align="right">Payment Amount</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -79,7 +86,7 @@ export default function Orders() {
         </TableBody>
       </Table>
       <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more orders
+        See more
       </Link>
     </React.Fragment>
   );

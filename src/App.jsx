@@ -1,5 +1,5 @@
 import Landing from "./pages/Landing.jsx";
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter, useNavigate } from 'react-router-dom'
 import SignUp from "./pages/SignUp.jsx";
 import SignIn from "./pages/SignIn.jsx";
 import ManagementDashboard from './pages/ManagementDashboard.jsx'
@@ -14,7 +14,6 @@ const App = () => {
 
   const { user } = useAuthProvider()
 
-
   const publicRouter = createBrowserRouter([
     {
       path: "/",
@@ -23,20 +22,18 @@ const App = () => {
       children: [
         { index: true, element: <Landing /> },
         { path: "/sign-up", element: <SignUp /> },
-        { path: "/sign-in", element: < SignIn /> },
+        { path: "/sign-in", element: <SignIn /> },
       ]
     }
   ])
 
-
-  const router = createBrowserRouter([
+  const privateRouter = createBrowserRouter([
     {
       path: "/",
       element: <PrivateLayout />,
       errorElement: <Error />,
       children: [
         { index: true, element: <ManagementDashboard /> },
-        { path: "/management", element: <ManagementDashboard /> },
         { path: "/units", element: <Units />, loader: unitsLoader },
         { path: "/messages", element: <Messages />, loader: myMessagesLoader },
         { path: "research", element: <Research /> },
@@ -59,7 +56,7 @@ const App = () => {
 
 
   return (
-    <RouterProvider router={user ? router : publicRouter} />
+    <RouterProvider router={user ? privateRouter : publicRouter} />
 
   )
 }

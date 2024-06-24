@@ -4,6 +4,7 @@ import { loginSchema } from '../../utilities/authSchemas.js'
 import useAxios from '../../hooks/useAxios.js'
 import { useAuthProvider } from '../../context/auth-context.jsx'
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const credentials = {
   email: import.meta.env.VITE_ADMIN_LOGIN,
@@ -14,6 +15,7 @@ const DemoButton = ({ closeDrawer }) => {
 
   const { signInUser } = useAuthProvider()
   const { response, error, loading, submitData } = useAxios()
+  const navigate = useNavigate()
   const handleSubmit = async (values, actions) => {
     try {
       await submitData({
@@ -21,6 +23,7 @@ const DemoButton = ({ closeDrawer }) => {
         url: "/auth/login",
         requestConfig: values
       })
+      navigate("/")
     } catch (err) {
       console.log(error.message)
     } finally {
@@ -31,6 +34,9 @@ const DemoButton = ({ closeDrawer }) => {
   useEffect(() => {
     if (response) signInUser(response.data)
   }, [response])
+
+
+
 
 
   return (
