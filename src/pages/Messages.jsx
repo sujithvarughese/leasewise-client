@@ -12,6 +12,8 @@ import { useAuthProvider } from '../context/auth-context.jsx'
 import Box from '@mui/material/Box'
 import CssBaseline from '@mui/material/CssBaseline'
 import Grid from '@mui/material/Grid'
+import Toolbar from '@mui/material/Toolbar'
+import Container from '@mui/material/Container'
 
 const Messages = () => {
   // messages = { inbox, outbox }	// message = { sender: { lastName, firstName, _id }, recipient, subject, body, read, flag, date, previousMessage
@@ -140,8 +142,8 @@ const Messages = () => {
           overflow: 'auto',
         }}
       >
-        <div className={classes.container}>
-
+        <Toolbar />
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           {
             // render create message modal when triggered
             showCreateMessageForm &&
@@ -292,7 +294,7 @@ const Messages = () => {
               }
             </div>
           </div>
-        </div>
+        </Container>
       </Box>
 
     </Box>

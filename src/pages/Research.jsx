@@ -2,8 +2,18 @@ import classes from "./styles/Research.module.css";
 import { axiosHUD } from "../utilities/axios.js";
 import { useState } from "react";
 import { Form } from 'formik'
-import { Select } from '@mui/material'
+import { FormControl, InputLabel, Select, TableContainer, Typography } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
+import Box from '@mui/material/Box'
+import CssBaseline from '@mui/material/CssBaseline'
+import Toolbar from '@mui/material/Toolbar'
+import Container from '@mui/material/Container'
+import Paper from '@mui/material/Paper'
+import Table from '@mui/material/Table'
+import TableHead from '@mui/material/TableHead'
+import TableBody from '@mui/material/TableBody'
+import TableRow from '@mui/material/TableRow'
+import TableCell from '@mui/material/TableCell'
 const Research = () => {
 
   const [counties, setCounties] = useState([])
@@ -81,104 +91,136 @@ const Research = () => {
   }
 
   return (
-    <div className={classes.container}>
-      <div className="title">
-        Search for Fair Market Rent Values:
-      </div>
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <Box
+        component="main"
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === 'light'
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          flexGrow: 1,
+          height: '100vh',
+          overflow: 'auto',
+        }}
+      >
+        <Toolbar />
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Typography variant="h5">
+              Search for Fair Market Rent Values:
+            </Typography>
 
-      <div>
-        <div className={classes.form}>
-          <form>
-            <label htmlFor="state">State</label>
-              <Select
-                type="text"
-                name="state"
-                list={states}
-                onChange={handleChangeStateCode}
-              >
-                {states.map(state => {
-                return (
-                  <MenuItem key={state} value={state}>{state}</MenuItem>
-                )
-              })}
-              </Select>
+            <div>
+              <div className={classes.form}>
 
-            {
-              counties.length > 0 &&
-              <>
-              <label htmlFor="county">County</label>
-              <Select
-                type="text"
-                name="county"
-                list={counties}
-                onChange={handleChangeCounty}
-              >
-                {counties.map(county => {
-                  return (
-                    <MenuItem key={county} value={county.value}>{county.text}</MenuItem>
-                  )
-                })}
-              </Select>
-              </>
-
-            }
-            {
-              fmrByZip?.length > 0 &&
-              <>
-              <label htmlFor="zip">Zip Code</label>
+                <FormControl>
+                  <InputLabel htmlFor="state">State</InputLabel>
                   <Select
+                    label="State"
                     type="text"
-                    name="zip"
-                    list={fmrByZip.map(zip => zip.zip_code)}
-                    onChange={handleSelectZipCode}
+                    name="state"
+                    list={states}
+                    onChange={handleChangeStateCode}
                   >
-                    {fmrByZip.map(zip => {
+                    {states.map(state => {
                       return (
-                        <MenuItem key={zip.zip_code} value={zip.zip_code}>{zip.zip_code}</MenuItem>
+                        <MenuItem key={state} value={state}>{state}</MenuItem>
                       )
                     })}
                   </Select>
-              </>
+                </FormControl>
 
-            }
-          </form>
-        </div>
+                  {
+                    counties.length > 0 &&
+                    <FormControl>
+                      <InputLabel htmlFor="county">County</InputLabel>
+                      <Select
+                        label="County"
+                        type="text"
+                        name="county"
+                        list={counties}
+                        onChange={handleChangeCounty}
+                      >
+                        {counties.map(county => {
+                          return (
+                            <MenuItem key={county} value={county.value}>{county.text}</MenuItem>
+                          )
+                        })}
+                      </Select>
+                    </FormControl>
 
-        {
-          fmrData &&
-          <div className={classes.table}>
-            <div className={classes.head}>
-              Fair Market Rent Values for {county}
-              { zip && <span className={classes.zipResult}>{`: ${zip}`}</span> }
+                  }
+                  {
+                    fmrByZip?.length > 0 &&
+                    <FormControl>
+                      <InputLabel htmlFor="zip">Zip Code</InputLabel>
+                      <Select
+                        label="Zip Code"
+                        type="text"
+                        name="zip"
+                        list={fmrByZip.map(zip => zip.zip_code)}
+                        onChange={handleSelectZipCode}
+                      >
+                        {fmrByZip.map(zip => {
+                          return (
+                            <MenuItem key={zip.zip_code} value={zip.zip_code}>{zip.zip_code}</MenuItem>
+                          )
+                        })}
+                      </Select>
+                    </FormControl>
+
+                  }
+
+              </div>
+
+              {
+                fmrData &&
+                <TableContainer component={Paper}>
+                  <Table aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>
+                          Fair Market Rent Values for {county}
+                          { zip && `: ${zip}`}
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell>Efficiency</TableCell>
+                        <TableCell>${fmrData["Efficiency"]}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>One-Bedroom</TableCell>
+                        <TableCell>${fmrData["One-Bedroom"]}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Two-Bedroom</TableCell>
+                        <TableCell>${fmrData["Two-Bedroom"]}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Three-Bedroom</TableCell>
+                        <TableCell>${fmrData["Three-Bedroom"]}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Four-Bedroom</TableCell>
+                        <TableCell>${fmrData["Four-Bedroom"]}</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+
+
+
+                </TableContainer>
+              }
             </div>
 
-            <div className={classes.body}>
-              <div className={classes.tr}>
-                <div className={classes.td}>Efficiency</div>
-                <div className={classes.td}>${fmrData["Efficiency"]}</div>
-              </div>
-              <div className={classes.tr}>
-                <div className={classes.td}>One-Bedroom</div>
-                <div className={classes.td}>${fmrData["One-Bedroom"]}</div>
-              </div>
-              <div className={classes.tr}>
-                <div className={classes.td}>Two-Bedroom</div>
-                <div className={classes.td}>${fmrData["Two-Bedroom"]}</div>
-              </div>
-              <div className={classes.tr}>
-                <div className={classes.td}>Three-Bedroom</div>
-                <div className={classes.td}>${fmrData["Three-Bedroom"]}</div>
-              </div>
-              <div className={classes.tr}>
-                <div className={classes.td}>Four-Bedroom</div>
-                <div className={classes.td}>${fmrData["Four-Bedroom"]}</div>
-              </div>
-            </div>
-          </div>
-        }
-      </div>
+        </Container>
+      </Box>
+    </Box>
 
-    </div>
+
   );
 };
 
