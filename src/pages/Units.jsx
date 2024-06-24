@@ -1,4 +1,3 @@
-import classes from "./styles/Units.module.css";
 import {useEffect, useState} from "react";
 
 import { useLoaderData } from "react-router-dom";
@@ -9,6 +8,11 @@ import UnitCard from '../components/units/UnitCard.jsx'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import { Switch } from '@mui/material'
+import CssBaseline from '@mui/material/CssBaseline'
+import Toolbar from '@mui/material/Toolbar'
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import FormControlLabel from '@mui/material/FormControlLabel'
 
 const Units = () => {
 	// units = [{ unit }, {},...]
@@ -44,58 +48,62 @@ const Units = () => {
 		window.scrollTo(0, 0)
 	}, []);
 	return (
-		<div className={classes.container}>
+		<Box sx={{ display: 'flex' }}>
+			<CssBaseline />
+			<Box
+				component="main"
+				sx={{
+					backgroundColor: (theme) =>
+						theme.palette.mode === 'light'
+							? theme.palette.grey[100]
+							: theme.palette.grey[900],
+					flexGrow: 1,
+					height: '100vh',
+					overflow: 'auto',
+				}}
+			>
+				<Toolbar />
+				<Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
 
-			<form>
-				<label htmlFor="isChecked">Gallery Mode</label>
-				<Switch id="isChecked" isChecked={!listMode} onChange={() => setListMode(!listMode)}></Switch>
-			</form>
+					<FormControlLabel
+						control={<Switch checked={!listMode} onChange={() => setListMode(!listMode)} />}
+						label="Gallery Mode"
+					/>
 
 
-			<div className={classes.options}>
 
-				{/* Search bar */}
-				<div className={classes.search}>
-					<SearchUnits query={query} setQuery={setQuery} />
-				</div>
-				<div>
-					<Button onClick={()=>setShowCreateUnitForm(!showCreateUnitForm)}>
-						{!showCreateUnitForm ? "Create Unit" : "Hide Form"}</Button>
-				</div>
+					<Stack flexDirection="row" justifyContent="space-between" alignItems="center">
+						{/* Search bar */}
+						<SearchUnits query={query} setQuery={setQuery} />
 
-			</div>
 
-			{
-				// pass setState function as cancel to hide form if desired
-				showCreateUnitForm && <CreateUnitForm cancel={()=>setShowCreateUnitForm(false)}/>
-			}
+							<Button
+								onClick={()=>setShowCreateUnitForm(!showCreateUnitForm)}
+							>
+								{!showCreateUnitForm ? "Create Unit" : "Hide Form"}</Button>
+					</Stack>
 
-			<div className={classes.unitContainer}>
-				<div className={classes.desktop}>
-					{listMode ?
-						<Stack>
-							{queriedUnits?.map(unit =><Unit key={unit._id} unit={unit}/>)}
-						</Stack>
-							:
-						<Stack flexDirection="row" flexWrap="wrap">
-							{queriedUnits?.map(unit =><UnitCard key={unit._id} {...unit}/>)}
-						</Stack>
-					}
-				</div>
-				<div className={classes.mobile}>
+					{showCreateUnitForm && <CreateUnitForm cancel={()=>setShowCreateUnitForm(false)}/>}
+
+
 					{listMode ?
 						<Stack>
 							{queriedUnits?.map(unit =><Unit key={unit._id} unit={unit}/>)}
 						</Stack>
 						:
-						<Stack flexDirection="row" flexWrap="wrap">
+						<Stack flexDirection="row" flexWrap="wrap" justifyContent="center">
 							{queriedUnits?.map(unit =><UnitCard key={unit._id} {...unit}/>)}
 						</Stack>
 					}
-				</div>
-			</div>
 
-		</div>
+
+				</Container>
+			</Box>
+		</Box>
+
+
+
+
 	);
 };
 

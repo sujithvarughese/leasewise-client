@@ -5,20 +5,23 @@ import { useLoaderData } from "react-router-dom";
 import { FinancesTotalCalculated, FinancesTotalUnitValues, FinancesMobileTable } from "../"
 import { totalProfit, convertToUSD } from "../utilities/financeCalculations.js";
 import { useManagementProvider } from '../context/management-context.jsx'
-import { Select } from '@mui/material'
+import { Select, Typography } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
+import CssBaseline from '@mui/material/CssBaseline'
+import Toolbar from '@mui/material/Toolbar'
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
 
 const Accounting = () => {
-
+/*
   // finances = array of each unit's financial data
-  const finances = useLoaderData()
-  const { units } = useManagementProvider()
-
+  const { finances, units } = useLoaderData()
+  console.log(units)
   // allow users to view summary per month or year
   const [selectedTerm, setSelectedTerm] = useState(1)
 
   // filter array we receive in loader to include address from {units} and only relevant data
-  const [unitFinances, setUnitFinances] = useState(finances.map(finance => {
+  const [unitFinances, setUnitFinances] = useState(finances?.map(finance => {
     const unit = units.find(unitInArray => unitInArray._id === finance.unit)
     return {
       unitID: finance.unit,
@@ -44,11 +47,49 @@ const Accounting = () => {
     const updatedList = unitFinances.filter(unitFinance => unitFinance.financeID !== unitID)
     setUnitFinances(updatedList)
   }
-
+*/
   return (
-    <div className={classes.container}>
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <Box
+        component="main"
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === 'light'
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          flexGrow: 1,
+          height: '100vh',
+          overflow: 'auto',
+        }}
+      >
+        <Toolbar />
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <Typography variant="h1">Under Construction</Typography>
+        </Container>
+      </Box>
+    </Box>
 
-      <div className="title">
+  );
+};
+
+export const accountingLoader = async () => {
+  try {
+    const responseFinances = await axiosDB("/finance")
+    const responseUnits = await axiosDB("/units")
+    const { finances } = responseFinances.data
+    const { units } = responseUnits.data
+    console.log(finances)
+    return { finances, units }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export default Accounting;
+
+/*
+        <div className="title">
         Accounting Totals
       </div>
 
@@ -99,19 +140,4 @@ const Accounting = () => {
           Total Profit: {convertToUSD(totalProfit(unitFinances, selectedTerm))}
         </div>
       </div>
-
-    </div>
-  );
-};
-
-export const accountingLoader = async () => {
-  try {
-    const response = await axiosDB("/finance")
-    const { finances } = response.data
-    return finances
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export default Accounting;
+*/

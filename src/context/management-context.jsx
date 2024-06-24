@@ -24,7 +24,6 @@ const ManagementProvider = ({ children }) => {
       const { units } = response.data
       console.log(units)
       dispatch({ type: "SET_UNITS", payload: units })
-      return units
     } catch (error) {
       throw new Error(error)
     }
