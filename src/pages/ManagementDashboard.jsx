@@ -55,7 +55,7 @@ const ManagementDashboard = () => {
                     height: 240,
                   }}
                 >
-                  {<Chart />}
+                  <Chart />
                 </Paper>
               </Grid>
               {/* Recent Deposits */}
@@ -68,13 +68,13 @@ const ManagementDashboard = () => {
                     height: 240,
                   }}
                 >
-                  {<Deposits />}
+                  <Deposits />
                 </Paper>
               </Grid>
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  {<Orders />}
+                  <Orders />
                 </Paper>
               </Grid>
             </Grid>

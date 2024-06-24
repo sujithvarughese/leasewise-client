@@ -1,5 +1,5 @@
 import Landing from "./pages/Landing.jsx";
-import { Routes, Route, useNavigate, BrowserRouter, RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import SignUp from "./pages/SignUp.jsx";
 import SignIn from "./pages/SignIn.jsx";
 import ManagementDashboard from './pages/ManagementDashboard.jsx'
@@ -7,9 +7,9 @@ import PrivateLayout from './components/nav/PrivateLayout.jsx'
 import Error from './pages/Error.jsx'
 import Units, { unitsLoader } from './pages/Units.jsx'
 import { useAuthProvider } from './context/auth-context.jsx'
-import PublicNavbar from './components/nav/PublicNavbar.jsx'
-import { useEffect } from 'react'
 import PublicLayout from './components/nav/PublicLayout.jsx'
+import Messages, { myMessagesLoader }  from './pages/Messages.jsx'
+import Research from './pages/Research.jsx'
 const App = () => {
 
   const { user } = useAuthProvider()
@@ -38,10 +38,13 @@ const App = () => {
         { index: true, element: <ManagementDashboard /> },
         { path: "/management", element: <ManagementDashboard /> },
         { path: "/units", element: <Units />, loader: unitsLoader },
+        { path: "/messages", element: <Messages />, loader: myMessagesLoader },
+        { path: "research", element: <Research /> },
+
         /*
         { path: "home", element: <MyUnit />, loader: myUnitLoader },
         { path: "payments", element: <MyPayments /> },
-        { path: "messages", element: <Messages />, loader: myMessagesLoader },
+
         { path: "admin", element: <AdminAccess />, loader: adminAccessLoader},
         { path: "accounting", element: <Accounting />,
           errorElement: <Error />,
