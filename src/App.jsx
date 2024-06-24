@@ -1,18 +1,26 @@
-import Landing from "./pages/Landing.jsx";
-import { RouterProvider, createBrowserRouter, useNavigate } from 'react-router-dom'
-import SignUp from "./pages/SignUp.jsx";
-import SignIn from "./pages/SignIn.jsx";
-import ManagementDashboard from './pages/ManagementDashboard.jsx'
-import PrivateLayout from './components/nav/PrivateLayout.jsx'
-import Error from './pages/Error.jsx'
-import Units, { unitsLoader } from './pages/Units.jsx'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { useAuthProvider } from './context/auth-context.jsx'
-import PublicLayout from './components/nav/PublicLayout.jsx'
-import Messages, { myMessagesLoader }  from './pages/Messages.jsx'
-import Research from './pages/Research.jsx'
+import {
+  Accounting, accountingLoader,
+  DashboardManagement,
+  DashboardTenant,
+  Error,
+  Landing,
+  Messages, messagesLoader,
+  PrivateLayout,
+  PrivateNavbar,
+  PublicLayout,
+  PublicNavbar,
+  Research,
+  SignIn,
+  SignUp,
+  Units, unitsLoader
+} from './'
+import { ManagementProvider } from './context/management-context.jsx'
+
 const App = () => {
 
-  const { user } = useAuthProvider()
+  const { user, role } = useAuthProvider()
 
   const publicRouter = createBrowserRouter([
     {
@@ -27,36 +35,41 @@ const App = () => {
     }
   ])
 
-  const privateRouter = createBrowserRouter([
+  const managementRouter = createBrowserRouter([
     {
       path: "/",
       element: <PrivateLayout />,
       errorElement: <Error />,
       children: [
-        { index: true, element: <ManagementDashboard /> },
+        { index: true, element: <DashboardManagement /> },
         { path: "/units", element: <Units />, loader: unitsLoader },
-        { path: "/messages", element: <Messages />, loader: myMessagesLoader },
+        { path: "/messages", element: <Messages />, loader: messagesLoader },
         { path: "research", element: <Research /> },
-
+        { path: "accounting", element: <Accounting />, loader: accountingLoader },
+          /*errorElement: <Error />,
+          children: [
+            { index: true, element: <FinancesTotal />, loader: financialSummaryLoader },
+            { path: ":id", element: <FinancesUnit />, loader: unitFinancialsLoader },
+          ]
+        }
         /*
         { path: "home", element: <MyUnit />, loader: myUnitLoader },
         { path: "payments", element: <MyPayments /> },
 
         { path: "admin", element: <AdminAccess />, loader: adminAccessLoader},
-        { path: "accounting", element: <Accounting />,
-          errorElement: <Error />,
-          children: [
-            { index: true, element: <FinancesTotal />, loader: financialSummaryLoader },
-            { path: ":id", element: <FinancesUnit />, loader: unitFinancialsLoader },
-          ]
-        }*/
+        */
       ]
     }
   ])
 
+  if (!user) {
+    return <RouterProvider router={publicRouter} />
+  }
 
   return (
-    <RouterProvider router={user ? privateRouter : publicRouter} />
+    <ManagementProvider>
+      <RouterProvider router={managementRouter} />
+    </ManagementProvider>
 
   )
 }

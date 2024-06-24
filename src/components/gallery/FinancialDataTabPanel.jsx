@@ -1,6 +1,6 @@
 
 import TabPanel from '@mui/lab/TabPanel';
-import { convertToUSD } from '../../utilities/financeCalcs.js'
+import { convertToUSD } from '../../utilities/financeCalculations.js'
 import FinanceDetailsRow from './FinanceDetailsRow.jsx'
 import Box from '@mui/material/Box'
 

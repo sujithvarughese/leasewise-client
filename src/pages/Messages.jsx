@@ -300,7 +300,7 @@ const Messages = () => {
   );
 };
 
-export const myMessagesLoader = async () => {
+export const messagesLoader = async () => {
   try {
     // retrieve all messages where sender or recipient matches using req.user info that is stored at login
     const response = await axiosDB("/messages")
