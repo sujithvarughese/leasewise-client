@@ -1,7 +1,5 @@
-import classes from "./styles/Research.module.css";
 import { axiosHUD } from "../utilities/axios.js";
 import { useState } from "react";
-import { Form } from 'formik'
 import { FormControl, InputLabel, Select, TableContainer, Typography } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
 import Box from '@mui/material/Box'
@@ -107,114 +105,109 @@ const Research = () => {
       >
         <Toolbar />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Typography variant="h5">
-              Search for Fair Market Rent Values:
-            </Typography>
+          <Typography variant="h5">
+            Search for Fair Market Rent Values:
+          </Typography>
 
-            <div>
-              <div className={classes.form}>
+          <Box>
+            <FormControl sx={{ m: 1, minWidth: 120}}>
+              <InputLabel htmlFor="state" id="state">State</InputLabel>
+              <Select
+                label="State"
+                type="text"
+                name="state"
+                id="state"
+                list={states}
+                onChange={handleChangeStateCode}
+              >
+                {states.map(state => {
+                  return (
+                    <MenuItem key={state} value={state}>{state}</MenuItem>
+                  )
+                })}
+              </Select>
+            </FormControl>
 
-                <FormControl>
-                  <InputLabel htmlFor="state">State</InputLabel>
-                  <Select
-                    label="State"
-                    type="text"
-                    name="state"
-                    list={states}
-                    onChange={handleChangeStateCode}
-                  >
-                    {states.map(state => {
-                      return (
-                        <MenuItem key={state} value={state}>{state}</MenuItem>
-                      )
-                    })}
-                  </Select>
-                </FormControl>
+            {counties.length > 0 &&
+              <FormControl sx={{ m: 1, minWidth: 120}}>
+                <InputLabel htmlFor="county" id="county">County</InputLabel>
+                <Select
+                  label="County"
+                  type="text"
+                  name="county"
+                  id="county"
+                  list={counties}
+                  onChange={handleChangeCounty}
+                >
+                  {counties.map(county => {
+                    return (
+                      <MenuItem key={county} value={county.value}>{county.text}</MenuItem>
+                    )
+                  })}
+                </Select>
+              </FormControl>
+            }
 
-                  {
-                    counties.length > 0 &&
-                    <FormControl>
-                      <InputLabel htmlFor="county">County</InputLabel>
-                      <Select
-                        label="County"
-                        type="text"
-                        name="county"
-                        list={counties}
-                        onChange={handleChangeCounty}
-                      >
-                        {counties.map(county => {
-                          return (
-                            <MenuItem key={county} value={county.value}>{county.text}</MenuItem>
-                          )
-                        })}
-                      </Select>
-                    </FormControl>
-
-                  }
-                  {
-                    fmrByZip?.length > 0 &&
-                    <FormControl>
-                      <InputLabel htmlFor="zip">Zip Code</InputLabel>
-                      <Select
-                        label="Zip Code"
-                        type="text"
-                        name="zip"
-                        list={fmrByZip.map(zip => zip.zip_code)}
-                        onChange={handleSelectZipCode}
-                      >
-                        {fmrByZip.map(zip => {
-                          return (
-                            <MenuItem key={zip.zip_code} value={zip.zip_code}>{zip.zip_code}</MenuItem>
-                          )
-                        })}
-                      </Select>
-                    </FormControl>
-
-                  }
-
-              </div>
-
-              {
-                fmrData &&
-                <TableContainer component={Paper}>
-                  <Table aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>
-                          Fair Market Rent Values for {county}
-                          { zip && `: ${zip}`}
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell>Efficiency</TableCell>
-                        <TableCell>${fmrData["Efficiency"]}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>One-Bedroom</TableCell>
-                        <TableCell>${fmrData["One-Bedroom"]}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Two-Bedroom</TableCell>
-                        <TableCell>${fmrData["Two-Bedroom"]}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Three-Bedroom</TableCell>
-                        <TableCell>${fmrData["Three-Bedroom"]}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Four-Bedroom</TableCell>
-                        <TableCell>${fmrData["Four-Bedroom"]}</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
+            {fmrByZip?.length > 0 &&
+              <FormControl sx={{ m: 1, minWidth: 120}}>
+                <InputLabel htmlFor="zip" id="zip">Zip Code</InputLabel>
+                <Select
+                  label="Zip Code"
+                  type="text"
+                  name="zip"
+                  id="zip"
+                  list={fmrByZip.map(zip => zip.zip_code)}
+                  onChange={handleSelectZipCode}
+                >
+                  {fmrByZip.map(zip => {
+                    return (
+                      <MenuItem key={zip.zip_code} value={zip.zip_code}>{zip.zip_code}</MenuItem>
+                    )
+                  })}
+                </Select>
+              </FormControl>
+            }
+          </Box>
 
 
+          {fmrData &&
+          <TableContainer component={Paper}>
+            <Table aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    Fair Market Rent Values for {county}
+                    { zip && `: ${zip}`}
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell>Efficiency</TableCell>
+                  <TableCell>${fmrData["Efficiency"]}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>One-Bedroom</TableCell>
+                  <TableCell>${fmrData["One-Bedroom"]}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Two-Bedroom</TableCell>
+                  <TableCell>${fmrData["Two-Bedroom"]}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Three-Bedroom</TableCell>
+                  <TableCell>${fmrData["Three-Bedroom"]}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Four-Bedroom</TableCell>
+                  <TableCell>${fmrData["Four-Bedroom"]}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+          }
 
-                </TableContainer>
-              }
-            </div>
+
 
         </Container>
       </Box>
