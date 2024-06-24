@@ -10,7 +10,7 @@ const MessageContents = ({ senderID, lastName, firstName, date, subject, body })
     const { user } = useAuthProvider()
 
     return (
-        <div className={user.userID === senderID ? classes.senderContainer : classes.recipientContainer}>
+        <div className={user.id === senderID ? classes.senderContainer : classes.recipientContainer}>
             <Card>
                 <div className={classes.contents}>
                     <div className={classes.head}>

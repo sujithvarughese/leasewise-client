@@ -11,6 +11,7 @@ import Button from '@mui/material/Button'
 import { useAuthProvider } from '../context/auth-context.jsx'
 import Box from '@mui/material/Box'
 import CssBaseline from '@mui/material/CssBaseline'
+import Grid from '@mui/material/Grid'
 
 const Messages = () => {
   // messages = { inbox, outbox }	// message = { sender: { lastName, firstName, _id }, recipient, subject, body, read, flag, date, previousMessage
@@ -40,11 +41,13 @@ const Messages = () => {
     }
   }
   const getMessages = async () => {
+
     try {
       // retrieve all messages where sender or recipient matches using req.user info that is stored at login
       const response = await axiosDB("/messages")
       const { messages } = response.data
       setMessagesState(messages)
+
     } catch (error) {
       throw new Error(error)
     }
@@ -112,16 +115,16 @@ const Messages = () => {
       getAdminInfo()
     }
     // conversations will be messages in which the most recent message in the conversation is either to or from the user
-    const conversations = messagesState.filter(message => message.headNode && (message.recipient._id === user.userID || message.sender._id === user.userID))
-    const incoming = messagesState.filter(message => message.recipient._id === user.userID)
-    const outgoing = messagesState.filter(message => message.sender._id === user.userID)
+    const conversations = messagesState.filter(message => message.headNode && (message.recipient._id === user.id || message.sender._id === user.id))
+    const incoming = messagesState.filter(message => message.recipient._id === user.id)
+    const outgoing = messagesState.filter(message => message.sender._id === user.id)
     setCurrentMailbox(conversations)
     setMyMessages(conversations)
     setMyIncoming(incoming)
     setMyOutgoing(outgoing)
     window.scrollTo(0, 0)
-  }, [messagesState]);
-
+  }, [messagesState, user.isAdmin, user.id]);
+  console.log(currentMailbox)
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -197,48 +200,53 @@ const Messages = () => {
 
           </div>
 
+          <Grid container>
+            <Grid item xs={12} md={3}>
+              {
+                currentMailbox.length > 0 ?
+                  currentMailbox.map(message =>
+                    <MessageCollapsed
+                      key={message._id}
+                      message={message}
+                      setExpandedMessage={setExpandedMessage}
+                      markMessageRead={markMessageRead}
+                      toggleFlag={toggleFlag}
+                      showExpanded={()=>{}}
+                      userID={user.id}
+                      closeReply={()=>setShowCreateReply(false)}
+                    />)
+                  :
+                  <div className={classes.empty}>No Messages in this Mailbox</div>
+              }
+            </Grid>
+            <Grid item xs={12} md={9}>
+              {
+                expandedMessage ?
+                  <MessageExpanded
+                    message={expandedMessage}
+                    messages={messages}
+                    toggleFlag={toggleFlag}
+                    userID={user.id}
+                    markMessageUnread={markMessageUnread}
+                    showCreateReply={showCreateReply}
+                    setShowCreateReply={setShowCreateReply}
+                    getMessages={getMessages}
+                    setMobileExpanded={setMobileExpanded}
+                  />
+                  :
+                  <div className={classes.noMessage}>
+                    No Message Selected
+                  </div>
+              }
+            </Grid>
+          </Grid>
+
+
           <div className={classes.mailbox}>
             {/* collapsed and expanded classes hidden on small screens */}
 
             <div className={classes.largeScreen}>
-              <div className={classes.collapsed}>
-                {
-                  currentMailbox.length > 0 ?
-                    currentMailbox.map(message =>
-                      <MessageCollapsed
-                        key={message._id}
-                        message={message}
-                        setExpandedMessage={setExpandedMessage}
-                        markMessageRead={markMessageRead}
-                        toggleFlag={toggleFlag}
-                        showExpanded={()=>{}}
-                        userID={user.userID}
-                        closeReply={()=>setShowCreateReply(false)}
-                      />)
-                    :
-                    <div className={classes.empty}>No Messages in this Mailbox</div>
-                }
-              </div>
-              <div className={classes.expanded}>
-                {
-                  expandedMessage ?
-                    <MessageExpanded
-                      message={expandedMessage}
-                      messages={messages}
-                      toggleFlag={toggleFlag}
-                      userID={user.userID}
-                      markMessageUnread={markMessageUnread}
-                      showCreateReply={showCreateReply}
-                      setShowCreateReply={setShowCreateReply}
-                      getMessages={getMessages}
-                      setMobileExpanded={setMobileExpanded}
-                    />
-                    :
-                    <div className={classes.noMessage}>
-                      No Message Selected
-                    </div>
-                }
-              </div>
+
             </div>
 
             <div className={classes.mobile}>
@@ -252,7 +260,7 @@ const Messages = () => {
                         message={expandedMessage}
                         messages={messages}
                         toggleFlag={toggleFlag}
-                        userID={user.userID}
+                        userID={user.id}
                         markMessageUnread={markMessageUnread}
                         showCreateReply={showCreateReply}
                         setShowCreateReply={setShowCreateReply}
@@ -274,7 +282,7 @@ const Messages = () => {
                             markMessageRead={markMessageRead}
                             toggleFlag={toggleFlag}
                             showExpanded={()=>setMobileExpanded(true)}
-                            userID={user.userID}
+                            userID={user.id}
                             closeReply={()=>setShowCreateReply(false)}
                           />)
                         :

@@ -27,7 +27,7 @@ const ReplyMessageForm = ({ message, closeReply, getMessages }) => {
 		// add sender info before passing to server
 		try {
 			const msg = await replyMessage({
-				sender: user.userID,
+				sender: user.id,
 				recipient: message.sender._id,
 				subject: message.subject,
 				body: body,
@@ -56,7 +56,7 @@ const ReplyMessageForm = ({ message, closeReply, getMessages }) => {
 				< TfiClose />
 			</div>
 			<Card>
-				<Form onSubmit={handleSubmit}>
+				<form onSubmit={handleSubmit}>
 					<div className={classes.form}>
 						<Typography
 							placeholder="Type reply here..."
@@ -70,7 +70,7 @@ const ReplyMessageForm = ({ message, closeReply, getMessages }) => {
 							<Button type="submit">{buttonText}</Button>
 						</div>
 					</div>
-				</Form>
+				</form>
 			</Card>
 		</div>
 

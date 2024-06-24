@@ -1,5 +1,5 @@
 .container {
-
+    overflow-y: scroll;
 }
 .content {
     padding: 0.5rem;
