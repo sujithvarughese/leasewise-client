@@ -1,0 +1,62 @@
+.actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    padding: 0.5rem;
+    backdrop-filter: blur(10px) grayscale(50%);
+    border-bottom: 2px solid var(--COLOR-DARK);
+    z-index: 10;
+}
+.backSubject {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.subjectLabel {
+    display: none;
+}
+.subjectContainer {
+    font-size: 18px;
+}
+.subject {
+    font-size: 16px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: clip;
+    text-overflow: ellipsis;
+}
+.back {
+    font-size: 36px;
+    line-height: 1;
+}
+.buttons {
+    font-size: 28px;
+    display: flex;
+    gap: 1rem;
+    z-index: 100;
+}
+.unread,
+.reply,
+.flag,
+.delete:hover {
+    cursor: pointer;
+}
+
+
+@media (min-width: 800px) {
+    .back {
+        display: none;
+    }
+    .subject {
+        font-size: 18px;
+    }
+}
+@media (min-width: 1000px) {
+    .subjectLabel {
+        display: revert;
+    }
+}
