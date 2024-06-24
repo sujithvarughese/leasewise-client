@@ -81,8 +81,12 @@ const PrivateNavbar = () => {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
   const navigate = useNavigate()
+  const signOutAndNavigateHome = () => {
+    signOutUser()
+    navigate("/")
+  }
+
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -121,7 +125,7 @@ const PrivateNavbar = () => {
           </IconButton>
 
           <MenuItem>
-            <Button color="secondary" variant="contained" sx={{ width: '100%' }} onClick={signOutUser}>
+            <Button color="secondary" variant="contained" sx={{ width: '100%' }} onClick={signOutAndNavigateHome}>
               Log Out
             </Button>
           </MenuItem>

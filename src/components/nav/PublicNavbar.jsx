@@ -32,7 +32,7 @@ const PublicNavbar = () => {
     { name: "Pricing", action: () => scrollToSection('pricing') },
   ]
 
-  const { user, signOutUser } = useAuthProvider()
+  const { user } = useAuthProvider()
 
   const [open, setOpen] = useState(false);
 
@@ -129,11 +129,7 @@ const PublicNavbar = () => {
                 alignItems: 'center',
               }}
             >
-              {user ?
-                <Button color="primary" variant="contained" size="small" onClick={signOutUser}>
-                  Log Out
-                </Button>
-                :
+              {user === null &&
                 <>
                   <Button color="primary" variant="text" size="small" component="a" href="/sign-in">
                     Sign in
@@ -187,13 +183,7 @@ const PublicNavbar = () => {
                   })}
                   <Divider />
 
-                    {user ?
-                      <MenuItem>
-                        <Button color="primary" variant="contained" sx={{ width: '100%' }} onClick={signOutUser}>
-                          Log Out
-                        </Button>
-                      </MenuItem>
-                      :
+                    {user === null &&
                       <>
                         <MenuItem>
                           <Button color="primary" variant="contained" component="a" href="/sign-up" sx={{ width: '100%' }}>

@@ -10,7 +10,7 @@ import Link from '@mui/material/Link';
 
 import Chart from '../components/dashboard/Chart';
 import Deposits from '../components/dashboard/Deposits.jsx';
-import Orders from '../components/dashboard/Orders';
+import UpcomingPayments from '../components/dashboard/UpcomingPayments.jsx';
 
 function Copyright(props) {
   return (
@@ -26,7 +26,7 @@ function Copyright(props) {
 }
 
 const ManagementDashboard = () => {
-
+  window.scrollTo(0, 0)
   return (
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
@@ -71,10 +71,10 @@ const ManagementDashboard = () => {
                   <Deposits />
                 </Paper>
               </Grid>
-              {/* Recent Orders */}
+              {/* Recent UpcomingPayments */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
+                  <UpcomingPayments />
                 </Paper>
               </Grid>
             </Grid>

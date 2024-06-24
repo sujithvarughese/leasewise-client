@@ -10,15 +10,18 @@ function createData(time, amount) {
 }
 
 const data = [
-  createData('00:00', 0),
-  createData('03:00', 300),
-  createData('06:00', 600),
-  createData('09:00', 800),
-  createData('12:00', 1500),
-  createData('15:00', 2000),
-  createData('18:00', 2400),
-  createData('21:00', 2400),
-  createData('24:00'),
+  createData('Jan', 0),
+  createData('Feb', 3000),
+  createData('Mar', 6000),
+  createData('Apr', 8000),
+  createData('May', 15000),
+  createData('June', 20000),
+  createData('July'),
+  createData('Aug'),
+  createData('Sept'),
+  createData('Oct'),
+  createData('Nov'),
+  createData('Dec'),
 ];
 
 export default function Chart() {
@@ -52,8 +55,8 @@ export default function Chart() {
                 fill: theme.palette.text.primary,
               },
               tickLabelStyle: theme.typography.body2,
-              max: 2500,
-              tickNumber: 3,
+              max: 30000,
+              tickNumber: 4,
             },
           ]}
           series={[
