@@ -12,7 +12,7 @@ import {
   PublicLayout,
   PublicNavbar,
   Research,
-  SignIn,
+  SignIn, signInLoader,
   SignUp,
   Units, unitsLoader
 } from './'
@@ -39,6 +39,7 @@ const App = () => {
     {
       path: "/",
       element: <PrivateLayout />,
+      loader: signInLoader,
       errorElement: <Error />,
       children: [
         { index: true, element: <DashboardManagement /> },

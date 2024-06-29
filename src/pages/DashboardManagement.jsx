@@ -13,6 +13,7 @@ import Deposits from '../components/dashboard/Deposits.jsx';
 import UpcomingPayments from '../components/dashboard/UpcomingPayments.jsx';
 import { useManagementProvider } from '../context/management-context.jsx'
 import { useEffect } from 'react'
+import { axiosDB } from '../utilities/axios.js'
 
 function Copyright(props) {
   return (
@@ -29,12 +30,6 @@ function Copyright(props) {
 
 const DashboardManagement = () => {
   window.scrollTo(0, 0)
-
-  const { fetchUnits } = useManagementProvider()
-
-  useEffect(() => {
-    fetchUnits()
-  }, [])
 
   return (
       <Box sx={{ display: 'flex' }}>
@@ -93,5 +88,19 @@ const DashboardManagement = () => {
       </Box>
   );
 }
+
+const dashboardLoader = async () => {
+  try {
+    // all units
+    let response = await axiosDB("/units")
+    const { units } = response.data
+    response = await axiosDB("/messages")
+    const { messages } = response.data
+    return { units, messages }
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 
 export default DashboardManagement

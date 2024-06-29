@@ -9,7 +9,6 @@ const UseAxios = () => {
   const [loading, setLoading] = useState(false)
 
   const submitData = async (configObject) => {
-    console.log(configObject)
     setResponse(null)
     setError("")
     setLoading(true)
@@ -18,7 +17,6 @@ const UseAxios = () => {
       const res = await axiosDB[method.toLowerCase()]( url, {
         ...requestConfig,
       })
-      console.log(res.data)
       setResponse(res.data)
       return true
     } catch (err) {

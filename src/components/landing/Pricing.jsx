@@ -180,7 +180,6 @@ const Pricing = () => {
                       }}
                     />
                     <Typography
-                      component="text"
                       variant="subtitle2"
                       sx={{
                         color:

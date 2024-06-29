@@ -126,7 +126,6 @@ const Messages = () => {
     setMyOutgoing(outgoing)
     window.scrollTo(0, 0)
   }, [messagesState, user.isAdmin, user.id]);
-  console.log(currentMailbox)
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />

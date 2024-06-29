@@ -19,7 +19,6 @@ const UnitModal = ({ isOpen, onClose, _id, houseNumber, street, apartmentNumber,
       const response = await axiosDB(`/finance/${_id}`)
       const { unitFinance } = response.data
       setFinancialData(unitFinance)
-      console.log(unitFinance)
     } catch (error) {
       console.log(error);
     }
