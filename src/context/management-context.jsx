@@ -2,7 +2,11 @@ import { createContext, useContext, useReducer } from 'react'
 import { axiosDB } from '../utilities/axios.js'
 
 const initialState = {
-  units: null
+  units: [],
+  messages: [],
+  payments: [],
+  rents: [],
+  mortgages: null
 }
 
 const managementReducer = (state, action) => {
@@ -16,7 +20,7 @@ const managementReducer = (state, action) => {
 const ManagementProvider = ({ children }) => {
 
   const [managementState, dispatch] = useReducer(managementReducer, initialState)
-
+/*
   const fetchUnits = async () => {
     try {
       // all units
@@ -27,12 +31,21 @@ const ManagementProvider = ({ children }) => {
     } catch (error) {
       throw new Error(error)
     }
+  }*/
+
+  const setUnits = (units) => {
+    dispatch({ type: "SET_UNITS", payload: units })
+  }
+
+  const setState = data => {
+    dispatch({ type: "SET_STATE", payload: data})
   }
 
   return (
     <ManagementContext.Provider value={{
       ...managementState,
-      fetchUnits,
+
+      setState
     }}>
       {children}
     </ManagementContext.Provider>

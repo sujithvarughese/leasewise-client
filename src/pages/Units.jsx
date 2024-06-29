@@ -112,7 +112,6 @@ export const unitsLoader = async () => {
 		// all units
 		const response = await axiosDB("/units")
 		const { units } = response.data
-		console.log(units)
 		return units
 	} catch (error) {
 		throw new Error(error)

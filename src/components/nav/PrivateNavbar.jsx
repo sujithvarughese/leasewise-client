@@ -74,7 +74,7 @@ const StyledAppBar = styled(MuiAppBar, {
   }),
 }));
 
-const PrivateNavbar = () => {
+const PrivateNavbar = ({ numUnreadMessages }) => {
 
   const { signOutUser } = useAuthProvider()
   const [open, setOpen] = React.useState(true);
@@ -96,7 +96,7 @@ const PrivateNavbar = () => {
 
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box>
       <CssBaseline />
       <StyledAppBar position="absolute" open={open}>
         <Toolbar
@@ -126,7 +126,7 @@ const PrivateNavbar = () => {
             {heading}
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
+            <Badge badgeContent={numUnreadMessages} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
@@ -165,21 +165,6 @@ const PrivateNavbar = () => {
           {secondaryListItems}
         </List>
       </Drawer>
-
-      <Box
-        component="main"
-        sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
-          flexGrow: 1,
-          height: '100vh',
-          overflow: 'auto',
-        }}
-      >
-        <Outlet />
-      </Box>
     </Box>
 
   )

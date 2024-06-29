@@ -7,11 +7,14 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { AuthProvider } from './context/auth-context.jsx'
+import { Provider } from 'react-redux'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+
   </React.StrictMode>,
 )

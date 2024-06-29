@@ -51,6 +51,7 @@ import PrivateLayout from './components/nav/PrivateLayout.jsx'
 import PrivateNavbar from './components/nav/PrivateNavbar.jsx'
 import PublicLayout from './components/nav/PublicLayout.jsx'
 import PublicNavbar from './components/nav/PublicNavbar.jsx'
+import { signInLoader } from './components/nav/PrivateLayout.jsx'
 
 //units
 import CreateUnitForm from './components/units/CreateUnitForm.jsx'
@@ -107,6 +108,7 @@ export {
   PrivateNavbar,
   PublicLayout,
   PublicNavbar,
+  signInLoader,
 
   CreateUnitForm,
   EditUnitForm,
