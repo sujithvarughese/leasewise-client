@@ -13,6 +13,7 @@ import SignIn from './pages/SignIn.jsx'
 import SignUp from './pages/SignUp.jsx'
 import Units from './pages/Units.jsx'
 import { unitsLoader } from './pages/Units.jsx'
+import Unit from "./pages/Unit.jsx"
 
 // COMPONENTS
 
@@ -58,7 +59,6 @@ import { signInLoader } from './components/nav/PrivateLayout.jsx'
 import CreateUnitForm from './components/units/CreateUnitForm.jsx'
 import EditUnitForm from './components/units/EditUnitForm.jsx'
 import SearchUnits from './components/units/SearchUnits.jsx'
-import Unit from './components/units/Unit.jsx'
 import UnitCard from './components/units/UnitCard.jsx'
 import UnitMobile from './components/units/UnitMobile.jsx'
 import UnitModal from './components/units/UnitModal.jsx'

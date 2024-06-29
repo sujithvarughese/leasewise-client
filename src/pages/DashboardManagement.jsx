@@ -6,7 +6,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
-
+import { convertToUSD, calculateProfit } from "../utilities/financeCalculations.js"
 
 import Chart from '../components/dashboard/Chart';
 import Deposits from '../components/dashboard/Deposits.jsx';
@@ -32,13 +32,18 @@ function Copyright(props) {
 const DashboardManagement = () => {
   window.scrollTo(0, 0)
 
-  const { payments, rents } = useLoaderData()
+  const { expenses, incomes } = useLoaderData()
   const { setState } = useManagementProvider()
 
   useEffect(() => {
-    setState({ payments: payments, rents: rents })
+    setState({ expenses: expenses, incomes: incomes })
   }, [])
 
+  const calculateTotalIncome = () =>  incomes?.reduce((acc, item) => acc + Number(item.amount))
+
+  const calculateTotalExpense = () => expenses?.reduce((acc, item) => acc + Number(item.amount))
+
+  const calculateProfit = calculateTotalIncome - calculateTotalExpense
 
   return (
       <Box sx={{ display: 'flex' }}>
@@ -100,11 +105,11 @@ const DashboardManagement = () => {
 
 export const dashboardLoader = async () => {
   try {
-    let response = await axiosDB("/payments")
-    const { payments } = response.data
-    response = await axiosDB("/rents")
-    const { rents } = response.data
-    return { payments, rents }
+    let response = await axiosDB("/expenses")
+    const { expenses } = response.data
+    response = await axiosDB("/incomes")
+    const { incomes } = response.data
+    return { expenses, incomes }
   } catch (error) {
     throw new Error(error)
   }

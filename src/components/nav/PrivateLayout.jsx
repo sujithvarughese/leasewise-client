@@ -11,11 +11,9 @@ const PrivateLayout = () => {
 
   const { messagesLoader } = useLoaderData()
   const navigation = useNavigation()
-  const { messages, setState } = useManagementProvider()
+  //const { messages, setState } = useManagementProvider()
 
-  useEffect(() => {
-    setState({ messages: messagesLoader})
-  }, [setState, messagesLoader])
+
 
   const unreadCount = messagesLoader.reduce((acc, message) => {
     if (!message.read) {

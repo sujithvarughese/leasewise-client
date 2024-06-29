@@ -4,9 +4,9 @@ import { axiosDB } from '../utilities/axios.js'
 const initialState = {
   units: [],
   messages: [],
-  payments: [],
-  rents: [],
-  mortgages: null
+  expenses: [],
+  incomes: [],
+  mortgages: []
 }
 
 const managementReducer = (state, action) => {
@@ -14,6 +14,12 @@ const managementReducer = (state, action) => {
     return {
       ...state,
       units: action.payload.units
+    }
+  }
+  if (action.type === "SET_STATE") {
+    return {
+      ...state,
+      ...action.payload
     }
   }
 }
