@@ -9,20 +9,22 @@ import Loading from '../Loading.jsx'
 
 const PrivateLayout = () => {
 
-  const { units, messages } = useLoaderData()
+  const { messagesLoader } = useLoaderData()
   const navigation = useNavigation()
-  const { setState } = useManagementProvider()
+  const { messages, setState } = useManagementProvider()
 
-  const unreadCount = messages.reduce((acc, message) => {
+  useEffect(() => {
+    setState({ messages: messagesLoader})
+  }, [setState, messagesLoader])
+
+  const unreadCount = messagesLoader.reduce((acc, message) => {
     if (!message.read) {
       return acc + 1
     }
     return acc
   }, 0)
 
-  useEffect(() => {
-    setState({ units: units})
-  }, [])
+
 
 
 /*
@@ -57,12 +59,9 @@ const PrivateLayout = () => {
 
 export const signInLoader = async () => {
   try {
-    // all units
-    let response = await axiosDB("/units")
-    const { units } = response.data
-    response = await axiosDB("/messages")
+    const response = await axiosDB("/messages")
     const { messages } = response.data
-    return { units, messages }
+    return { messagesLoader: messages }
   } catch (error) {
     throw new Error(error)
   }
