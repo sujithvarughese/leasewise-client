@@ -2,6 +2,7 @@
 import Accounting from './pages/Accounting.jsx'
 import { accountingLoader } from './pages/Accounting.jsx'
 import DashboardManagement from './pages/DashboardManagement.jsx'
+import { dashboardLoader } from './pages/DashboardManagement.jsx'
 import DashboardTenant from './pages/DashboardTenant.jsx'
 import Error from './pages/Error.jsx'
 import Landing from './pages/Landing.jsx'
@@ -66,6 +67,7 @@ export {
   Accounting,
   accountingLoader,
   DashboardManagement,
+  dashboardLoader,
   DashboardTenant,
   Error,
   Landing,

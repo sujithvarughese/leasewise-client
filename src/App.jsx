@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { useAuthProvider } from './context/auth-context.jsx'
 import {
-  Accounting, accountingLoader,
+  Accounting, accountingLoader, dashboardLoader,
   DashboardManagement,
   DashboardTenant,
   Error,
@@ -42,7 +42,7 @@ const App = () => {
       loader: signInLoader,
       errorElement: <Error />,
       children: [
-        { index: true, element: <DashboardManagement /> },
+        { index: true, element: <DashboardManagement />, loader: dashboardLoader },
         { path: "/units", element: <Units />, loader: unitsLoader },
         { path: "/messages", element: <Messages />, loader: messagesLoader },
         { path: "research", element: <Research /> },

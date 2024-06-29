@@ -14,6 +14,7 @@ import UpcomingPayments from '../components/dashboard/UpcomingPayments.jsx';
 import { useManagementProvider } from '../context/management-context.jsx'
 import { useEffect } from 'react'
 import { axiosDB } from '../utilities/axios.js'
+import { useLoaderData } from 'react-router-dom'
 
 function Copyright(props) {
   return (
@@ -30,6 +31,14 @@ function Copyright(props) {
 
 const DashboardManagement = () => {
   window.scrollTo(0, 0)
+
+  const { payments, rents } = useLoaderData()
+  const { setState } = useManagementProvider()
+
+  useEffect(() => {
+    setState({ payments: payments, rents: rents })
+  }, [])
+
 
   return (
       <Box sx={{ display: 'flex' }}>
@@ -89,14 +98,13 @@ const DashboardManagement = () => {
   );
 }
 
-const dashboardLoader = async () => {
+export const dashboardLoader = async () => {
   try {
-    // all units
-    let response = await axiosDB("/units")
-    const { units } = response.data
-    response = await axiosDB("/messages")
-    const { messages } = response.data
-    return { units, messages }
+    let response = await axiosDB("/payments")
+    const { payments } = response.data
+    response = await axiosDB("/rents")
+    const { rents } = response.data
+    return { payments, rents }
   } catch (error) {
     throw new Error(error)
   }
