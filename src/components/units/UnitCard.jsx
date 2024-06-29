@@ -7,6 +7,7 @@ import Image from 'mui-image'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { CardMedia } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 const UnitCard = ({
   _id,
@@ -26,8 +27,13 @@ const UnitCard = ({
   const [isHovering, setIsHovering] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
 
+  const navigate = useNavigate()
+  const navigateToUnit = () => {
+    navigate(`/unit/${_id}`, { state: _id })
+  }
+
   return (
-    <Button onClick={() => setModalOpen(!modalOpen)}>
+    <Button onClick={navigateToUnit}>
       <UnitModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}

@@ -13,17 +13,18 @@ import Toolbar from '@mui/material/Toolbar'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import FormControlLabel from '@mui/material/FormControlLabel'
+import { useManagementProvider } from '../context/management-context.jsx'
 
 const Units = () => {
 	// units = [{ unit }, {},...]
 	const units = useLoaderData()
-/*
+
 	// set in global state
-	const { setUnits } = useGlobalContext()
+	const { setState } = useManagementProvider()
 	useEffect(() => {
-		setUnits(units)
+		setState({ units: units })
 	}, []);
-*/
+
 	// state to trigger show create unit form
 	const [showCreateUnitForm, setShowCreateUnitForm] = useState(false)
 	const [listMode, setListMode] = useState(false)
