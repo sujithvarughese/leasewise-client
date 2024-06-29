@@ -8,6 +8,9 @@ import Toolbar from '@mui/material/Toolbar'
 import { useLocation } from 'react-router-dom'
 import { axiosDB } from '../utilities/axios.js'
 import { useManagementProvider } from '../context/management-context.jsx'
+import Button from '@mui/material/Button'
+import CreateExpenseForm from '../components/forms/CreateExpenseForm.jsx'
+import { useState } from 'react'
 
 const Unit = () => {
 
@@ -19,6 +22,8 @@ const Unit = () => {
   const unitDetails = units?.find(unit => unit._id === id)
   const unitExpenses = expenses?.filter(expense => expense.unit === id)
   const unitIncomes = incomes?.filter(income => income.unit === id)
+
+  const [showCreateExpenseForm, setShowCreateExpenseForm] = useState(false)
 
   console.log(unitDetails)
 
@@ -49,9 +54,12 @@ const Unit = () => {
         <Tab label="Finances" />
         <Tab label="Messages" />
         <Tab label="Rents" />
-
-
       </Tabs>
+
+      <Button>Create Mortgage</Button>
+      {showCreateExpenseForm && <CreateExpenseForm />}
+      <Button onClick={() => setShowCreateExpenseForm(!showCreateExpenseForm)}>Create Expense</Button>
+      <Button>Create Income</Button>
     </Container>
   )
 }
