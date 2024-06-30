@@ -22,18 +22,13 @@ const PrivateLayout = () => {
     return acc
   }, 0)
 
-
-
-
 /*
   const navigate = useNavigate()
   useEffect(() => {
     navigate("/")
   }, [user])
 */
-  if (navigation.state === "loading") {
-    return <Loading />
-  }
+
   return (
     <Box display="flex">
       <PrivateNavbar numUnreadMessages={unreadCount}/>

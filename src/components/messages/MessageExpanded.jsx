@@ -25,7 +25,9 @@ const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnr
 		}
 		setPreviousMessages(previousMessagesArray)
 
-		currentMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+		if (previousMessagesArray.length > 6) {
+			currentMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+		}
 	}, [message])
 
 	return (

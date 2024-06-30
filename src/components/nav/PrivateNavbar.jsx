@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate, useNavigation } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
 import MuiAppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -28,6 +28,8 @@ import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange.js'
 import ForumIcon from '@mui/icons-material/Forum.js'
 import DataThresholdingIcon from '@mui/icons-material/DataThresholding.js'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance.js'
+import Loading from '../Loading.jsx'
+import { LinearProgress } from '@mui/material'
 
 const drawerWidth = 240;
 
@@ -82,6 +84,7 @@ const PrivateNavbar = ({ numUnreadMessages }) => {
     setOpen(!open);
   };
   const navigate = useNavigate()
+  const navigation = useNavigation()
   const signOutAndNavigateHome = () => {
     signOutUser()
     navigate("/")
@@ -93,7 +96,6 @@ const PrivateNavbar = ({ numUnreadMessages }) => {
     navigate(url)
 
   }
-
 
   return (
     <Box>
@@ -125,6 +127,7 @@ const PrivateNavbar = ({ numUnreadMessages }) => {
           >
             {heading}
           </Typography>
+
           <IconButton color="inherit">
             <Badge badgeContent={numUnreadMessages} color="secondary">
               <NotificationsIcon />
@@ -137,6 +140,9 @@ const PrivateNavbar = ({ numUnreadMessages }) => {
             </Button>
           </MenuItem>
         </Toolbar>
+        <Box width="100%">
+          {navigation.state === "loading" && <LinearProgress color="secondary"/>}
+        </Box>
       </StyledAppBar>
       <Drawer variant="permanent" open={open}>
         <Toolbar
@@ -165,6 +171,7 @@ const PrivateNavbar = ({ numUnreadMessages }) => {
           {secondaryListItems}
         </List>
       </Drawer>
+
     </Box>
 
   )

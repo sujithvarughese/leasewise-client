@@ -68,7 +68,7 @@ const UnitMobile = ({ unit }) => {
                         {/* forms open when state toggled */}
 
                         {/* showMessageForm &&
-                          <CreateMessageForm
+                          <MessageForm
                             cancel={()=>setShowMessageForm(false)}
                             addressBook={[{
                                 text: `${tenant.lastName}, ${tenant.firstName}`,

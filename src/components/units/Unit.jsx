@@ -98,7 +98,7 @@ const Unit = ({ unit }) => {
 					{/* showCreateUserForm && <CreateUserForm closeForm={()=>setShowCreateUserForm(false)} unitID={unit._id}/> */}
 
 					{/* showMessageForm &&
-						<CreateMessageForm
+						<MessageForm
 							cancel={()=>setShowMessageForm(false)}
 							addressBook={[{
 								text: `${tenant.lastName}, ${tenant.firstName}`,

@@ -96,14 +96,14 @@ export default Accounting;
       <div className={classes.content}>
         <div className={classes.form}>
             <label htmlFor="term" id="term">Term</label>
-            <Select
+            <StyledSelect
               type="text"
               name="term"
               onChange={(e)=>setSelectedTerm(e.target.value)}
             >
               <MenuItem value={1}>Monthly</MenuItem>
               <MenuItem value={12}>Yearly</MenuItem>
-            </Select>
+            </StyledSelect>
         </div>
         <div className={classes.mobile}>
           <FinancesMobileTable unitFinances={unitFinances} selectedTerm={selectedTerm} removeUnit={removeUnit}/>

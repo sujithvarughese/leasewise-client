@@ -10,6 +10,8 @@ import { axiosDB } from '../utilities/axios.js'
 import { useManagementProvider } from '../context/management-context.jsx'
 import Button from '@mui/material/Button'
 import CreateExpenseForm from '../components/forms/CreateExpenseForm.jsx'
+import CreateIncomeForm from '../components/forms/CreateIncomeForm.jsx'
+import CreateMortgageForm from '../components/forms/CreateMortgageForm.jsx'
 import { useState } from 'react'
 
 const Unit = () => {
@@ -24,6 +26,8 @@ const Unit = () => {
   const unitIncomes = incomes?.filter(income => income.unit === id)
 
   const [showCreateExpenseForm, setShowCreateExpenseForm] = useState(false)
+  const [showCreateIncomeForm, setShowCreateIncomeForm] = useState(false)
+  const [showCreateMortgageForm, setShowCreateMortgageForm] = useState(false)
 
   console.log(unitDetails)
 
@@ -56,10 +60,16 @@ const Unit = () => {
         <Tab label="Rents" />
       </Tabs>
 
-      <Button>Create Mortgage</Button>
-      {showCreateExpenseForm && <CreateExpenseForm />}
+      <Button onClick={() => setShowCreateMortgageForm(!showCreateMortgageForm)}>Create Mortgage</Button>
+      {showCreateMortgageForm && <CreateMortgageForm id={id} open={showCreateMortgageForm} onClose={() => setShowCreateMortgageForm(false)}/>}
+
+
       <Button onClick={() => setShowCreateExpenseForm(!showCreateExpenseForm)}>Create Expense</Button>
-      <Button>Create Income</Button>
+      {showCreateExpenseForm && <CreateExpenseForm id={id} open={showCreateExpenseForm} onClose={() => setShowCreateExpenseForm(false)}/>}
+
+      <Button onClick={() => setShowCreateIncomeForm(!showCreateIncomeForm)}>Create Income</Button>
+      {showCreateIncomeForm && <CreateIncomeForm id={id} open={showCreateIncomeForm} onClose={() => setShowCreateIncomeForm(false)}/>}
+
     </Container>
   )
 }
