@@ -8,6 +8,7 @@ import Card from '@mui/material/Card'
 import { Form } from 'formik'
 import { Typography } from '@mui/material'
 import Button from '@mui/material/Button'
+import MessageForm from '../forms/MessageForm.jsx'
 
 const ReplyMessageForm = ({ message, closeReply, getMessages }) => {
 
@@ -53,18 +54,13 @@ const ReplyMessageForm = ({ message, closeReply, getMessages }) => {
 	return (
 		<div className={classes.container}>
 			<div className={classes.cancel} onClick={closeReply}>
-				< TfiClose />
+				{/*< TfiClose />*/}
 			</div>
 			<Card>
 				<form onSubmit={handleSubmit}>
 					<div className={classes.form}>
-						<Typography
-							placeholder="Type reply here..."
-							name="body"
-							value={body}
-							rows="10"
-							onChange={handleChange}
-						></Typography>
+
+						<MessageForm name="body" placeholder="Type Message Here..."/>
 
 						<div className={classes.button}>
 							<Button type="submit">{buttonText}</Button>

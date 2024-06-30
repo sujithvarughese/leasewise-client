@@ -7,7 +7,7 @@ const useSubmitForm = () => {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
-  const submitData = async (configObject) => {
+  const submitForm = async (configObject) => {
     setResponse(null)
     setError("")
     setLoading(true)
@@ -26,7 +26,7 @@ const useSubmitForm = () => {
     }
   }
 
-  return { response, error, loading, submitData }
+  return { response, error, loading, submitForm }
 }
 
 export default useSubmitForm
