@@ -1,7 +1,7 @@
 import classes from "./styles/Unit.module.css";
 import { EditUnitForm, } from "../";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from 'react-router-dom'
 import { convertToUSD } from "../../utilities/financeCalculations.js";
 import { BiMessageSquareEdit } from "react-icons/bi"
 import { ImUserPlus } from "react-icons/im";
@@ -12,24 +12,58 @@ import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
+import UnitModal from './UnitModal.jsx'
 
 
-const Unit = ({ unit }) => {
+const Unit = ({
+	_id,
+	houseNumber,
+	street,
+	city,
+	apartmentNumber,
+	state,
+	zip,
+	image,
+	bedrooms,
+	bathrooms,
+	tenant,
+	user
+}) => {
 
-	const { houseNumber, street, city, apartmentNumber, state, zip, image, bedrooms, bathrooms, tenant, user } = unit
 
+	const [modalOpen, setModalOpen] = useState(false)
 	// state functions to hide and show forms
 	const [showEditUnitForm, setShowEditUnitForm] = useState(false)
 	const [showCreateUserForm, setShowCreateUserForm] = useState(false)
 	const [showEditUserForm, setShowEditUserForm] = useState(false)
 	const [showMessageForm, setShowMessageForm] = useState(false)
 
+	const navigate = useNavigate()
+	const navigateToUnit = () => {
+		navigate(`/unit/${_id}`, { state: _id })
+	}
 	return (
-			<Paper>
+			<Card>
+				<UnitModal
+					isOpen={modalOpen}
+					onClose={() => setModalOpen(false)}
+					_id={_id}
+					houseNumber={houseNumber}
+					street={street}
+					apartmentNumber={apartmentNumber}
+					city={city}
+					state={state}
+					zip={zip}
+					image={image}
+					bedrooms={bedrooms}
+					bathrooms={bathrooms}
+					tenant={tenant}
+					user={user}
+				/>
 				<div className={classes.content}>
 					{/* clicking image or address navigates to FinancesUnit */}
 					<NavLink
-						to={{ pathname: `../accounting/${unit._id }`}}
+						to={{ pathname: `../unit/${_id }`}}
 						state={{ houseNumber, street, apartmentNumber, city, state, zip, tenant, user }}
 					>
 						<img src={image} alt="img" className={classes.image}/>
@@ -42,7 +76,7 @@ const Unit = ({ unit }) => {
 							!showEditUnitForm && !showEditUserForm &&
 								<Stack>
 									<NavLink
-										to={{ pathname: `../accounting/${unit._id }`}}
+										to={{ pathname: `../accounting/${_id }`}}
 										state={{ houseNumber, street, apartmentNumber, city, state, zip, tenant, user }}
 										className={classes.link}
 									>
@@ -107,7 +141,7 @@ const Unit = ({ unit }) => {
 						/>
 					*/}
 				</div>
-			</Paper>
+			</Card>
 
 	);
 };
