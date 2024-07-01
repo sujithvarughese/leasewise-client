@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 import { Tab, Tabs, Typography } from '@mui/material'
 import FinancialDataTabPanel from '../components/gallery/FinancialDataTabPanel.jsx'
 import Toolbar from '@mui/material/Toolbar'
-import { useLocation } from 'react-router-dom'
+import { useLoaderData, useLocation } from 'react-router-dom'
 import { axiosDB } from '../utilities/axios.js'
 import { useManagementProvider } from '../context/management-context.jsx'
 import Button from '@mui/material/Button'
@@ -18,20 +18,19 @@ import UnitTabs from '../components/units/UnitTabs.jsx'
 const Unit = () => {
 
   const { state: id } = useLocation()
-  console.log(id)
 
-  const { units, expenses, incomes, mortgages } = useManagementProvider()
+  const { units, expenses, incomes, mortgages } = useLoaderData()
+
 
   const unitDetails = units?.find(unit => unit._id === id)
   const unitExpenses = expenses?.filter(expense => expense.unit === id)
   const unitIncomes = incomes?.filter(income => income.unit === id)
-  const unitMortgage = mortgages?.filter(mortgage => mortgage.unit === id)
+  const unitMortgages = mortgages?.filter(mortgage => mortgage.unit === id)
 
   const [showCreateExpenseForm, setShowCreateExpenseForm] = useState(false)
   const [showCreateIncomeForm, setShowCreateIncomeForm] = useState(false)
   const [showCreateMortgageForm, setShowCreateMortgageForm] = useState(false)
 
-  console.log(unitDetails)
 
   return (
     <Container>
@@ -56,7 +55,7 @@ const Unit = () => {
         <Typography fontSize="sm">Rent: ${unitDetails?.tenant?.rent}</Typography>
       </Stack>
 
-      <UnitTabs unitIncomes={unitIncomes} unitExpenses={unitExpenses} unitMortgage={unitMortgage}/>
+      <UnitTabs id={id} unitIncomes={unitIncomes} unitExpenses={unitExpenses} unitMortgages={unitMortgages}/>
 
       <Button onClick={() => setShowCreateMortgageForm(!showCreateMortgageForm)}>Create Mortgage</Button>
       {showCreateMortgageForm && <CreateMortgageForm id={id} open={showCreateMortgageForm} onClose={() => setShowCreateMortgageForm(false)}/>}
@@ -70,6 +69,20 @@ const Unit = () => {
 
     </Container>
   )
+}
+
+export const unitLoader = async () => {
+  try {
+    let response = await axiosDB("/expenses")
+    const { expenses } = response.data
+    response = await axiosDB("/incomes")
+    const { incomes } = response.data
+    response = await axiosDB("/mortgages")
+    const { mortgages } = response.data
+    return { expenses, incomes, mortgages }
+  } catch (error) {
+    throw new Error(error)
+  }
 }
 
 export default Unit

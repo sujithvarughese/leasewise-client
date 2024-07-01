@@ -14,6 +14,7 @@ import SignUp from './pages/SignUp.jsx'
 import Units from './pages/Units.jsx'
 import { unitsLoader } from './pages/Units.jsx'
 import Unit from "./pages/Unit.jsx"
+import { unitLoader } from './pages/Unit.jsx'
 
 // COMPONENTS
 
@@ -77,6 +78,7 @@ export {
   SignUp,
   Units,
   unitsLoader,
+  unitLoader,
 
   FinancesMobileTable,
   FinancesTotalCalculated,

@@ -6,10 +6,11 @@ import { Tab } from '@mui/material'
 import TabPanel from '@mui/lab/TabPanel'
 import TabIncomes from './TabIncomes.jsx'
 import TabExpenses from './TabExpenses.jsx'
+import TabMortgages from './TabMortgages.jsx'
 
-const UnitTabs = ({ unitIncomes, unitExpenses, unitMortgage }) => {
+const UnitTabs = ({ id, unitIncomes, unitExpenses, unitMortgages }) => {
 
-  const [value, setValue] = useState("income")
+  const [value, setValue] = useState("incomes")
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -20,12 +21,12 @@ const UnitTabs = ({ unitIncomes, unitExpenses, unitMortgage }) => {
         <TabList onChange={handleChange} aria-label="incomes-expenses-mortgage-tabs">
           <Tab label="Incomes" value="incomes" />
           <Tab label="Expenses" value="expenses" />
-          <Tab label="Mortgage" value="mortgage" />
+          <Tab label="Mortgages" value="mortgages" />
         </TabList>
       </Box>
       <TabIncomes unitIncomes={unitIncomes} />
       <TabExpenses unitExpenses={unitExpenses} />
-      <TabExpenses unitMortgage={unitMortgage} />
+      <TabMortgages unitMortgages={unitMortgages} />
     </TabContext>
   )
 }
