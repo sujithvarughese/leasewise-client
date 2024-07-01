@@ -39,7 +39,6 @@ import Pricing from './components/landing/Pricing.jsx'
 import Testimonials from './components/landing/Testimonials.jsx'
 
 //messages
-import CreateMessageForm from './components/messages/CreateMessageForm.jsx'
 import MessageActions from './components/messages/MessageActions.jsx'
 import MessageCollapsed from './components/messages/MessageCollapsed.jsx'
 import MessageContents from './components/messages/MessageContents.jsx'
