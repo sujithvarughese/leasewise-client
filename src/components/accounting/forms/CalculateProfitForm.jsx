@@ -1,8 +1,13 @@
 import classes from "./styles/FinanceCalculationForms.module.css";
-import {Button, Form, Input, Select} from "../../../ui/index.js";
-import {useEffect, useState} from "react";
-import {calculateProfit} from "../../../utils/financeCalculations.js";
-import FormRow from "../../../ui/FormRow.jsx";
+import React, {useEffect, useState} from "react";
+import {calculateProfit} from "../../../utilities/financeCalculations.js";
+import { Typography } from '@mui/material'
+import TextField from '@mui/material/TextField'
+import StyledSelect from '../../ui/StyledSelect.jsx'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
+import Toolbar from '@mui/material/Toolbar'
+import CssBaseline from '@mui/material/CssBaseline'
 
 const CalculateProfitForm = ({ annualPropertyTax, annualInsurancePremium, annualHoa, rent, setProfit }) => {
 
@@ -28,55 +33,20 @@ const CalculateProfitForm = ({ annualPropertyTax, annualInsurancePremium, annual
     }, [rent]);
 
     return (
-        <div className={classes.container}>
-            <Form onSubmit={handleSubmit} title="Calculate Profit">
-                    <FormRow label="Annual Property Tax">
-                        <Input
-                            type="number"
-                            name="annualPropertyTax"
-                            value={values.annualPropertyTax}
-                            onChange={handleChange}
-                        ></Input>
-                    </FormRow>
-                    <FormRow label="Annual Insurance Premium">
-                        <Input
-                            type="number"
-                            name="annualInsurancePremium"
-                            value={values.annualInsurancePremium}
-                            onChange={handleChange}
-                        ></Input>
-                    </FormRow>
-                    <FormRow label="Annual Assosiation Fee">
-                        <Input
-                            type="number"
-                            name="annualHoa"
-                            value={values.annualHoa}
-                            onChange={handleChange}
-                        ></Input>
-                    </FormRow>
-                    <FormRow label="Monthly Rent Income">
-                        <Input
-                            type="number"
-                            name="monthlyRent"
-                            value={values.monthlyRent}
-                            onChange={handleChange}
-                        ></Input>
-                    </FormRow>
-                    <FormRow label="Term">
-                        <Select
-                            name="term"
-                            list={[{ text: "Monthly", value: 1 }, { text: "Annual", value: 12 }]}
-                            value={values.term}
-                            onChange={handleChange}
-                        ></Select>
-                    </FormRow>
-
-                    <div className={classes.button}>
-                        <Button type="submit">Calculate Monthly Profit</Button>
-                    </div>
-
-            </Form>
-        </div>
+        <Container>
+          <Typography>Calculate Profit</Typography>
+          <CssBaseline />
+          <Toolbar />
+            <form onSubmit={handleSubmit}>
+              <TextField name="annualPropertyTax" label="Annual Property Tax" />
+              <TextField name="annualInsurancePremium" label="Annual Insurance Premium" />
+              <TextField name="annualHoa" label="Annual Assosiation Fees" />
+              <TextField name="monthlyRent" label="Monthly Rent Income" />
+              <StyledSelect name="term" label="Term"
+                            options={[{ label: "Monthly", value: 1 }, { label: "Annual", value: 12 }]} minWidth={120}/>
+              <Button type="submit">Calculate Monthly Profit</Button>
+            </form>
+        </Container>
     );
 };
 

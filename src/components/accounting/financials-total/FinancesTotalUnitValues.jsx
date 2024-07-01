@@ -1,7 +1,11 @@
-import classes from "../../../pages/styles/FinancesTotal.module.css";
 import {IoRemoveCircle} from "react-icons/io5";
 import { calculateMonthlyPayment, convertToUSD } from "../../../utilities/financeCalculations.js";
 import {NavLink} from "react-router-dom";
+import TableRow from '@mui/material/TableRow'
+import TableCell from '@mui/material/TableCell'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import Box from '@mui/material/Box'
 
 const FinancesTotalUnitValues = ({ unitFinance, selectedTerm, removeUnit }) => {
 
@@ -9,44 +13,43 @@ const FinancesTotalUnitValues = ({ unitFinance, selectedTerm, removeUnit }) => {
     const { principal, interest, term } = unitFinance.mortgage
     return (
 
-        <tr className={classes.tr}>
-            <td>
-                <div className={classes.addressCol}>
-                    <div
-                        className={classes.remove}
-                        onClick={()=>removeUnit(unitFinance.financeID)}
-                    >
+        <TableRow>
+            <TableCell>
+                <Box>
+                    <IconButton onClick={()=>removeUnit(unitFinance.financeID)}>
                         <IoRemoveCircle />
-                    </div>
+                    </IconButton>
 
                     <NavLink
                         to={{ pathname: `../accounting/${unitID}`}}
                         state={{ houseNumber, street, apartmentNumber, city, state, zip, tenant, user }}
-                        className={classes.link}
+                        style={{ fontWeight: "600"}}
                     >
                         {houseNumber} {street} {apartmentNumber}
                     </NavLink>
+                </Box>
+            </TableCell>
 
-                </div>
-
-
-            </td>
-            <td>
+            <TableCell>
                 {convertToUSD((calculateMonthlyPayment(principal, interest, term)) * selectedTerm)}
-            </td>
-            <td>
+            </TableCell>
+
+            <TableCell>
                 {convertToUSD(unitFinance.propertyTax * selectedTerm)}
-            </td>
-            <td>
+            </TableCell>
+
+            <TableCell>
                 {convertToUSD(unitFinance.insurance * selectedTerm)}
-            </td>
-            <td>
+            </TableCell>
+
+            <TableCell>
                 {convertToUSD(unitFinance.hoa * selectedTerm)}
-            </td>
-            <td>
+            </TableCell>
+
+            <TableCell>
                 {convertToUSD(unitFinance.rent * selectedTerm)}
-            </td>
-        </tr>
+            </TableCell>
+        </TableRow>
     );
 };
 

@@ -1,13 +1,14 @@
-import classes from "./styles/FinanceUnitDetails.module.css";
+import TableRow from '@mui/material/TableRow'
+import TableCell from '@mui/material/TableCell'
 
 const FinanceDetailsRow = ({ label, display }) => {
 
     return (
 
-        <div className={classes.tr}>
-            <div className={classes.td}>{label}</div>
-            <div className={classes.td}>{display}</div>
-        </div>
+        <TableRow>
+            <TableCell>{label}</TableCell>
+            <TableCell>{display}</TableCell>
+        </TableRow>
 
     );
 };
