@@ -93,12 +93,12 @@ const UnitCoverListMode = ({
 						}
 					</div>
 
-					{// if occupied show message user icon, else show create user button
+					{/*// if occupied show message user icon, else show create user button
 					user &&
 					<Button onClick={()=>setShowMessageForm(prevState => !prevState)} fontSize="42px">
 						<MdOutgoingMail />
 					</Button>
-					}
+					*/}
 				</div>
 
 

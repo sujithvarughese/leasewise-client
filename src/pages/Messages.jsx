@@ -1,7 +1,6 @@
 import classes from "./styles/Messages.module.css";
 import { axiosDB } from "../utilities/axios.js";
 import { useLoaderData } from "react-router-dom";
-import CreateMessageForm from "../components/messages/CreateMessageForm.jsx";
 import MessageExpanded from '../components/messages/MessageExpanded.jsx'
 import MessageCollapsed from '../components/messages/MessageCollapsed.jsx'
 import { useEffect, useState } from "react";
