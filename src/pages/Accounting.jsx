@@ -1,19 +1,25 @@
-import classes from "./styles/FinancesTotal.module.css";
 import { useState } from "react";
 import { axiosDB } from "../utilities/axios.js";
 import { useLoaderData } from "react-router-dom";
 import { FinancesTotalCalculated, FinancesTotalUnitValues, FinancesMobileTable } from "../"
 import { totalProfit, convertToUSD } from "../utilities/financeCalculations.js";
 import { useManagementProvider } from '../context/management-context.jsx'
-import { Select, Typography } from '@mui/material'
+import { FormControl, Select, TableContainer, Typography } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
 import CssBaseline from '@mui/material/CssBaseline'
 import Toolbar from '@mui/material/Toolbar'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
+import StyledSelect from '../components/ui/StyledSelect.jsx'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Table from '@mui/material/Table'
+import TableCell from '@mui/material/TableCell'
+import TableBody from '@mui/material/TableBody'
+import Paper from '@mui/material/Paper'
 
 const Accounting = () => {
-/*
+
   // finances = array of each unit's financial data
   const { finances, units } = useLoaderData()
   console.log(units)
@@ -47,7 +53,7 @@ const Accounting = () => {
     const updatedList = unitFinances.filter(unitFinance => unitFinance.financeID !== unitID)
     setUnitFinances(updatedList)
   }
-*/
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -65,9 +71,47 @@ const Accounting = () => {
       >
         <Toolbar />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Typography variant="h1">Under Construction</Typography>
+          <Typography variant="h4">Accounting</Typography>
+          <StyledSelect name="term" label="Term"
+                        options={[{ label: "Monthly", value: 1 }, { label: "Annual", value: 12 }]}
+                        minWidth={120} />
+
+          <TableContainer component={Paper}>
+            <Table aria-label="simple-table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Address</TableCell>
+                  <TableCell>Mortgage</TableCell>
+                  <TableCell>Tax</TableCell>
+                  <TableCell>Insurance</TableCell>
+                  <TableCell>HOA</TableCell>
+                  <TableCell>Rent</TableCell>
+                </TableRow>
+              </TableHead>
+
+              <TableBody>
+                {
+                  unitFinances.map(unitFinance =>
+                    <FinancesTotalUnitValues
+                      key={unitFinance.financeID}
+                      unitFinance={unitFinance}
+                      selectedTerm={selectedTerm}
+                      removeUnit={removeUnit}
+                    />)
+                }
+                <FinancesTotalCalculated unitFinances={unitFinances} selectedTerm={selectedTerm}/>
+              </TableBody>
+            </Table>
+
+            <Box>
+              <Typography>Total Profit: {convertToUSD(totalProfit(unitFinances, selectedTerm))}</Typography>
+            </Box>
+          </TableContainer>
         </Container>
       </Box>
+
+
+
     </Box>
 
   );
@@ -87,57 +131,3 @@ export const accountingLoader = async () => {
 }
 
 export default Accounting;
-
-/*
-        <div className="title">
-        Accounting Totals
-      </div>
-
-      <div className={classes.content}>
-        <div className={classes.form}>
-            <label htmlFor="term" id="term">Term</label>
-            <StyledSelect
-              type="text"
-              name="term"
-              onChange={(e)=>setSelectedTerm(e.target.value)}
-            >
-              <MenuItem value={1}>Monthly</MenuItem>
-              <MenuItem value={12}>Yearly</MenuItem>
-            </StyledSelect>
-        </div>
-        <div className={classes.mobile}>
-          <FinancesMobileTable unitFinances={unitFinances} selectedTerm={selectedTerm} removeUnit={removeUnit}/>
-        </div>
-
-        <table className={classes.largeScreen}>
-          <thead>
-          <tr>
-            <th>Address</th>
-            <th>Mortgage</th>
-            <th>Tax</th>
-            <th>Insurance</th>
-            <th>HOA</th>
-            <th>Rent</th>
-          </tr>
-          </thead>
-
-          <tbody>
-          {
-            unitFinances.map(unitFinance =>
-              <FinancesTotalUnitValues
-                key={unitFinance.financeID}
-                unitFinance={unitFinance}
-                selectedTerm={selectedTerm}
-                removeUnit={removeUnit}
-              />)
-          }
-          <FinancesTotalCalculated unitFinances={unitFinances} selectedTerm={selectedTerm}/>
-
-          </tbody>
-        </table>
-
-        <div className={classes.totalProfit}>
-          Total Profit: {convertToUSD(totalProfit(unitFinances, selectedTerm))}
-        </div>
-      </div>
-*/

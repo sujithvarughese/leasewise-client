@@ -1,27 +1,29 @@
-import classes from "../../../pages/styles/FinancesTotal.module.css";
 import  { convertToUSD, totalMortgage, totalPropertyTax, totalInsurance, totalRent, totalHoa, totalProfit } from "../../../utilities/financeCalculations.js";
+import TableRow from '@mui/material/TableRow'
+import TableCell from '@mui/material/TableCell'
+import { Typography } from '@mui/material'
 
 const FinancesTotalCalculated = ({ unitFinances, selectedTerm }) => {
 
     return (
-        <tr>
-            <td></td>
-            <td className={classes.totals}>
-                {convertToUSD(totalMortgage(unitFinances, selectedTerm))}
-            </td>
-            <td className={classes.totals}>
-                {convertToUSD(totalPropertyTax(unitFinances, selectedTerm))}
-            </td>
-            <td className={classes.totals}>
-                {convertToUSD(totalInsurance(unitFinances, selectedTerm))}
-            </td>
-            <td className={classes.totals}>
-                {convertToUSD(totalHoa(unitFinances, selectedTerm))}
-            </td>
-            <td className={classes.totals}>
-                {convertToUSD(totalRent(unitFinances, selectedTerm))}
-            </td>
-        </tr>
+        <TableRow sx={{ fontWeight: "600"}}>
+            <TableCell></TableCell>
+            <TableCell>
+              <Typography>{convertToUSD(totalMortgage(unitFinances, selectedTerm))}</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>{convertToUSD(totalPropertyTax(unitFinances, selectedTerm))}</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>{convertToUSD(totalInsurance(unitFinances, selectedTerm))}</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>{convertToUSD(totalHoa(unitFinances, selectedTerm))}</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>{convertToUSD(totalRent(unitFinances, selectedTerm))}</Typography>
+            </TableCell>
+        </TableRow>
     );
 };
 

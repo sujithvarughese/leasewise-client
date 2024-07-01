@@ -1,4 +1,3 @@
-import classes from "./styles/Messages.module.css";
 import { axiosDB } from "../utilities/axios.js";
 import { useLoaderData } from "react-router-dom";
 import MessageExpanded from '../components/messages/MessageExpanded.jsx'
@@ -15,6 +14,8 @@ import Toolbar from '@mui/material/Toolbar'
 import Container from '@mui/material/Container'
 import NewMessageForm from '../components/messages/NewMessageForm.jsx'
 import IconButton from '@mui/material/IconButton'
+import { Typography } from '@mui/material'
+import Stack from '@mui/material/Stack'
 
 const Messages = () => {
   // messages = { inbox, outbox }	// message = { sender: { lastName, firstName, _id }, recipient, subject, body, read, flag, date, previousMessage
@@ -146,7 +147,7 @@ const Messages = () => {
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
 
 
-          <div className={classes.nav}>
+          <Stack flexDirection="row">
             {
               // Create new message icon is hidden in mobile when message is expanded
               // Back button is only displayed in mobile when message is expanded
@@ -159,8 +160,7 @@ const Messages = () => {
               </IconButton>
             }
 
-            <div className={classes.links}>
-              <div className={currentLink === "all" ? classes.active : classes.link}>
+            <Stack flexDirection="row" justifyContent="flex-end" width={1}>
                 <Button
                   onClick= {()=> {
                     setExpandedMessage(null)
@@ -168,8 +168,8 @@ const Messages = () => {
                     setCurrentLink("all")
                   }
                   }>All</Button>
-              </div>
-              <div className={currentLink === "incoming" ? classes.active : classes.link}>
+
+
                 <Button
                   onClick= {()=> {
                     setExpandedMessage(null)
@@ -177,9 +177,9 @@ const Messages = () => {
                     setCurrentLink("incoming")
                   }
                   }>Incoming</Button>
-              </div>
 
-              <div className={currentLink === "outgoing" ? classes.active : classes.link}>
+
+
                 <Button
                   onClick={() => {
                     setExpandedMessage(null)
@@ -187,11 +187,11 @@ const Messages = () => {
                     setCurrentLink("outgoing")
                   }
                   }>Outgoing</Button>
-              </div>
 
-            </div>
 
-          </div>
+            </Stack>
+
+          </Stack>
 
           <Grid container>
             <Grid item xs={12} md={4}>
@@ -209,7 +209,7 @@ const Messages = () => {
                 closeReply={()=>setShowCreateReply(false)}
               />)
               :
-              <Box className={classes.empty}>No Messages in this Mailbox</Box>
+              <Typography textAlign="center">No Messages in this Mailbox</Typography>
               }
             </Grid>
 
@@ -240,64 +240,13 @@ const Messages = () => {
             </Grid>
             :
             <Grid item xs={12} md={8}>
-              <div className={classes.noMessage}>
+              <Typography variant="h3" textAlign="center" py={16}>
                 No Message Selected
-              </div>
+              </Typography>
             </Grid>
             }
           </Grid>
 
-
-          <div className={classes.mailbox}>
-            {/* collapsed and expanded classes hidden on small screens */}
-
-            <div className={classes.largeScreen}>
-
-            </div>
-
-            <div className={classes.mobile}>
-              {
-                mobileExpanded ?
-                  // when message is expanded in mobile, component will be rendered full screen
-                  <div className={classes.mobileExpanded}>
-                    {
-                      expandedMessage &&
-                      <MessageExpanded
-                        message={expandedMessage}
-                        messages={messages}
-                        toggleFlag={toggleFlag}
-                        userID={user.id}
-                        markMessageUnread={markMessageUnread}
-                        showCreateReply={showCreateReply}
-                        setShowCreateReply={setShowCreateReply}
-                        getMessages={getMessages}
-                        setMobileExpanded={setMobileExpanded}
-                      />
-                    }
-                  </div>
-                  :
-                  // mobileExpanded=true when message is open, so only show collapsed list when no msg selected
-                  <div className={classes.mobileCollapsed}>
-                    {
-                      currentMailbox.length > 0 ?
-                        currentMailbox.map(message =>
-                          <MessageCollapsed
-                            key={message._id}
-                            message={message}
-                            setExpandedMessage={setExpandedMessage}
-                            markMessageRead={markMessageRead}
-                            toggleFlag={toggleFlag}
-                            showExpanded={()=>setMobileExpanded(true)}
-                            userID={user.id}
-                            closeReply={()=>setShowCreateReply(false)}
-                          />)
-                        :
-                        <div>No Messages in this Mailbox</div>
-                    }
-                  </div>
-              }
-            </div>
-          </div>
         </Container>
       </Box>
 

@@ -17,6 +17,7 @@ import {
   Units, unitsLoader
 } from './'
 import { ManagementProvider } from './context/management-context.jsx'
+import FinanceDetails from './components/accounting/financials-unit/FinanceDetails.jsx'
 
 const App = () => {
 
@@ -46,8 +47,9 @@ const App = () => {
         { path: "/units", element: <Units />, loader: unitsLoader },
         { path: "/unit/:id", element: <Unit /> },
         { path: "/messages", element: <Messages />, loader: messagesLoader },
-        { path: "research", element: <Research /> },
-        { path: "accounting", element: <Accounting />, loader: accountingLoader },
+        { path: "/research", element: <Research /> },
+        { path: "/accounting", element: <Accounting />, loader: accountingLoader },
+        { path: "/accounting/:id", element: <FinanceDetails />, loader: accountingLoader },
           /*errorElement: <Error />,
           children: [
             { index: true, element: <FinancesTotal />, loader: financialSummaryLoader },

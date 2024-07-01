@@ -1,10 +1,17 @@
 import classes from "./styles/FinanceUnitDetails.module.css";
-import { CalculateProfitForm} from "../../"
+import CalculateProfitForm from "../forms/CalculateProfitForm.jsx"
 import {useState} from "react";
-import { convertToUSD } from "../../../utils/financeCalculations.js";
+import { convertToUSD } from "../../../utilities/financeCalculations.js";
 import FinanceDetailsRow from "./FinanceDetailsRow.jsx";
-import {Input, Button} from "../../../ui/index.js";
-import ButtonPlain from "../../../ui/ButtonPlain.jsx";
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import { ButtonGroup, TableContainer } from '@mui/material'
+import Table from '@mui/material/Table'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import TableCell from '@mui/material/TableCell'
+import TableBody from '@mui/material/TableBody'
+
 
 const FinanceDetails = ({ updateUnitFinance, purchasePrice, rent, fairMarketRent, annualPropertyTax, annualInsurancePremium, annualHoa }) => {
 
@@ -37,24 +44,27 @@ const FinanceDetails = ({ updateUnitFinance, purchasePrice, rent, fairMarketRent
     }
 
     return (
-        <div className={classes.container}>
+        <TableContainer>
 
-            <div className={classes.table}>
-                <div className={classes.head}>
-                    <div className={classes.title}>
-                        Overview
-                    </div>
-                    <div className={classes.editDesktop}>
-                        {!editMode && <ButtonPlain onClick={()=>setEditMode(!editMode)} fontSize="14px">[Edit]</ButtonPlain>}
-                    </div>
-                </div>
+            <Table aria-label="simple-table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>
+                            Overview
+                        </TableCell>
+                        <TableCell>
+                            {!editMode && <Button onClick={()=>setEditMode(!editMode)} fontSize="14px">[Edit]</Button>}
+                        </TableCell>
+                    </TableRow>
 
-                <div className={classes.body}>
+                </TableHead>
+
+                <TableBody>
                     <FinanceDetailsRow
                         label="Purchase Price"
                         display={(purchasePrice && !editMode) ? convertToUSD(values.purchasePrice)
                             :
-                            <Input
+                            <TextField
                                 name="purchasePrice"
                                 type="number"
                                 value={values.purchasePrice}
@@ -66,7 +76,7 @@ const FinanceDetails = ({ updateUnitFinance, purchasePrice, rent, fairMarketRent
                         label="Rent"
                         display={(rent && !editMode) ? convertToUSD(values.rent)
                             :
-                            <Input
+                            <TextField
                                 name="rent"
                                 type="number"
                                 value={values.rent}
@@ -78,7 +88,7 @@ const FinanceDetails = ({ updateUnitFinance, purchasePrice, rent, fairMarketRent
                         label="Fair Market Rent"
                         display={(fairMarketRent && !editMode) ? convertToUSD(values.fairMarketRent)
                             :
-                            <Input
+                            <TextField
                                 name="fairMarketRent"
                                 type="number"
                                 value={values.fairMarketRent}
@@ -88,22 +98,17 @@ const FinanceDetails = ({ updateUnitFinance, purchasePrice, rent, fairMarketRent
                     />
                     {
                         editMode &&
-                        <div className={classes.buttons}>
+                        <ButtonGroup>
                             <Button onClick={update}>Update</Button>
                             <Button onClick={cancel}>Cancel</Button>
-                        </div>
+                        </ButtonGroup>
                     }
-                </div>
-            </div>
-            <div className={classes.editMobile}>
-                {!editMode && <Button onClick={()=>setEditMode(!editMode)}>Edit</Button>}
-            </div>
+                </TableBody>
+            </Table>
 
             {
                 purchasePrice && rent &&
-
-                <div className={classes.calcProfit}>
-
+                <div>
                     <CalculateProfitForm
                         annualPropertyTax={annualPropertyTax}
                         annualInsurancePremium={annualInsurancePremium}
@@ -111,18 +116,15 @@ const FinanceDetails = ({ updateUnitFinance, purchasePrice, rent, fairMarketRent
                         rent={rent}
                         setProfit={setProfit}
                     />
-
                     {
                         profit &&
-                        <div className={classes.result}>
+                        <div>
                             Total Profit: {convertToUSD(profit)}
                         </div>
                     }
-
-
                 </div>
             }
-        </div>
+        </TableContainer>
     );
 };
 
