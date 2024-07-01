@@ -1,9 +1,11 @@
-import classes from "./styles/MessageCollapsed.module.css";
 import { TiFlag } from "react-icons/ti"
 import { FcInfo } from "react-icons/fc"
 import { GoDotFill } from "react-icons/go"
 import { RiShareForwardFill } from "react-icons/ri"
 import {useState} from "react";
+import Box from '@mui/material/Box'
+import { Typography } from '@mui/material'
+import Stack from '@mui/material/Stack'
 const MessageCollapsed = ({ message, setExpandedMessage, markMessageRead, showExpanded, userID, closeReply }) => {
 
 	const { sender, recipient, subject, body, read, flag } = message
@@ -14,8 +16,21 @@ const MessageCollapsed = ({ message, setExpandedMessage, markMessageRead, showEx
 
 	return (
 		// selecting anywhere on collapsed message will open expanded message, and mark as read
-		<div
-			className={classes.container}
+		<Box
+			component="button"
+			border="none"
+			width="100%"
+			display="flex"
+			position="relative"
+			padding={1}
+			borderRadius={1}
+			gap={1}
+			sx={{
+				"&:hover": {
+					bgcolor: "gray",
+					cursor: "pointer"
+				}
+			}}
 			onClick={() => {
 				setExpandedMessage(message)
 				markMessageRead(message)
@@ -24,55 +39,50 @@ const MessageCollapsed = ({ message, setExpandedMessage, markMessageRead, showEx
 			}}
 		>
 			{/* icons dynamically render to show flag and read status */}
-			<div className={classes.alerts}>
-				<div className={classes.replied}>
-					{ sender._id === userID && <RiShareForwardFill /> }
-				</div>
-				<div className={classes.read}>
+			<Stack>
+				<Box position="absolute"  top="20%" color="dodgerblue">
 					{ recipient._id === userID && !read && <GoDotFill />}
-				</div>
-				<div className={classes.flag}>
-					{ recipient._id === userID && flag && <TiFlag /> }
-				</div>
-			</div>
+				</Box>
+				<Box position="absolute" bottom="20%" color="darkorange">
+					{ flag && <TiFlag /> }
+				</Box>
+			</Stack>
 
-			{/* message contents */}
-			<div className={classes.details}>
-				<div className={classes.senderDate}>
-
-					{
-						userID === recipient._id ?
-							<div className={classes.sender}>
-								{sender.lastName}, {sender.firstName}
-							</div>
-							:
-							<div className={classes.sender}>
-								{recipient.lastName}, {recipient.firstName}
-							</div>
-					}
-
-
-					<div className={classes.date}>
-						<div>
-							{date}
-						</div>
-						<div>
-							{time}
-						</div>
-
-					</div>
-				</div>
-
-
-				<div className={classes.subject}>
+			<Stack justifyContent="flex-start" alignItems="flex-start" pl={1} width="100%">
+				{userID === recipient._id ?
+				<Typography fontWeight={600} whiteSpace="nowrap" overflow="clip" textOverflow="ellipsis" maxWidth="50%">
+					{sender.lastName}, {sender.firstName}
+				</Typography>
+				:
+				<Typography fontWeight={600} whiteSpace="nowrap" overflow="clip" textOverflow="ellipsis" maxWidth="50%">
+					{recipient.lastName}, {recipient.firstName}
+				</Typography>
+				}
+				<Typography
+					whiteSpace="nowrap" overflow="clip" textOverflow="ellipsis">
 					{subject}
-				</div>
+				</Typography>
 
-				<div className={classes.body}>
-					{body.substring(0, 40)}
-				</div>
-			</div>
-		</div>
+				<Typography
+					variant="body2"
+					whiteSpace="nowrap" overflow="clip" textOverflow="ellipsis" maxWidth="60%"
+
+				>
+					{body}
+				</Typography>
+			</Stack>
+
+
+			<Stack position="absolute" right={6} top={24}>
+				<Typography variant="subtitle2">
+					{date}
+				</Typography>
+				<Typography variant="caption">
+					{time}
+				</Typography>
+			</Stack>
+
+		</Box>
 
 	);
 };

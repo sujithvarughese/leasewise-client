@@ -1,4 +1,3 @@
-import classes from "./styles/MessageActions.module.css";
 import { RiReplyLine } from "react-icons/ri"
 import { TiFlag, TiFlagOutline } from "react-icons/ti"
 import { CiUnread } from "react-icons/ci"
@@ -7,6 +6,10 @@ import { axiosDB } from "../../utilities/axios.js";
 import {TfiControlBackward} from "react-icons/tfi";
 import { useAuthProvider } from '../../context/auth-context.jsx'
 import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
+import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
+import { ButtonGroup, Typography } from '@mui/material'
 
 const MessageActions = ({ message, reply, toggleFlag, markMessageUnread, setMobileExpanded }) => {
 
@@ -14,40 +17,45 @@ const MessageActions = ({ message, reply, toggleFlag, markMessageUnread, setMobi
 	const { date, sender, recipient, subject, body, read, flag } = message
 
 	return (
-		<div className={classes.actions}>
-			<div className={classes.backSubject}>
-				<div className={classes.back}>
+		<Stack
+			flexDirection="row"
+			justifyContent="space-between"
+			alignItems="center"
+			p={1}
+		>
+			<Box>
+				<Box display={{ xs: "flex", lg: "none" }}>
 					<Button onClick={()=>setMobileExpanded(false)}><TfiControlBackward /></Button>
-				</div>
+				</Box>
 
-				<div className={classes.subjectContainer}>
-					<span className={classes.subjectLabel}>Subject:</span> <span className={classes.subject}>{message.subject}</span>
-				</div>
-			</div>
+				<Stack flexDirection="row">
+					<Typography>Subject:</Typography>
+					<Typography
+						whiteSpace="nowrap" overflow="clip" textOverflow="ellipsis"
+						fontWeight={600}
+					>
+						{subject}</Typography>
+				</Stack>
+			</Box>
 
-			<div className={classes.buttons}>
-				{/*
-				<div className={classes.reply} onClick={reply}>
-					<RiReplyLine />
-				</div>
-				*/}
-				<div className={classes.flag} onClick={()=>toggleFlag(message)}>
+			<ButtonGroup>
+				<IconButton onClick={()=>toggleFlag(message)}>
 					{ flag ? <TiFlag /> : <TiFlagOutline />}
-				</div>
+				</IconButton>
 
-				<div className={classes.delete} onClick={()=>console.log("Unauthorized to delete!")}>
+				<IconButton onClick={()=>console.log("Unauthorized to delete!")}>
 					<IoTrashOutline />
-				</div>
+				</IconButton>
 
 				{
-					message.read &&
-					<div className={classes.unread} onClick={()=>markMessageUnread(message)}>
-						<CiUnread />
-					</div>
+				message.read &&
+				<IconButton onClick={()=>markMessageUnread(message)}>
+					<CiUnread />
+				</IconButton>
 				}
-			</div>
+			</ButtonGroup>
 
-		</div>
+		</Stack>
 	);
 };
 

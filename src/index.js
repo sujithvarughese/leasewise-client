@@ -59,7 +59,7 @@ import { signInLoader } from './components/nav/PrivateLayout.jsx'
 import CreateUnitForm from './components/units/CreateUnitForm.jsx'
 import EditUnitForm from './components/units/EditUnitForm.jsx'
 import SearchUnits from './components/units/SearchUnits.jsx'
-import UnitCard from './components/units/UnitCard.jsx'
+import UnitCoverGalleryMode from './components/units/UnitCoverGalleryMode.jsx'
 import UnitMobile from './components/units/UnitMobile.jsx'
 import UnitModal from './components/units/UnitModal.jsx'
 
@@ -116,7 +116,7 @@ export {
   EditUnitForm,
   SearchUnits,
   Unit,
-  UnitCard,
+  UnitCoverGalleryMode,
   UnitMobile,
   UnitModal
 

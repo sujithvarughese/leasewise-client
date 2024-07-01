@@ -2,8 +2,8 @@ import {useEffect, useState} from "react";
 
 import { useLoaderData } from "react-router-dom";
 import { axiosDB } from "../utilities/axios.js";
-import { Unit, SearchUnits, CreateUnitForm } from "../components";
-import UnitCard from '../components/units/UnitCard.jsx'
+import { UnitCoverListMode, SearchUnits, CreateUnitForm } from "../components";
+import UnitCoverGalleryMode from '../components/units/UnitCoverGalleryMode.jsx'
 
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
@@ -89,11 +89,11 @@ const Units = () => {
 
 					{listMode ?
 						<Stack>
-							{queriedUnits?.map(unit =><Unit key={unit._id} unit={unit}/>)}
+							{queriedUnits?.map(unit =><UnitCoverListMode key={unit._id} {...unit}/>)}
 						</Stack>
 						:
 						<Stack flexDirection="row" flexWrap="wrap" justifyContent="center">
-							{queriedUnits?.map(unit =><UnitCard key={unit._id} {...unit}/>)}
+							{queriedUnits?.map(unit =><UnitCoverGalleryMode key={unit._id} {...unit}/>)}
 						</Stack>
 					}
 

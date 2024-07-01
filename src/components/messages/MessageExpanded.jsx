@@ -1,9 +1,10 @@
-import classes from "./styles/MessageExpanded.module.css";
 import MessageActions from './MessageActions.jsx'
 import MessageContents from './MessageContents.jsx'
 import ReplyMessageForm from './ReplyMessageForm.jsx'
 import { axiosDB } from "../../utilities/axios.js";
 import {useEffect, useRef, useState} from "react";
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 
 const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnread, showCreateReply, setShowCreateReply, getMessages, setMobileExpanded }) => {
 
@@ -31,53 +32,40 @@ const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnr
 	}, [message])
 
 	return (
-		<div className={classes.container}>
-
+		<Box sx={{ overflowY: "scroll" }}>
 			{
-				<MessageActions
-					message={message}
-					reply={()=>setShowCreateReply(true)}
-					toggleFlag={toggleFlag}
-					markMessageUnread={markMessageUnread}
-					setMobileExpanded={setMobileExpanded}
-				/>
+			<MessageActions
+				message={message}
+				reply={()=>setShowCreateReply(true)}
+				toggleFlag={toggleFlag}
+				markMessageUnread={markMessageUnread}
+				setMobileExpanded={setMobileExpanded}
+			/>
 			}
 
-			<div className={classes.content}>
-
-				<div className={classes.messages}>
+				<Box>
 					{
-						showCreateReply &&
-						<div className={classes.replyForm}>
-							<ReplyMessageForm
-								message={message}
-								closeReply={()=>setShowCreateReply(false)}
-								getMessages={getMessages}
-							/>
-						</div>
+					previousMessages.length > 0 &&
+					<div>
+						{
+							previousMessages.map(previousMessage => {
+								return (
+									<Grid display="grid" key={previousMessage._id}>
+										<MessageContents
+											lastName={previousMessage.sender.lastName}
+											firstName={previousMessage.sender.firstName}
+											senderID={previousMessage.sender._id}
+											date={previousMessage.date}
+											subject={previousMessage.subject}
+											body={previousMessage.body}
+										/>
+									</Grid>
+								)
+							}).reverse()
+						}
+					</div>
 					}
-					{
-						previousMessages.length > 0 &&
-						<div className={classes.previousMessages}>
-							{
-								previousMessages.map(previousMessage => {
-									return (
-										<div className={classes.message} key={previousMessage._id}>
-											<MessageContents
-												lastName={previousMessage.sender.lastName}
-												firstName={previousMessage.sender.firstName}
-												senderID={previousMessage.sender._id}
-												date={previousMessage.date}
-												subject={previousMessage.subject}
-												body={previousMessage.body}
-											/>
-										</div>
-									)
-								}).reverse()
-							}
-						</div>
-					}
-					<div   ref={currentMessageRef} className={classes.message}>
+					<div ref={currentMessageRef}>
 						<MessageContents
 							lastName={sender.lastName}
 							firstName={sender.firstName}
@@ -87,20 +75,17 @@ const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnr
 							body={body}
 						/>
 					</div>
-					<div className={classes.replyForm}>
+
+					<div>
 						<ReplyMessageForm
 							message={message}
 							closeReply={()=>setShowCreateReply(false)}
 							getMessages={getMessages}
 						/>
 					</div>
+				</Box>
 
-
-
-
-				</div>
-			</div>
-		</div>
+		</Box>
 	);
 };
 

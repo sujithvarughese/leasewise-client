@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography'
 import { CardMedia } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
-const UnitCard = ({
+const UnitCoverGalleryMode = ({
   _id,
   houseNumber,
   street,
@@ -25,7 +25,6 @@ const UnitCard = ({
 }) => {
 
   const [isHovering, setIsHovering] = useState(false)
-  const [modalOpen, setModalOpen] = useState(false)
 
   const navigate = useNavigate()
   const navigateToUnit = () => {
@@ -34,23 +33,6 @@ const UnitCard = ({
 
   return (
     <Button onClick={navigateToUnit}>
-      <UnitModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        _id={_id}
-        houseNumber={houseNumber}
-        street={street}
-        apartmentNumber={apartmentNumber}
-        city={city}
-        state={state}
-        zip={zip}
-        image={image}
-        bedrooms={bedrooms}
-        bathrooms={bathrooms}
-        tenant={tenant}
-        user={user}
-      />
-
       <Card sx={{ position: "relative" }}>
 
         <CardMedia
@@ -103,4 +85,4 @@ const UnitCard = ({
   )
 }
 
-export default UnitCard
+export default UnitCoverGalleryMode
