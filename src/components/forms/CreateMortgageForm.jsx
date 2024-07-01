@@ -5,23 +5,27 @@ import { FormControl, InputLabel } from '@mui/material'
 import StyledSelect from '../ui/StyledSelect.jsx'
 import MenuItem from '@mui/material/MenuItem'
 import CustomInput from '../ui/CustomInput.jsx'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import Button from '@mui/material/Button'
 import FormModal from '../ui/FormModal.jsx'
 import { LoadingButton } from '@mui/lab'
 import Stack from '@mui/material/Stack'
 
-const CreateMortgageForm = ({ open, onClose }) => {
+const CreateMortgageForm = ({ id, open, onClose }) => {
 
   const { response, error, loading, submitForm } = useSubmit()
   const handleSubmit = (e) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     const values = [...formData.values()]
-    const data = Object.fromEntries(formData)
-    console.log(data)
-    submitForm("POST", "/mortgage", values)
-    e.currentTarget.reset()
+    const fieldIsEmpty = values.includes("")
+    if (fieldIsEmpty) {
+      console.log("enter all fields")
+      return
+    }
+    const data = { ...Object.fromEntries(formData), unit: id }
+    submitForm({ method: "POST", url: "/mortgages", requestConfig: data })
+    // e.currentTarget.reset()
     console.log(data)
   }
 

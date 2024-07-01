@@ -7,7 +7,7 @@ import TabPanel from '@mui/lab/TabPanel'
 
 const UnitTabs = ({ unitIncomes, unitExpenses, unitMortgages }) => {
 
-  const [value, setValue] = useState("incomes")
+  const [value, setValue] = useState("1")
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -25,7 +25,7 @@ const UnitTabs = ({ unitIncomes, unitExpenses, unitMortgages }) => {
         <TabPanel value="1">
           <Box>
             {unitIncomes?.map(income =>
-              <Box  key={income._id}>
+              <Box key={income._id}>
                 <Typography>Category: {income?.category}</Typography>
                 <Typography>Amount: {income?.amount}</Typography>
                 <Typography>Balance: {income?.balance}</Typography>
