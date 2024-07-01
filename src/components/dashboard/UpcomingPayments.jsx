@@ -6,6 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
+import { convertToUSD } from '../../utilities/financeCalculations.js'
 
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
@@ -59,7 +60,12 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function UpcomingPayments() {
+const UpcomingPayments = ({ expenses }) => {
+
+
+  const upcomingExpenses = expenses.filter(expense => expense.balance > 0)
+
+
   return (
     <React.Fragment>
       <Title>Upcoming Payments</Title>
@@ -74,20 +80,19 @@ export default function UpcomingPayments() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`$${row.amount}`}</TableCell>
+          {upcomingExpenses.map((expense) => (
+            <TableRow key={expense.id}>
+              <TableCell>{expense.dateDue.substring(0, 10)}</TableCell>
+              <TableCell>{expense.category[0].toUpperCase() + expense.category.substring(1)}</TableCell>
+              <TableCell>{expense.companyName}</TableCell>
+              <TableCell>{expense.paymentMethod}</TableCell>
+              <TableCell align="right">{convertToUSD(expense.amount)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more
-      </Link>
     </React.Fragment>
   );
 }
+
+export default UpcomingPayments
