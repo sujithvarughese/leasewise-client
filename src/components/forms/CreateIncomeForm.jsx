@@ -5,14 +5,14 @@ import { FormControl, InputLabel } from '@mui/material'
 import StyledSelect from '../ui/StyledSelect.jsx'
 import MenuItem from '@mui/material/MenuItem'
 import CustomInput from '../ui/CustomInput.jsx'
-import React from 'react'
+
 import Button from '@mui/material/Button'
 import FormModal from '../ui/FormModal.jsx'
 import Stack from '@mui/material/Stack'
 
-const CreateIncomeForm = ({ open, onClose }) => {
+const CreateIncomeForm = ({ id, open, onClose }) => {
 
-  const { response, error, loading } = useSubmit()
+  const { response, error, loading, submitForm } = useSubmit()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -23,8 +23,9 @@ const CreateIncomeForm = ({ open, onClose }) => {
       console.log("enter all fields")
       return
     }
-    const data = Object.fromEntries(formData)
-    e.currentTarget.reset()
+    const data = { ...Object.fromEntries(formData), unit: id }
+    submitForm({ method: "POST", url: "/incomes", requestConfig: data } )
+    // e.currentTarget.reset()
     console.log(data)
   }
 
@@ -37,11 +38,8 @@ const CreateIncomeForm = ({ open, onClose }) => {
           <TextField type="number" id="amount" name="amount" label="Amount" variant="outlined" />
           <TextField type="number" id="balance" name="balance" label="Balance" variant="outlined" />
           <TextField type="date" id="datePaid" name="datePaid" helperText="Date Paid" variant="outlined" />
-          <TextField id="paidBy" name="paidBy" label="Paid By" variant="outlined" />
-          <TextField id="companyAddress" name="companyAddress" label="Company Address" variant="outlined" />
-          <TextField id="companyPhone" name="companyPhone" label="Company Phone" variant="outlined" />
-          <TextField type="email" id="companyEmail" name="companyEmail" label="Company Email" variant="outlined" />
-          <Button type="submit">Submit</Button>
+          <TextField id="paymentMethod" name="paymentMethod" label="Payment Method" variant="outlined" />
+          <Button type="submit" loading={loading}>Submit</Button>
         </Stack>
       </form>
     </FormModal>
