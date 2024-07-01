@@ -21,8 +21,8 @@ const FinancesTotalUnitValues = ({ unitFinance, selectedTerm, removeUnit }) => {
                     </IconButton>
 
                     <NavLink
-                        to={{ pathname: `../accounting/${unitID}`}}
-                        state={{ houseNumber, street, apartmentNumber, city, state, zip, tenant, user }}
+                        to={{ pathname: `../unit/${unitID}`}}
+                        state={unitID}
                         style={{ fontWeight: "600"}}
                     >
                         {houseNumber} {street} {apartmentNumber}
