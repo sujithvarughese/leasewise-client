@@ -15,6 +15,7 @@ import { useManagementProvider } from '../context/management-context.jsx'
 import { useEffect } from 'react'
 import { axiosDB } from '../utilities/axios.js'
 import { useLoaderData } from 'react-router-dom'
+import PieChartExpenses from '../components/dashboard/PieChartExpenses.jsx'
 
 function Copyright(props) {
   return (
@@ -40,11 +41,7 @@ const DashboardManagement = () => {
   }, [])
 
 
-  const calculateTotalIncome = incomes?.reduce((acc, item) => acc + Number(item.amount), 0)
 
-  const calculateTotalExpense = expenses?.reduce((acc, item) => acc + Number(item.amount), 0)
-
-  const calculateProfit = calculateTotalIncome - calculateTotalExpense
 
 
   return (
@@ -75,7 +72,7 @@ const DashboardManagement = () => {
                     height: 240,
                   }}
                 >
-                  <Chart />
+                  <PieChartExpenses expenses={expenses}/>
                 </Paper>
               </Grid>
               {/* Recent Deposits */}
@@ -88,13 +85,13 @@ const DashboardManagement = () => {
                     height: 240,
                   }}
                 >
-                  <Deposits />
+                  <Deposits incomes={incomes} expenses={expenses}/>
                 </Paper>
               </Grid>
               {/* Recent UpcomingPayments */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <UpcomingPayments />
+                  <UpcomingPayments expenses={expenses}/>
                 </Paper>
               </Grid>
             </Grid>
