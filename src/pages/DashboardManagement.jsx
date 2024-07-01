@@ -32,18 +32,20 @@ function Copyright(props) {
 const DashboardManagement = () => {
   window.scrollTo(0, 0)
 
-  const { expenses, incomes } = useLoaderData()
+  const { expenses, incomes, mortgages } = useLoaderData()
   const { setState } = useManagementProvider()
 
   useEffect(() => {
-    setState({ expenses: expenses, incomes: incomes })
+    setState({ expenses: expenses, incomes: incomes, mortgages: mortgages })
   }, [])
 
-  const calculateTotalIncome = () =>  incomes?.reduce((acc, item) => acc + Number(item.amount))
 
-  const calculateTotalExpense = () => expenses?.reduce((acc, item) => acc + Number(item.amount))
+  const calculateTotalIncome = incomes?.reduce((acc, item) => acc + Number(item.amount), 0)
+
+  const calculateTotalExpense = expenses?.reduce((acc, item) => acc + Number(item.amount), 0)
 
   const calculateProfit = calculateTotalIncome - calculateTotalExpense
+
 
   return (
       <Box sx={{ display: 'flex' }}>
@@ -109,7 +111,9 @@ export const dashboardLoader = async () => {
     const { expenses } = response.data
     response = await axiosDB("/incomes")
     const { incomes } = response.data
-    return { expenses, incomes }
+    response = await axiosDB("/mortgages")
+    const { mortgages } = response.data
+    return { expenses, incomes, mortgages }
   } catch (error) {
     throw new Error(error)
   }
