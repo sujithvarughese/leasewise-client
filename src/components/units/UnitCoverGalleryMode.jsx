@@ -40,8 +40,8 @@ const UnitCoverGalleryMode = ({
           image={image}
           alt={`${houseNumber} ${street}`}
           sx={{
-            height: "240px",
-            width: "240px",
+            height: { xs: "100px", sm: "240px" },
+            width: { xs: "100px", sm: "240px" }
           }}
 
         />
@@ -64,7 +64,7 @@ const UnitCoverGalleryMode = ({
           margin={2}
           top={0}
         >
-          <Typography >{city}</Typography>
+          <Typography display={{ xs: "none", sm: "initial" }}>{city}</Typography>
         </Box>
         <Box
           position="absolute"
@@ -72,6 +72,7 @@ const UnitCoverGalleryMode = ({
           textAlign="left"
           color="white"
           margin={2}
+          display={{ xs: "none", sm: "initial" }}
         >
           <Typography>{houseNumber} {street} {apartmentNumber}</Typography>
           <Typography>{tenant?.lastName}, {tenant?.firstName}</Typography>

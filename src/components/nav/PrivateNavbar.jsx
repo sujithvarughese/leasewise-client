@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem'
 import { useAuthProvider } from '../../context/auth-context.jsx'
 import MuiDrawer from '@mui/material/Drawer'
 import Box from '@mui/material/Box'
+import Drawer from '@mui/material/Drawer'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft.js'
 import Divider from '@mui/material/Divider'
 import List from '@mui/material/List'
@@ -33,58 +34,9 @@ import { LinearProgress } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Stack from '@mui/material/Stack'
 
-const drawerWidth = 240;
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
-}));
-const StyledAppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
+
+
 
 const PrivateNavbar = ({ numUnreadMessages }) => {
 
@@ -102,6 +54,7 @@ const PrivateNavbar = ({ numUnreadMessages }) => {
 
   const [heading, setHeading] = useState("Dashboard")
   const setHeadingAndNavigate = (name, url) => {
+    toggleDrawer(false)
     setHeading(name)
     navigate(url)
 
@@ -155,27 +108,24 @@ const PrivateNavbar = ({ numUnreadMessages }) => {
 
       <Drawer
         anchor="left" open={open} onClose={() => toggleDrawer(false)}
-        sx={{ width: drawerWidth, flexShrink: 0, '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' } }}
       >
         <Box sx={{ minWidth: '60dvw', p: 2, backgroundColor: 'background.paper', flexGrow: 1, }}>
-          <DrawerHeader>
-            <IconButton onClick={toggleDrawer}>
+          <Box display="flex" justifyContent="flex-end">
+            <IconButton onClick={() => toggleDrawer(close)}>
               <ChevronLeftIcon />
             </IconButton>
-          </DrawerHeader>
-
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'end', flexGrow: 1, }}>
-            <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', px: 1 }} />
-            <List component="nav">
-              {managementLinks.map(link =>
-                <ListItemButton key={link.name} onClick={() => setHeadingAndNavigate(link.name, link.url)}>
-                  <ListItemIcon>{link.icon}</ListItemIcon>
-                  <ListItemText primary={link.name}/>
-                </ListItemButton>
-              )}
-            </List>
           </Box>
-        </Box>
+
+          <List component="nav" sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, }}>
+            {managementLinks.map(link =>
+              <ListItemButton key={link.name} onClick={() => setHeadingAndNavigate(link.name, link.url)}>
+                <ListItemIcon>{link.icon}</ListItemIcon>
+                <ListItemText primary={link.name}/>
+              </ListItemButton>
+            )}
+          </List>
+          </Box>
+
       </Drawer>
 
     </Box>
