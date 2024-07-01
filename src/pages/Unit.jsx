@@ -54,11 +54,6 @@ const Unit = () => {
         <Typography fontSize="sm">Rent: ${unitDetails?.tenant?.rent}</Typography>
       </Stack>
 
-      <Tabs>
-        <Tab label="Finances" />
-        <Tab label="Messages" />
-        <Tab label="Rents" />
-      </Tabs>
 
       <Button onClick={() => setShowCreateMortgageForm(!showCreateMortgageForm)}>Create Mortgage</Button>
       {showCreateMortgageForm && <CreateMortgageForm id={id} open={showCreateMortgageForm} onClose={() => setShowCreateMortgageForm(false)}/>}
