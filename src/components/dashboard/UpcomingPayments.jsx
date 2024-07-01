@@ -74,8 +74,8 @@ const UpcomingPayments = ({ expenses }) => {
           <TableRow>
             <TableCell>Date</TableCell>
             <TableCell>Name</TableCell>
-            <TableCell>Pay To</TableCell>
-            <TableCell>Payment Method</TableCell>
+            <TableCell sx={{ display: {xs: "none", sm: "revert" }}}>Pay To</TableCell>
+            <TableCell sx={{ display: {xs: "none", sm: "revert" }}}>Payment Method</TableCell>
             <TableCell align="right">Payment Amount</TableCell>
           </TableRow>
         </TableHead>
@@ -84,8 +84,8 @@ const UpcomingPayments = ({ expenses }) => {
             <TableRow key={expense.id}>
               <TableCell>{expense.dateDue.substring(0, 10)}</TableCell>
               <TableCell>{expense.category[0].toUpperCase() + expense.category.substring(1)}</TableCell>
-              <TableCell>{expense.companyName}</TableCell>
-              <TableCell>{expense.paymentMethod}</TableCell>
+              <TableCell sx={{ display: {xs: "none", sm: "revert" }}}>{expense.companyName}</TableCell>
+              <TableCell sx={{ display: {xs: "none", sm: "revert" }}}>{expense.paymentMethod}</TableCell>
               <TableCell align="right">{convertToUSD(expense.amount)}</TableCell>
             </TableRow>
           ))}
