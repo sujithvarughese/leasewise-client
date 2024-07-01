@@ -10,6 +10,7 @@ import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import Box from '@mui/material/Box'
 import { CardMedia, Typography } from '@mui/material'
+import Grid from '@mui/material/Grid'
 
 
 const UnitCoverListMode = ({
@@ -36,81 +37,55 @@ const UnitCoverListMode = ({
 	}
 	return (
 			<Card>
-
-				<div className={classes.content}>
-
+				<Grid container alignItems="center">
 					{/* clicking image or address navigates to FinancesUnit */}
-					<Button onClick={navigateToUnit}>
-						<CardMedia
-							component="img"
-							image={image}
-							alt={`${houseNumber} ${street}`}
-							sx={{
-								height: "240px",
-								width: "240px",
-							}}
+
+					<Grid item xs={3}>
+						<Button onClick={navigateToUnit}>
+							<CardMedia
+								component="img"
+								image={image}
+								alt={`${houseNumber} ${street}`}
+								sx={{
+									height: { xs: "80px", md: "150px" },
+									width: { xs: "80px", md: "150px" }
+								}}
 							/>
-					</Button>
+						</Button>
+					</Grid>
 
-					<div className={classes.info}>
 
+					<Grid item xs={6} lg={7}>
 						<Stack>
-							<Button onClick={navigateToUnit}
-								className={classes.link}
-							>
-								<Typography>{houseNumber} {street} {apartmentNumber}</Typography>
-							</Button>
-
+							<Box>
+								<Button onClick={navigateToUnit} sx={{ p: 0}}>
+									<Typography whiteSpace="nowrap" overflop="clip" textOverflow="ellipsis">{houseNumber} {street} {apartmentNumber}</Typography>
+								</Button>
+							</Box>
 							<Typography>{city}, {state} {zip}</Typography>
-							{ /*<Button onClick={()=>setShowEditUnitForm(true)} fontSize="14px">[Edit]</Button> */}
 						</Stack>
-
 						{
 						user &&
-						<div className={classes.userContainer}>
-							<div className={classes.tenant}>
-
-								<Typography>Tenant: {tenant?.firstName} {tenant?.lastName}</Typography>
-								<Typography>{tenant?.email}</Typography>
-								<Typography>{tenant?.phone}</Typography>
-							</div>
-						</div>
+						<Box>
+							<Typography fontSize={{ xs: "12px", sm: "16px" }}>{tenant?.lastName}, {tenant?.firstName} </Typography>
+							<Typography fontSize={{ xs: "12px", sm: "16px" }}>{tenant?.email}</Typography>
+							<Typography fontSize={{ xs: "12px", sm: "16px" }}>{tenant?.phone}</Typography>
+						</Box>
 						}
+					</Grid>
 
-					</div>
-
-					<div className={classes.details}>
-						<div>
+					<Grid item xs={2}>
+						<Typography fontSize={{ xs: "12px", sm: "16px" }}>
 							{bedrooms}-br / {bathrooms}-bath
-						</div>
+						</Typography>
 						{
 							user &&
-							<div className={classes.rent}>
+							<Typography fontSize={{ xs: "12px", sm: "16px" }}>
 								Rent: {convertToUSD(tenant?.rent)}
-							</div>
+							</Typography>
 						}
-					</div>
-
-					{/*// if occupied show message user icon, else show create user button
-					user &&
-					<Button onClick={()=>setShowMessageForm(prevState => !prevState)} fontSize="42px">
-						<MdOutgoingMail />
-					</Button>
-					*/}
-				</div>
-
-
-				{showMessageForm &&
-					<CreateMessageForm
-						cancel={()=>setShowMessageForm(false)}
-						addressBook={[{
-							text: `${tenant?.lastName}, ${tenant?.firstName}`,
-							value: user
-						}]}
-					/>
-				}
-
-
+					</Grid>
+				</Grid>
 			</Card>
 
 	);
