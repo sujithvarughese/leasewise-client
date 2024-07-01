@@ -1,5 +1,5 @@
 
-import useSubmitForm from '../../hooks/useSubmitForm.js'
+import useSubmit from '../../hooks/useSubmit.js'
 import TextField from '@mui/material/TextField'
 import { FormControl, InputLabel } from '@mui/material'
 import StyledSelect from '../ui/StyledSelect.jsx'
@@ -11,7 +11,7 @@ import FormModal from '../ui/FormModal.jsx'
 
 const CreateIncomeForm = ({ open, onClose }) => {
 
-  const { response, error, loading } = useSubmitForm()
+  const { response, error, loading } = useSubmit()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -28,8 +28,9 @@ const CreateIncomeForm = ({ open, onClose }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <FormModal open={open} onClose={onClose} heading="Create Expense">
+
+    <FormModal open={open} onClose={onClose} heading="Create Expense">
+      <form onSubmit={handleSubmit}>
         <StyledSelect name="category" label="Category" options={categories} minWidth={120}/>
         <TextField type="number" id="amount" name="amount" label="Amount" variant="outlined" />
         <TextField type="number" id="balance" name="balance" label="Balance" variant="outlined" />
@@ -39,8 +40,9 @@ const CreateIncomeForm = ({ open, onClose }) => {
         <TextField id="companyPhone" name="companyPhone" label="Company Phone" variant="outlined" />
         <TextField type="email" id="companyEmail" name="companyEmail" label="Company Email" variant="outlined" />
         <Button type="submit">Submit</Button>
-      </FormModal>
-    </form>
+      </form>
+    </FormModal>
+
   )
 }
 

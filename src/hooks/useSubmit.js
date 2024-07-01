@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { axiosDB } from './useAxios.js'
 
-const useSubmitForm = () => {
+const useSubmit = () => {
 
   const [response, setResponse] = useState(null)
   const [error, setError] = useState("")
@@ -29,4 +29,4 @@ const useSubmitForm = () => {
   return { response, error, loading, submitForm }
 }
 
-export default useSubmitForm
+export default useSubmit

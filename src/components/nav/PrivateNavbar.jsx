@@ -30,6 +30,8 @@ import DataThresholdingIcon from '@mui/icons-material/DataThresholding.js'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance.js'
 import Loading from '../Loading.jsx'
 import { LinearProgress } from '@mui/material'
+import AppBar from '@mui/material/AppBar'
+import Stack from '@mui/material/Stack'
 
 const drawerWidth = 240;
 
@@ -58,6 +60,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-end',
+}));
 const StyledAppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
@@ -79,9 +89,9 @@ const StyledAppBar = styled(MuiAppBar, {
 const PrivateNavbar = ({ numUnreadMessages }) => {
 
   const { signOutUser } = useAuthProvider()
-  const [open, setOpen] = React.useState(true);
-  const toggleDrawer = () => {
-    setOpen(!open);
+  const [open, setOpen] = useState(false);
+  const toggleDrawer = (newOpen) => {
+    setOpen(newOpen);
   };
   const navigate = useNavigate()
   const navigation = useNavigation()
@@ -100,76 +110,72 @@ const PrivateNavbar = ({ numUnreadMessages }) => {
   return (
     <Box>
       <CssBaseline />
-      <StyledAppBar position="absolute" open={open}>
-        <Toolbar
-          sx={{
-            pr: '24px', // keep right padding when drawer closed
-          }}
-        >
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={toggleDrawer}
-            sx={{
-              marginRight: '36px',
-              ...(open && { display: 'none' }),
-            }}
-          >
+      <AppBar>
+        <Toolbar>
+          <IconButton color="inherit" aria-label="open drawer" onClick={() => toggleDrawer(true)} sx={{ display: { sm: 'none' }}}>
             <MenuIcon />
           </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            sx={{ flexGrow: 1 }}
-          >
+
+          <Typography component="h1" variant="h6" color="inherit" sx={{ flexGrow: 1, display: { xs: 'none', sm: "initial" } }}>
             {heading}
           </Typography>
 
-          <IconButton color="inherit">
-            <Badge badgeContent={numUnreadMessages} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          <Stack flexDirection="row" justifyContent="flex-end" width="100%">
+            <IconButton color="inherit">
+              <Badge badgeContent={numUnreadMessages} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
 
-          <MenuItem>
-            <Button color="secondary" variant="contained" sx={{ width: '100%' }} onClick={signOutAndNavigateHome}>
-              Log Out
-            </Button>
-          </MenuItem>
+            <MenuItem>
+              <Button color="secondary" variant="contained" sx={{ width: '100%' }} onClick={signOutAndNavigateHome}>
+                Log Out
+              </Button>
+            </MenuItem>
+          </Stack>
+
         </Toolbar>
+
         <Box width="100%">
           {navigation.state === "loading" && <LinearProgress color="secondary"/>}
         </Box>
-      </StyledAppBar>
-      <Drawer variant="permanent" open={open}>
-        <Toolbar
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            px: [1],
-          }}
-        >
-          <IconButton onClick={toggleDrawer}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </Toolbar>
-        <Divider />
+      </AppBar>
+
+      <Box display={{ xs: "none", sm: "initial"}}>
+        <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', px: 1 }} />
         <List component="nav">
           {managementLinks.map(link =>
             <ListItemButton key={link.name} onClick={() => setHeadingAndNavigate(link.name, link.url)}>
-              <ListItemIcon>
-                {link.icon}
-              </ListItemIcon>
-              <ListItemText primary={link.name} />
+              <ListItemIcon>{link.icon}</ListItemIcon>
+              <ListItemText primary={link.name} sx={{ display: { xs: "none", md: "initial" }}}/>
             </ListItemButton>
           )}
-          <Divider sx={{ my: 1 }} />
-          {secondaryListItems}
         </List>
+      </Box>
+
+      <Drawer
+        anchor="left" open={open} onClose={() => toggleDrawer(false)}
+        sx={{ width: drawerWidth, flexShrink: 0, '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' } }}
+      >
+        <Box sx={{ minWidth: '60dvw', p: 2, backgroundColor: 'background.paper', flexGrow: 1, }}>
+          <DrawerHeader>
+            <IconButton onClick={toggleDrawer}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </DrawerHeader>
+
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'end', flexGrow: 1, }}>
+            <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', px: 1 }} />
+            <List component="nav">
+              {managementLinks.map(link =>
+                <ListItemButton key={link.name} onClick={() => setHeadingAndNavigate(link.name, link.url)}>
+                  <ListItemIcon>{link.icon}</ListItemIcon>
+                  <ListItemText primary={link.name}/>
+                </ListItemButton>
+              )}
+            </List>
+          </Box>
+        </Box>
       </Drawer>
 
     </Box>
