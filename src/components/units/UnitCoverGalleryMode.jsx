@@ -43,7 +43,6 @@ const UnitCoverGalleryMode = ({
             height: { xs: "100px", sm: "240px" },
             width: { xs: "100px", sm: "240px" }
           }}
-
         />
         <Box
           position="absolute"
@@ -56,7 +55,7 @@ const UnitCoverGalleryMode = ({
           sx={{
             opacity: `${isHovering ? 0 : 0.4}`
           }}
-        ></Box>
+        />
 
         <Box
           position="absolute"
@@ -64,18 +63,19 @@ const UnitCoverGalleryMode = ({
           margin={2}
           top={0}
         >
-          <Typography display={{ xs: "none", sm: "initial" }}>{city}</Typography>
+          <Typography  fontWeight={600} display={{ xs: "none", sm: "initial" }}>{city}</Typography>
         </Box>
+
         <Box
           position="absolute"
-          bottom={0}
+          bottom={12}
+          left={12}
           textAlign="left"
           color="white"
-          margin={2}
           display={{ xs: "none", sm: "initial" }}
         >
-          <Typography>{houseNumber} {street} {apartmentNumber}</Typography>
-          <Typography>{tenant?.lastName}, {tenant?.firstName}</Typography>
+          <Typography fontWeight={700}>{houseNumber} {street} {apartmentNumber}</Typography>
+          <Typography fontWeight={700}>{tenant?.lastName}, {tenant?.firstName}</Typography>
         </Box>
 
       </Card>

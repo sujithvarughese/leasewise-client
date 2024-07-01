@@ -13,17 +13,19 @@ import CreateExpenseForm from '../components/forms/CreateExpenseForm.jsx'
 import CreateIncomeForm from '../components/forms/CreateIncomeForm.jsx'
 import CreateMortgageForm from '../components/forms/CreateMortgageForm.jsx'
 import { useState } from 'react'
+import UnitTabs from '../components/units/UnitTabs.jsx'
 
 const Unit = () => {
 
   const { state: id } = useLocation()
   console.log(id)
 
-  const { units, expenses, incomes } = useManagementProvider()
+  const { units, expenses, incomes, mortgages } = useManagementProvider()
 
   const unitDetails = units?.find(unit => unit._id === id)
   const unitExpenses = expenses?.filter(expense => expense.unit === id)
   const unitIncomes = incomes?.filter(income => income.unit === id)
+  const unitMortgage = mortgages?.filter(mortgage => mortgage.unit === id)
 
   const [showCreateExpenseForm, setShowCreateExpenseForm] = useState(false)
   const [showCreateIncomeForm, setShowCreateIncomeForm] = useState(false)
@@ -54,6 +56,7 @@ const Unit = () => {
         <Typography fontSize="sm">Rent: ${unitDetails?.tenant?.rent}</Typography>
       </Stack>
 
+      <UnitTabs unitIncomes={unitIncomes} unitExpenses={unitExpenses} unitMortgage={unitMortgage}/>
 
       <Button onClick={() => setShowCreateMortgageForm(!showCreateMortgageForm)}>Create Mortgage</Button>
       {showCreateMortgageForm && <CreateMortgageForm id={id} open={showCreateMortgageForm} onClose={() => setShowCreateMortgageForm(false)}/>}
