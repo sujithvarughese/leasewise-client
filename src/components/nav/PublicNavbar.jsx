@@ -13,9 +13,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import DemoButton from './DemoButton.jsx'
 import { useAuthProvider } from '../../context/auth-context.jsx'
 import { useNavigate } from 'react-router-dom'
-
+import logo from "../../assets/images/landing/logos/lease-wise-logo.png"
 const logoStyle = {
-  width: '140px',
+  width: '48px',
   height: 'auto',
   cursor: 'pointer',
 };
@@ -99,9 +99,7 @@ const PublicNavbar = () => {
               }}
             >
               <img
-                src={
-                  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg'
-                }
+                src={logo}
                 style={logoStyle}
                 alt="logo of sitemark"
               />

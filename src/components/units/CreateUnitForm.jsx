@@ -23,7 +23,7 @@ const initialState = {
 const CreateUnitForm = ({ cancel }) => {
 
 	const [values, setValues] = useState(initialState)
-	const [buttonText, setButtonText] = useState("Create Unit")
+	const [buttonText, setButtonText] = useState("Create UnitCoverListMode")
 	const handleChange = (e) => {
 		setValues({ ...values, [e.target.name]: e.target.value });
 	}
@@ -34,7 +34,7 @@ const CreateUnitForm = ({ cancel }) => {
 		try {
 			const msg = await createUnit(values)
 			if (msg === 'success') {
-				setButtonText("Unit Created!")
+				setButtonText("UnitCoverListMode Created!")
 			} else {
 				setButtonText("Error")
 			}
@@ -61,7 +61,7 @@ const CreateUnitForm = ({ cancel }) => {
 		<div className={classes.container}>
 		<Modal open={() => {}} closeFn={cancel}>
 		<Card>
-		<Form onSubmit={handleSubmit} title="Create Unit">
+		<Form onSubmit={handleSubmit} title="Create UnitCoverListMode">
 			<div className={classes.form}>
 				<div className={classes.addressLine1}>
 					<Input
@@ -162,7 +162,7 @@ const createUnit = async (unit) => {
 		const { msg } = response.data
 		return msg
 	} catch (error) {
-		console.log('Unit could not be created');
+		console.log('UnitCoverListMode could not be created');
 	}
 }
 

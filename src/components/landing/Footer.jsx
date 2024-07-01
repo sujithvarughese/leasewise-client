@@ -10,9 +10,10 @@ import Typography from '@mui/material/Typography';
 import FacebookIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
+import logo from "../../assets/images/landing/logos/lease-wise-logo.png"
 
 const logoStyle = {
-  width: '140px',
+  width: '80px',
   height: 'auto',
 };
 
@@ -20,7 +21,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" mt={1}>
       {'Copyright © '}
-      <Link href="https://mui.com/">Sitemark&nbsp;</Link>
+      <Link href="https://mui.com/">LeaseWise&nbsp;</Link>
       {new Date().getFullYear()}
     </Typography>
   );
@@ -56,9 +57,7 @@ const Footer = () => {
           <Box sx={{ width: { xs: '100%', sm: '60%' } }}>
             <Box sx={{ ml: '-15px' }}>
               <img
-                src={
-                  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg'
-                }
+                src={logo}
                 style={logoStyle}
                 alt="logo of sitemark"
               />
@@ -99,20 +98,14 @@ const Footer = () => {
           <Typography variant="body2" fontWeight={600}>
             Product
           </Typography>
-          <Link color="text.secondary" href="#">
+          <Link color="text.secondary" href="#features">
             Features
           </Link>
-          <Link color="text.secondary" href="#">
-            Testimonials
-          </Link>
-          <Link color="text.secondary" href="#">
+          <Link color="text.secondary" href="#highlights">
             Highlights
           </Link>
-          <Link color="text.secondary" href="#">
+          <Link color="text.secondary" href="#pricing">
             Pricing
-          </Link>
-          <Link color="text.secondary" href="#">
-            FAQs
           </Link>
         </Box>
         <Box
@@ -189,7 +182,7 @@ const Footer = () => {
         >
           <IconButton
             color="inherit"
-            href="https://github.com/mui"
+            href="https://github.com"
             aria-label="GitHub"
             sx={{ alignSelf: 'center' }}
           >
@@ -197,7 +190,7 @@ const Footer = () => {
           </IconButton>
           <IconButton
             color="inherit"
-            href="https://x.com/MaterialUI"
+            href="https://x.com"
             aria-label="X"
             sx={{ alignSelf: 'center' }}
           >
@@ -205,7 +198,7 @@ const Footer = () => {
           </IconButton>
           <IconButton
             color="inherit"
-            href="https://www.linkedin.com/company/mui/"
+            href="https://www.linkedin.com"
             aria-label="LinkedIn"
             sx={{ alignSelf: 'center' }}
           >

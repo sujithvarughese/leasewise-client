@@ -14,6 +14,8 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Grid from '@mui/material/Grid'
 import Toolbar from '@mui/material/Toolbar'
 import Container from '@mui/material/Container'
+import NewMessageForm from '../components/messages/NewMessageForm.jsx'
+import IconButton from '@mui/material/IconButton'
 
 const Messages = () => {
   // messages = { inbox, outbox }	// message = { sender: { lastName, firstName, _id }, recipient, subject, body, read, flag, date, previousMessage
@@ -143,28 +145,19 @@ const Messages = () => {
       >
         <Toolbar />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          {
-            // render create message modal when triggered
-            showCreateMessageForm &&
-            <CreateMessageForm
-              cancel={()=>setShowCreateMessageForm(false)}
-              addressBook={addressBook}
-              getMessages={getMessages}
-            />
-          }
+
 
           <div className={classes.nav}>
             {
               // Create new message icon is hidden in mobile when message is expanded
               // Back button is only displayed in mobile when message is expanded
-              !mobileExpanded
-              &&
-              <Button
+              !mobileExpanded && !showCreateMessageForm &&
+              <IconButton
                 onClick={()=>setShowCreateMessageForm(prevState => !prevState)}
                 fontSize="56px"
               >
                 <BiMessageSquareEdit />
-              </Button>
+              </IconButton>
             }
 
             <div className={classes.links}>
@@ -202,44 +195,57 @@ const Messages = () => {
           </div>
 
           <Grid container>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={4}>
               {
-                currentMailbox.length > 0 ?
-                  currentMailbox.map(message =>
-                    <MessageCollapsed
-                      key={message._id}
-                      message={message}
-                      setExpandedMessage={setExpandedMessage}
-                      markMessageRead={markMessageRead}
-                      toggleFlag={toggleFlag}
-                      showExpanded={()=>{}}
-                      userID={user.id}
-                      closeReply={()=>setShowCreateReply(false)}
-                    />)
-                  :
-                  <div className={classes.empty}>No Messages in this Mailbox</div>
+              currentMailbox.length > 0 ?
+              currentMailbox.map(message =>
+              <MessageCollapsed
+                key={message._id}
+                message={message}
+                setExpandedMessage={setExpandedMessage}
+                markMessageRead={markMessageRead}
+                toggleFlag={toggleFlag}
+                showExpanded={()=>{}}
+                userID={user.id}
+                closeReply={()=>setShowCreateReply(false)}
+              />)
+              :
+              <Box className={classes.empty}>No Messages in this Mailbox</Box>
               }
             </Grid>
-            <Grid item xs={12} md={9}>
-              {
-                expandedMessage ?
-                  <MessageExpanded
-                    message={expandedMessage}
-                    messages={messages}
-                    toggleFlag={toggleFlag}
-                    userID={user.id}
-                    markMessageUnread={markMessageUnread}
-                    showCreateReply={showCreateReply}
-                    setShowCreateReply={setShowCreateReply}
-                    getMessages={getMessages}
-                    setMobileExpanded={setMobileExpanded}
-                  />
-                  :
-                  <div className={classes.noMessage}>
-                    No Message Selected
-                  </div>
-              }
+
+            {
+            showCreateMessageForm &&
+            <Grid item xs={12} md={8}>
+              <NewMessageForm
+                close={()=>setShowCreateMessageForm(false)}
+                addressBook={addressBook}
+                getMessages={getMessages}
+              />
             </Grid>
+            }
+            {
+            expandedMessage && !showCreateMessageForm ?
+            <Grid item xs={12} md={8}>
+              <MessageExpanded
+                message={expandedMessage}
+                messages={messages}
+                toggleFlag={toggleFlag}
+                userID={user.id}
+                markMessageUnread={markMessageUnread}
+                showCreateReply={showCreateReply}
+                setShowCreateReply={setShowCreateReply}
+                getMessages={getMessages}
+                setMobileExpanded={setMobileExpanded}
+              />
+            </Grid>
+            :
+            <Grid item xs={12} md={8}>
+              <div className={classes.noMessage}>
+                No Message Selected
+              </div>
+            </Grid>
+            }
           </Grid>
 
 
