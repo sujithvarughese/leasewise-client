@@ -21,8 +21,7 @@ const PieChartExpenses = ({ expenses }) => {
   return (
     <PieChart
       series={[{ data: createData() },]}
-    width={400}
-    height={200}
+
     >
 
     </PieChart>
