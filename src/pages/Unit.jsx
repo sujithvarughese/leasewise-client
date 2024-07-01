@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 import { Tab, Tabs, Typography } from '@mui/material'
 import FinancialDataTabPanel from '../components/gallery/FinancialDataTabPanel.jsx'
 import Toolbar from '@mui/material/Toolbar'
-import { useLoaderData, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { axiosDB } from '../utilities/axios.js'
 import { useManagementProvider } from '../context/management-context.jsx'
 import Button from '@mui/material/Button'
@@ -19,7 +19,7 @@ const Unit = () => {
 
   const { state: id } = useLocation()
 
-  const { units, expenses, incomes, mortgages } = useLoaderData()
+  const { units, expenses, incomes, mortgages } = useManagementProvider()
 
 
   const unitDetails = units?.find(unit => unit._id === id)
@@ -55,7 +55,7 @@ const Unit = () => {
         <Typography fontSize="sm">Rent: ${unitDetails?.tenant?.rent}</Typography>
       </Stack>
 
-      <UnitTabs id={id} unitIncomes={unitIncomes} unitExpenses={unitExpenses} unitMortgages={unitMortgages}/>
+      <UnitTabs unitIncomes={unitIncomes} unitExpenses={unitExpenses} unitMortgages={unitMortgages}/>
 
       <Button onClick={() => setShowCreateMortgageForm(!showCreateMortgageForm)}>Create Mortgage</Button>
       {showCreateMortgageForm && <CreateMortgageForm id={id} open={showCreateMortgageForm} onClose={() => setShowCreateMortgageForm(false)}/>}

@@ -13,7 +13,7 @@ import {
   PublicNavbar,
   Research,
   SignIn, signInLoader,
-  SignUp, Unit,
+  SignUp, Unit, unitLoader,
   Units, unitsLoader
 } from './'
 import { ManagementProvider } from './context/management-context.jsx'
@@ -45,7 +45,7 @@ const App = () => {
       children: [
         { index: true, element: <DashboardManagement />, loader: dashboardLoader },
         { path: "/units", element: <Units />, loader: unitsLoader },
-        { path: "/unit/:id", element: <Unit /> },
+        { path: "/unit/:id", element: <Unit />, loader: unitLoader },
         { path: "/messages", element: <Messages />, loader: messagesLoader },
         { path: "/research", element: <Research /> },
         { path: "/accounting", element: <Accounting />, loader: accountingLoader },
