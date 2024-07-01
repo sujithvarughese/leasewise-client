@@ -95,7 +95,6 @@ export {
   Pricing,
   Testimonials,
 
-  CreateMessageForm,
   MessageActions,
   MessageCollapsed,
   MessageContents,
