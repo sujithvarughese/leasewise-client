@@ -9,6 +9,7 @@ import React, { useEffect } from 'react'
 import Button from '@mui/material/Button'
 import FormModal from '../ui/FormModal.jsx'
 import { LoadingButton } from '@mui/lab'
+import Stack from '@mui/material/Stack'
 
 const CreateMortgageForm = ({ open, onClose }) => {
 
@@ -31,13 +32,15 @@ const CreateMortgageForm = ({ open, onClose }) => {
   return (
     <FormModal open={open} onClose={onClose} heading="Create Mortgage">
       <form onSubmit={handleSubmit}>
-        <TextField id="bank" name="bank" label="Bank" variant="outlined" />
-        <TextField type="number" id="purchasePrice" name="purchasePrice" label="Purchase Price" variant="outlined" />
-        <TextField type="number" id="principal" name="principal" label="Principal" variant="outlined" />
-        <TextField type="number" id="interest" name="interest" label="Interest" variant="outlined" />
-        <TextField type="number" id="term" name="term" label="Term" variant="outlined" />
-        <TextField type="number" id="numPaymentsMade" name="numPaymentsMade" label="Payments made" variant="outlined" />
-        <LoadingButton type="submit" loading={loading}>Submit</LoadingButton>
+        <Stack gap={2}>
+          <TextField id="bank" name="bank" label="Bank" variant="outlined" />
+          <TextField type="number" id="purchasePrice" name="purchasePrice" label="Purchase Price" variant="outlined" />
+          <TextField type="number" id="principal" name="principal" label="Principal" variant="outlined" />
+          <TextField type="number" id="interest" name="interest" label="Interest" variant="outlined" />
+          <TextField type="number" id="term" name="term" label="Term" variant="outlined" />
+          <TextField type="number" id="numPaymentsMade" name="numPaymentsMade" label="Payments made" variant="outlined" />
+          <LoadingButton type="submit" loading={loading}>Submit</LoadingButton>
+        </Stack>
       </form>
     </FormModal>
   )
