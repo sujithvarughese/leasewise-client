@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
 import { PieChart } from '@mui/x-charts/PieChart';
+import { Typography } from '@mui/material'
+import Title from './Title';
+
 const PieChartExpenses = ({ expenses }) => {
 
   const createData = () => {
@@ -19,12 +22,11 @@ const PieChartExpenses = ({ expenses }) => {
   }
 
   return (
-    <PieChart
-      series={[{ data: createData() },]}
+    <>
+      <Title>Expenses</Title>
+      <PieChart series={[{ data: createData() },]} />
+    </>
 
-    >
-
-    </PieChart>
   )
 }
 

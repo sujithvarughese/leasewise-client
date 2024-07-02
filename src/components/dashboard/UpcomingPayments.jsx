@@ -69,7 +69,7 @@ const UpcomingPayments = ({ expenses }) => {
   return (
     <React.Fragment>
       <Title>Upcoming Payments</Title>
-      <Table size="small">
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell>Date</TableCell>

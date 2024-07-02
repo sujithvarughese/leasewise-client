@@ -4,6 +4,11 @@ import Box from '@mui/material/Box'
 import TabList from '@mui/lab/TabList'
 import { Tab, Typography } from '@mui/material'
 import TabPanel from '@mui/lab/TabPanel'
+import TableHead from '@mui/material/TableHead'
+import Table from '@mui/material/Table'
+import TableRow from '@mui/material/TableRow'
+import TableCell from '@mui/material/TableCell'
+import TableBody from '@mui/material/TableBody'
 
 const UnitTabs = ({ unitIncomes, unitExpenses, unitMortgages }) => {
 
@@ -22,51 +27,88 @@ const UnitTabs = ({ unitIncomes, unitExpenses, unitMortgages }) => {
             <Tab label="Mortgages" value="3" />
           </TabList>
         </Box>
+
         <TabPanel value="1">
-          <Box>
-            {unitIncomes?.map(income =>
-              <Box key={income._id}>
-                <Typography>Category: {income?.category}</Typography>
-                <Typography>Amount: {income?.amount}</Typography>
-                <Typography>Balance: {income?.balance}</Typography>
-                <Typography>Date Paid: {income?.datePaid}</Typography>
-                <Typography>Paid Via: {income?.paidVia}</Typography>
-              </Box>
-            )}
-          </Box>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Date Paid</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell>Amount</TableCell>
+                <TableCell>Balance</TableCell>
+                <TableCell>Payment Method</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {unitIncomes?.map(income =>
+                <TableRow key={income._id}>
+                  <TableCell>{income?.datePaid?.substring(0, 10)}</TableCell>
+                  <TableCell>{income?.category}</TableCell>
+                  <TableCell>{income?.amount}</TableCell>
+                  <TableCell>{income?.balance}</TableCell>
+                  <TableCell>{income?.paymentMethod}</TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </TabPanel>
+
         <TabPanel value="2">
-          <Box>
-            {unitExpenses?.map(expense =>
-              <Box  key={expense._id}>
-                <Typography>Type: {expense?.type}</Typography>
-                <Typography>Category: {expense?.category}</Typography>
-                <Typography>Amount: {expense?.amount}</Typography>
-                <Typography>Balance: {expense?.balance}</Typography>
-                <Typography>Date Due: {expense?.dateDue}</Typography>
-                <Typography>Date Paid: {expense?.datePaid}</Typography>
-                <Typography>Company: {expense?.companyName}</Typography>
-                <Typography>Company Address: {expense?.companyAddress}</Typography>
-                <Typography>Company Phone: {expense?.companyPhone}</Typography>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Date Due</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell>Pay To</TableCell>
+                <TableCell>Amount</TableCell>
+                <TableCell>Balance</TableCell>
 
-              </Box>
-            )}
-          </Box>
+
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {unitExpenses?.map(expense =>
+                <TableRow  key={expense._id}>
+                  <TableCell>{expense?.dateDue?.substring(0, 10)}</TableCell>
+                  <TableCell>{expense?.category}</TableCell>
+                  <TableCell>{expense?.companyName}</TableCell>
+                  <TableCell>{expense?.amount}</TableCell>
+                  <TableCell>{expense?.balance}</TableCell>
+
+
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </TabPanel>
-        <TabPanel value="3">
-          <Box>
-            {unitMortgages?.map(mortgage =>
-              <Box  key={mortgage._id}>
-                <Typography>Bank: {mortgage?.bank}</Typography>
-                <Typography>Purchase Price: {mortgage?.purchasePrice}</Typography>
-                <Typography>Principal: {mortgage?.principal}</Typography>
-                <Typography>Interest: {mortgage?.interest}</Typography>
-                <Typography>Term: {mortgage?.term}</Typography>
-                <Typography>Payments Made: {mortgage?.numPaymentsMade}</Typography>
 
-              </Box>
-            )}
-          </Box>
+        <TabPanel value="3">
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Bank</TableCell>
+                <TableCell>Purchase Price</TableCell>
+                <TableCell>Principal</TableCell>
+                <TableCell>Interest</TableCell>
+                <TableCell>Term</TableCell>
+                <TableCell>Payments Made</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {unitMortgages?.map(mortgage =>
+                <TableRow  key={mortgage._id}>
+                  <TableCell>{mortgage?.bank}</TableCell>
+                  <TableCell>{mortgage?.purchasePrice}</TableCell>
+                  <TableCell>{mortgage?.principal}</TableCell>
+                  <TableCell>{mortgage?.interest}</TableCell>
+                  <TableCell>{mortgage?.term}</TableCell>
+                  <TableCell>{mortgage?.numPaymentsMade}</TableCell>
+
+                </TableRow>
+              )}
+            </TableBody>
+
+          </Table>
         </TabPanel>
       </TabContext>
     </Box>
