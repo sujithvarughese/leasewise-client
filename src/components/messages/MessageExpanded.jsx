@@ -32,59 +32,43 @@ const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnr
 	}, [message])
 
 	return (
-		<Box sx={{ overflowY: "scroll" }}>
-			{
-			<MessageActions
+		<Box sx={{ overflowY: "scroll", px: 3 }}>
+			{<MessageActions
 				message={message}
 				reply={()=>setShowCreateReply(true)}
 				toggleFlag={toggleFlag}
 				markMessageUnread={markMessageUnread}
 				setMobileExpanded={setMobileExpanded}
-			/>
-			}
-
-				<Box>
-					{
-					previousMessages.length > 0 &&
-					<div>
-						{
-							previousMessages.map(previousMessage => {
-								return (
-									<Grid display="grid" key={previousMessage._id}>
-										<MessageContents
-											lastName={previousMessage.sender.lastName}
-											firstName={previousMessage.sender.firstName}
-											senderID={previousMessage.sender._id}
-											date={previousMessage.date}
-											subject={previousMessage.subject}
-											body={previousMessage.body}
-										/>
-									</Grid>
-								)
-							}).reverse()
-						}
-					</div>
-					}
-					<div ref={currentMessageRef}>
-						<MessageContents
-							lastName={sender.lastName}
-							firstName={sender.firstName}
-							senderID={sender._id}
-							date={date}
-							subject={subject}
-							body={body}
-						/>
-					</div>
-
-					<div>
-						<ReplyMessageForm
-							message={message}
-							closeReply={()=>setShowCreateReply(false)}
-							getMessages={getMessages}
-						/>
-					</div>
-				</Box>
-
+			/>}
+			<Box>
+				{previousMessages.length > 0 &&
+				<Grid display="grid" gap={2}>
+					{previousMessages.map(previousMessage =>
+					<MessageContents
+						key={previousMessage._id}
+						lastName={previousMessage.sender.lastName}
+						firstName={previousMessage.sender.firstName}
+						senderID={previousMessage.sender._id}
+						date={previousMessage.date}
+						subject={previousMessage.subject}
+						body={previousMessage.body}
+					/>).reverse()}
+					<MessageContents
+						lastName={sender.lastName}
+						firstName={sender.firstName}
+						senderID={sender._id}
+						date={date}
+						subject={subject}
+						body={body}
+					/>
+				</Grid>
+				}
+				<ReplyMessageForm
+					message={message}
+					closeReply={()=>setShowCreateReply(false)}
+					getMessages={getMessages}
+				/>
+			</Box>
 		</Box>
 	);
 };

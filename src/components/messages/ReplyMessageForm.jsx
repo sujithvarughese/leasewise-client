@@ -1,5 +1,5 @@
 import classes from "./styles/ReplyMessageForm.module.css";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosDB } from "../../utilities/axios.js";
 import { TfiClose } from "react-icons/tfi";
@@ -9,6 +9,7 @@ import { Form } from 'formik'
 import { Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import MessageForm from '../forms/MessageForm.jsx'
+import { Textarea } from '@mui/joy'
 
 const ReplyMessageForm = ({ message, closeReply, getMessages }) => {
 
@@ -53,15 +54,26 @@ const ReplyMessageForm = ({ message, closeReply, getMessages }) => {
 
 	return (
 		<div className={classes.container}>
-			<div className={classes.cancel} onClick={closeReply}>
-				{/*< TfiClose />*/}
-			</div>
 			<Card>
 				<form onSubmit={handleSubmit}>
 					<div className={classes.form}>
-
-						<MessageForm name="body" placeholder="Type Message Here..."/>
-
+						<Textarea
+							name="body"
+							placeholder="Create Message"
+							minRows={2}
+							sx={{
+								border: "none",
+								'--Textarea-focusedInset': 'var(--any, )',
+								'--Textarea-focusedThickness': '0.25rem',
+								'--Textarea-focusedHighlight': 'rgba(13,110,253,.25)',
+								'&::before': {
+									transition: 'box-shadow .15s ease-in-out',
+								},
+								'&:focus-within': {
+									borderColor: '#86b7fe',
+								},
+							}}
+						/>
 						<div className={classes.button}>
 							<Button type="submit">{buttonText}</Button>
 						</div>

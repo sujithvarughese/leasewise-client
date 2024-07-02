@@ -25,7 +25,7 @@ const MessageActions = ({ message, reply, toggleFlag, markMessageUnread, setMobi
 		>
 			<Box>
 				<Box display={{ xs: "flex", lg: "none" }}>
-					<Button onClick={()=>setMobileExpanded(false)}><TfiControlBackward /></Button>
+					<IconButton onClick={()=>setMobileExpanded(false)}><TfiControlBackward /></IconButton>
 				</Box>
 
 				<Stack flexDirection="row">

@@ -2,13 +2,17 @@ import React from 'react'
 import { Textarea } from '@mui/joy'
 
 const MessageForm = ({ name, placeholder, ...props }) => {
+
+
   return (
+
     <Textarea
       id={name}
       name={name}
       placeholder={placeholder ||"Create Message"}
       minRows={2}
       sx={{
+        border: "none",
         '--Textarea-focusedInset': 'var(--any, )',
         '--Textarea-focusedThickness': '0.25rem',
         '--Textarea-focusedHighlight': 'rgba(13,110,253,.25)',

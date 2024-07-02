@@ -154,7 +154,7 @@ const Messages = () => {
               !mobileExpanded && !showCreateMessageForm &&
               <IconButton
                 onClick={()=>setShowCreateMessageForm(prevState => !prevState)}
-                fontSize="56px"
+                sx={{ fontSize: "32px"}}
               >
                 <BiMessageSquareEdit />
               </IconButton>
@@ -193,7 +193,7 @@ const Messages = () => {
 
           </Stack>
 
-          <Grid container>
+          <Grid container position="relative">
             <Grid item xs={12} md={4}>
               {
               currentMailbox.length > 0 ?
@@ -225,7 +225,7 @@ const Messages = () => {
             }
             {
             expandedMessage && !showCreateMessageForm ?
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={7} sx={{ position: "fixed", right: 0, width: "100%" }}>
               <MessageExpanded
                 message={expandedMessage}
                 messages={messages}

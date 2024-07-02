@@ -19,7 +19,7 @@ const MessageContents = ({ senderID, lastName, firstName, date, subject, body })
               padding: 1,
               width: "85%",
               backgroundColor: `${user.id === senderID ? "dodgerblue" : ""}`,
-              placeSelf: `${user.id === senderID ? "flex-end" : "flex-start"}`
+              justifySelf: `${user.id === senderID ? "flex-end" : "flex-start"}`
           }}>
             <Stack>
                 <Typography variant="body2">
