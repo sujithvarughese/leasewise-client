@@ -6,11 +6,11 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-
 import FacebookIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
 import logo from "../../assets/images/landing/logos/lease-wise-logo.png"
+import tos from "../../assets/terms-and-conditions.pdf"
 
 const logoStyle = {
   width: '80px',
@@ -138,7 +138,7 @@ const Footer = () => {
           <Typography variant="body2" fontWeight={600}>
             Legal
           </Typography>
-          <Link color="text.secondary" href="#">
+          <Link color="text.secondary" href={tos}>
             Terms
           </Link>
           <Link color="text.secondary" href="#">
@@ -166,7 +166,7 @@ const Footer = () => {
           <Typography display="inline" sx={{ mx: 0.5, opacity: 0.5 }}>
             &nbsp;•&nbsp;
           </Typography>
-          <Link color="text.secondary" href="#">
+          <Link color="text.secondary" href={tos}>
             Terms of Service
           </Link>
           <Copyright />

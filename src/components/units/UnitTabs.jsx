@@ -9,6 +9,7 @@ import Table from '@mui/material/Table'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import TableBody from '@mui/material/TableBody'
+import { convertToUSD } from '../../utilities/financeCalculations.js'
 
 const UnitTabs = ({ unitIncomes, unitExpenses, unitMortgages }) => {
 
@@ -28,7 +29,7 @@ const UnitTabs = ({ unitIncomes, unitExpenses, unitMortgages }) => {
           </TabList>
         </Box>
 
-        <TabPanel value="1">
+        <TabPanel value="1"  sx={{ p: 0 }}>
           <Table>
             <TableHead>
               <TableRow>
@@ -36,31 +37,31 @@ const UnitTabs = ({ unitIncomes, unitExpenses, unitMortgages }) => {
                 <TableCell>Category</TableCell>
                 <TableCell>Amount</TableCell>
                 <TableCell>Balance</TableCell>
-                <TableCell>Payment Method</TableCell>
+                <TableCell sx={{ display: { xs: "none", sm: "revert" }}}>Payment Method</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {unitIncomes?.map(income =>
                 <TableRow key={income._id}>
                   <TableCell>{income?.datePaid?.substring(0, 10)}</TableCell>
-                  <TableCell>{income?.category}</TableCell>
-                  <TableCell>{income?.amount}</TableCell>
-                  <TableCell>{income?.balance}</TableCell>
-                  <TableCell>{income?.paymentMethod}</TableCell>
+                  <TableCell>{income?.category[0].toUpperCase() + income.category.substring(1)}</TableCell>
+                  <TableCell>{convertToUSD(income?.amount)}</TableCell>
+                  <TableCell>{convertToUSD(income?.balance)}</TableCell>
+                  <TableCell sx={{ display: { xs: "none", sm: "revert" }}}>{income?.paymentMethod}</TableCell>
                 </TableRow>
               )}
             </TableBody>
           </Table>
         </TabPanel>
 
-        <TabPanel value="2">
+        <TabPanel value="2" sx={{ p: 0 }}>
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell>Date Due</TableCell>
                 <TableCell>Category</TableCell>
-                <TableCell>Pay To</TableCell>
-                <TableCell>Amount</TableCell>
+                <TableCell sx={{ display: { xs: "none", sm: "revert" }}}>Pay To</TableCell>
+                <TableCell sx={{ display: { xs: "none", sm: "revert" }}}>Amount</TableCell>
                 <TableCell>Balance</TableCell>
 
 
@@ -70,10 +71,10 @@ const UnitTabs = ({ unitIncomes, unitExpenses, unitMortgages }) => {
               {unitExpenses?.map(expense =>
                 <TableRow  key={expense._id}>
                   <TableCell>{expense?.dateDue?.substring(0, 10)}</TableCell>
-                  <TableCell>{expense?.category}</TableCell>
-                  <TableCell>{expense?.companyName}</TableCell>
-                  <TableCell>{expense?.amount}</TableCell>
-                  <TableCell>{expense?.balance}</TableCell>
+                  <TableCell>{expense?.category[0].toUpperCase() + expense.category.substring(1)}</TableCell>
+                  <TableCell sx={{ display: { xs: "none", sm: "revert" }}}>{expense?.companyName}</TableCell>
+                  <TableCell sx={{ display: { xs: "none", sm: "revert" }}}>{convertToUSD(expense?.amount)}</TableCell>
+                  <TableCell>{convertToUSD(expense?.balance)}</TableCell>
 
 
                 </TableRow>
@@ -82,27 +83,27 @@ const UnitTabs = ({ unitIncomes, unitExpenses, unitMortgages }) => {
           </Table>
         </TabPanel>
 
-        <TabPanel value="3">
+        <TabPanel value="3" sx={{ p: 0 }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Bank</TableCell>
+                <TableCell sx={{ display: { xs: "none", sm: "revert" }}}>Bank</TableCell>
                 <TableCell>Purchase Price</TableCell>
                 <TableCell>Principal</TableCell>
-                <TableCell>Interest</TableCell>
+                <TableCell>APR</TableCell>
                 <TableCell>Term</TableCell>
-                <TableCell>Payments Made</TableCell>
+                <TableCell sx={{ display: { xs: "none", sm: "revert" }}}>Payments Made</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {unitMortgages?.map(mortgage =>
                 <TableRow  key={mortgage._id}>
-                  <TableCell>{mortgage?.bank}</TableCell>
-                  <TableCell>{mortgage?.purchasePrice}</TableCell>
-                  <TableCell>{mortgage?.principal}</TableCell>
-                  <TableCell>{mortgage?.interest}</TableCell>
-                  <TableCell>{mortgage?.term}</TableCell>
-                  <TableCell>{mortgage?.numPaymentsMade}</TableCell>
+                  <TableCell sx={{ display: { xs: "none", sm: "revert" }}}>{mortgage?.bank}</TableCell>
+                  <TableCell>{convertToUSD(mortgage?.purchasePrice)}</TableCell>
+                  <TableCell>{convertToUSD(mortgage?.principal)}</TableCell>
+                  <TableCell>{mortgage?.interest}%</TableCell>
+                  <TableCell>{mortgage?.term} months</TableCell>
+                  <TableCell sx={{ display: { xs: "none", sm: "revert" }}}>{mortgage?.numPaymentsMade}</TableCell>
 
                 </TableRow>
               )}

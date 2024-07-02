@@ -15,8 +15,8 @@ const Copyright = (props) => {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://lease-wise.com/">
+        LeaseWise
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -40,7 +40,7 @@ const SignIn = () => {
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 12,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -92,7 +92,7 @@ const SignIn = () => {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/sign-up" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

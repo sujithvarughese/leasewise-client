@@ -2,7 +2,7 @@ import Container from '@mui/material/Container'
 import Image from 'mui-image'
 import Stack from '@mui/material/Stack'
 import Box from '@mui/material/Box'
-import { Tab, Tabs, Typography } from '@mui/material'
+import { ButtonGroup, Tab, Tabs, Typography } from '@mui/material'
 import FinancialDataTabPanel from '../components/gallery/FinancialDataTabPanel.jsx'
 import Toolbar from '@mui/material/Toolbar'
 import { useLocation } from 'react-router-dom'
@@ -37,35 +37,40 @@ const Unit = () => {
       <Toolbar />
       <Image src={unitDetails?.image} alt="image" />
 
-      <Stack justifyContent="space-around">
-        <Box>
-          <Typography>{unitDetails?.houseNumber} {unitDetails?.street} {unitDetails?.apartmentNumber}</Typography>
-          <Typography fontSize="md">{unitDetails?.city}, {unitDetails?.state} {unitDetails?.zip}</Typography>
-        </Box>
-        <Box>
-          <Typography>{unitDetails?.bedrooms} bd / {unitDetails?.bathrooms}ba</Typography>
-        </Box>
+      <Stack justifyContent="center" alignItems="center" margin={3}>
+        <Stack justifyContent="space-around">
+          <Box>
+            <Typography variant="h5">{unitDetails?.houseNumber} {unitDetails?.street} {unitDetails?.apartmentNumber}</Typography>
+            <Typography variant="h6">{unitDetails?.city}, {unitDetails?.state} {unitDetails?.zip}</Typography>
+          </Box>
+          <Box>
+            <Typography>{unitDetails?.bedrooms} bd / {unitDetails?.bathrooms}ba</Typography>
+          </Box>
+        </Stack>
+        <br/>
+        <Stack justifyContent="space-around">
+          <Box>
+            <Typography variant="body2">{unitDetails?.tenant?.lastName}, {unitDetails?.tenant?.firstName}</Typography>
+            <Typography variant="body2">{unitDetails?.tenant?.email}</Typography>
+          </Box>
+          <Typography variant="body2">Rent: ${unitDetails?.tenant?.rent}</Typography>
+        </Stack>
       </Stack>
 
-      <Stack justifyContent="space-around">
-        <Box>
-          <Typography fontSize="sm">{unitDetails?.tenant?.lastName}, {unitDetails?.tenant?.firstName}</Typography>
-          <Typography fontSize="sm">{unitDetails?.tenant?.email}</Typography>
-        </Box>
-        <Typography fontSize="sm">Rent: ${unitDetails?.tenant?.rent}</Typography>
-      </Stack>
+
 
       <UnitTabs unitIncomes={unitIncomes} unitExpenses={unitExpenses} unitMortgages={unitMortgages}/>
 
-      <Button onClick={() => setShowCreateMortgageForm(!showCreateMortgageForm)}>Create Mortgage</Button>
-      {showCreateMortgageForm && <CreateMortgageForm id={id} open={showCreateMortgageForm} onClose={() => setShowCreateMortgageForm(false)}/>}
 
+      <ButtonGroup sx={{ display: "flex", justifyContent: "space-around", m: 3}}>
+        <Button variant="contained" onClick={() => setShowCreateMortgageForm(!showCreateMortgageForm)}>Create Mortgage</Button>
+        {showCreateMortgageForm && <CreateMortgageForm id={id} open={showCreateMortgageForm} onClose={() => setShowCreateMortgageForm(false)}/>}
+        <Button variant="contained" onClick={() => setShowCreateExpenseForm(!showCreateExpenseForm)}>Create Expense</Button>
+        {showCreateExpenseForm && <CreateExpenseForm id={id} open={showCreateExpenseForm} onClose={() => setShowCreateExpenseForm(false)}/>}
+        <Button variant="contained" onClick={() => setShowCreateIncomeForm(!showCreateIncomeForm)}>Create Income</Button>
+        {showCreateIncomeForm && <CreateIncomeForm id={id} open={showCreateIncomeForm} onClose={() => setShowCreateIncomeForm(false)}/>}
+      </ButtonGroup>
 
-      <Button onClick={() => setShowCreateExpenseForm(!showCreateExpenseForm)}>Create Expense</Button>
-      {showCreateExpenseForm && <CreateExpenseForm id={id} open={showCreateExpenseForm} onClose={() => setShowCreateExpenseForm(false)}/>}
-
-      <Button onClick={() => setShowCreateIncomeForm(!showCreateIncomeForm)}>Create Income</Button>
-      {showCreateIncomeForm && <CreateIncomeForm id={id} open={showCreateIncomeForm} onClose={() => setShowCreateIncomeForm(false)}/>}
 
     </Container>
   )

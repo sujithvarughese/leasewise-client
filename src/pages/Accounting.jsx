@@ -70,21 +70,24 @@ const Accounting = () => {
         }}
       >
         <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Container sx={{ mt: 4, mb: 4 }}>
           <Typography variant="h4">Accounting</Typography>
-          <StyledSelect name="term" label="Term"
-                        options={[{ label: "Monthly", value: 1 }, { label: "Annual", value: 12 }]}
-                        minWidth={120} />
 
-          <TableContainer component={Paper}>
+          {/*<StyledSelect name="term" label="Term"
+                        options={[{ label: "Monthly", value: 1 }, { label: "Annual", value: 12 }]}
+                        minWidth={120}
+          />*/}
+
+          <TableContainer component={Paper} sx={{ my: 2 }}>
             <Table aria-label="simple-table">
               <TableHead>
                 <TableRow>
                   <TableCell>Address</TableCell>
-                  <TableCell>Mortgage</TableCell>
-                  <TableCell>Tax</TableCell>
-                  <TableCell>Insurance</TableCell>
-                  <TableCell>HOA</TableCell>
+                  <TableCell sx={{ display: { xs: "none", md: "revert" }}}>Mortgage</TableCell>
+                  <TableCell sx={{ display: { xs: "none", md: "revert" }}}>Tax</TableCell>
+                  <TableCell sx={{ display: { xs: "none", md: "revert" }}}>Insurance</TableCell>
+                  <TableCell sx={{ display: { xs: "none", md: "revert" }}}>HOA</TableCell>
+                  <TableCell sx={{ display: { md: "none" }}}>Expenses</TableCell>
                   <TableCell>Rent</TableCell>
                 </TableRow>
               </TableHead>
@@ -103,8 +106,8 @@ const Accounting = () => {
               </TableBody>
             </Table>
 
-            <Box>
-              <Typography>Total Profit: {convertToUSD(totalProfit(unitFinances, selectedTerm))}</Typography>
+            <Box p={3}>
+              <Typography variant="h6">Total Profit: {convertToUSD(totalProfit(unitFinances, selectedTerm))}</Typography>
             </Box>
           </TableContainer>
         </Container>

@@ -16,9 +16,9 @@ const FinancesTotalUnitValues = ({ unitFinance, selectedTerm, removeUnit }) => {
         <TableRow>
             <TableCell>
                 <Box>
-                    <IconButton onClick={()=>removeUnit(unitFinance.financeID)}>
+                  {/*<IconButton onClick={()=>removeUnit(unitFinance.financeID)}>
                         <IoRemoveCircle />
-                    </IconButton>
+                    </IconButton>*/}
 
                     <NavLink
                         to={{ pathname: `../unit/${unitID}`}}
@@ -30,20 +30,24 @@ const FinancesTotalUnitValues = ({ unitFinance, selectedTerm, removeUnit }) => {
                 </Box>
             </TableCell>
 
-            <TableCell>
+            <TableCell sx={{ display: { xs: "none", md: "revert" }}}>
                 {convertToUSD((calculateMonthlyPayment(principal, interest, term)) * selectedTerm)}
             </TableCell>
 
-            <TableCell>
+            <TableCell sx={{ display: { xs: "none", md: "revert" }}}>
                 {convertToUSD(unitFinance.propertyTax * selectedTerm)}
             </TableCell>
 
-            <TableCell>
+            <TableCell sx={{ display: { xs: "none", md: "revert" }}}>
                 {convertToUSD(unitFinance.insurance * selectedTerm)}
             </TableCell>
 
-            <TableCell>
+            <TableCell sx={{ display: { xs: "none", md: "revert" }}}>
                 {convertToUSD(unitFinance.hoa * selectedTerm)}
+            </TableCell>
+
+            <TableCell  sx={{ display: { md: "none" }}}>
+              {convertToUSD(calculateMonthlyPayment(principal, interest, term) * selectedTerm + unitFinance.propertyTax * selectedTerm + unitFinance.insurance * selectedTerm)}
             </TableCell>
 
             <TableCell>

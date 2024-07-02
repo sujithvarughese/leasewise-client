@@ -10,6 +10,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import { useNavigate } from 'react-router-dom'
 
 const tiers = [
   {
@@ -53,6 +54,12 @@ const tiers = [
 ];
 
 const Pricing = () => {
+
+  const navigate = useNavigate()
+  const navigateToSignUp = () => {
+    navigate("/sign-up")
+  }
+
   return (
     <Container
       id="pricing"
@@ -76,10 +83,7 @@ const Pricing = () => {
           Pricing
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          Quickly build an effective pricing table for your potential customers with
-          this layout. <br />
-          It&apos;s built with default Material UI components with little
-          customization.
+          Three different plans so you can choose based on your needs and the size of your business. <br />
         </Typography>
       </Box>
       <Grid container spacing={3} alignItems="center" justifyContent="center">
@@ -195,7 +199,7 @@ const Pricing = () => {
                   fullWidth
                   variant={tier.buttonVariant}
                   component="a"
-                  href="/material-ui/getting-started/templates/checkout/"
+                  onClick={navigateToSignUp}
                   target="_blank"
                 >
                   {tier.buttonText}

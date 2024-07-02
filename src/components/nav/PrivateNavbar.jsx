@@ -48,8 +48,8 @@ const PrivateNavbar = ({ numUnreadMessages }) => {
   const navigate = useNavigate()
   const navigation = useNavigation()
   const signOutAndNavigateHome = () => {
-    signOutUser()
     navigate("/")
+    signOutUser()
   }
 
   const [heading, setHeading] = useState("Dashboard")

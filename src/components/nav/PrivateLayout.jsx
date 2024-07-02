@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import { axiosDB } from '../../utilities/axios.js'
 import { useManagementProvider } from '../../context/management-context.jsx'
 import Loading from '../Loading.jsx'
+import Footer from './Footer.jsx'
 
 const PrivateLayout = () => {
 
@@ -30,23 +31,27 @@ const PrivateLayout = () => {
 */
 
   return (
-    <Box display="flex">
-      <PrivateNavbar numUnreadMessages={unreadCount}/>
-      <Box
-        component="main"
-        sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
-          flexGrow: 1,
-          height: '100vh',
-          overflow: 'auto',
-        }}
-      >
-        <Outlet />
+
+      <Box display="flex">
+        <PrivateNavbar numUnreadMessages={unreadCount}/>
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === 'light'
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: '100vh',
+            overflow: 'auto',
+          }}
+        >
+          <Outlet />
+        </Box>
       </Box>
-    </Box>
+
+
+
   )
 }
 

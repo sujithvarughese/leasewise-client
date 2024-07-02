@@ -8,8 +8,15 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import coverIMG from "../../assets/images/landing/cover.jpeg"
-
+import TOS from "../../assets/terms-and-conditions.pdf"
+import { useNavigate } from 'react-router-dom'
 const Hero = () => {
+
+  const navigate = useNavigate()
+  const navigateToSignUp = () => {
+    navigate("/sign-up")
+  }
+
   return (
     <Box
       id="hero"
@@ -83,16 +90,15 @@ const Hero = () => {
                 'aria-label': 'Enter your email address',
               }}
             />
-            <Button variant="contained" color="primary">
+            <Button onClick={navigateToSignUp} variant="contained" color="primary">
               Sign Up Now
             </Button>
           </Stack>
           <Typography variant="caption" textAlign="center" sx={{ opacity: 0.8 }}>
             By clicking &quot;Sign Up Now&quot; you agree to our&nbsp;
-            <Link href="#" color="primary">
+            <Link href={TOS}  target="_blank" rel="noreferrer" color="primary">
               Terms & Conditions
             </Link>
-            .
           </Typography>
         </Stack>
         <Box

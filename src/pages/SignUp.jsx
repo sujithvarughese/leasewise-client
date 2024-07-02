@@ -10,13 +10,14 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import useSubmit from '../hooks/useSubmit.js'
 
 const Copyright = (props) => {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://lease-wise.com/">
+        LeaseWise
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -26,13 +27,13 @@ const Copyright = (props) => {
 
 const SignUp = () => {
 
+  const { response, error, loading, submitForm } = useSubmit()
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const formData = new FormData(event.currentTarget);
+    const data = { ...Object.fromEntries(formData)}
+    submitForm({ method: "POST", url: "/auth/signup", requestConfig: data })
   };
 
 
@@ -41,7 +42,7 @@ const SignUp = () => {
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 12,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -109,12 +110,13 @@ const SignUp = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            loading={loading}
           >
             Sign Up
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/sign-in" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

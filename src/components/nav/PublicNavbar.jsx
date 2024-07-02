@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Outlet } from "react-router-dom"
+import { NavLink, Outlet } from 'react-router-dom'
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -98,11 +98,15 @@ const PublicNavbar = () => {
                 px: 0,
               }}
             >
-              <img
-                src={logo}
-                style={logoStyle}
-                alt="logo of sitemark"
-              />
+              <NavLink to="/">
+                <img
+                  src={logo}
+                  style={logoStyle}
+                  alt="logo of sitemark"
+                />
+
+              </NavLink>
+
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                 {links.map(link => {
                   return (
