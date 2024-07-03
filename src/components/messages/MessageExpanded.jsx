@@ -30,6 +30,7 @@ const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnr
 			setOtherUser(message.sender._id)
 		}
 	}
+	console.log(userID)
 	console.log(otherUser)
 	useEffect(() => {
 		fetchCurrentConversation(message._id)
