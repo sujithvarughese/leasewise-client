@@ -24,14 +24,22 @@ const Messages = () => {
   const { user } = useAuthProvider()
 
 
-  const [messages, setMessages] = useState(data)
+  const [messageHeadNodes, setMessageHeadNodes] = useState(data)
   const [showCreateMessageForm, setShowCreateMessageForm] = useState(false)
   const [addressBook, setAddressBook] = useState([])
-  const [expandedMessage, setExpandedMessage] = useState(null)
-  const [mobileExpanded, setMobileExpanded] = useState(false)
+  const [expandedConversation, setExpandedConversation] = useState(null)
   const [showCreateReply, setShowCreateReply] = useState(false)
 
-
+  const getMessages = async () => {
+    try {
+      // retrieve all messages where sender or recipient matches using req.user info that is stored at login
+      const response = await axiosDB("/messages")
+      const { messages } = response.data
+      setMessageHeadNodes(messages)
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
   // fetch address book for admin
   const getUserList = async () => {
     try {
@@ -41,17 +49,6 @@ const Messages = () => {
       setAddressBook(userList)
     } catch (error) {
       console.log(error);
-    }
-  }
-  const getMessages = async () => {
-    try {
-      // retrieve all messages where sender or recipient matches using req.user info that is stored at login
-      const response = await axiosDB("/messages")
-      const { messages } = response.data
-      setMessages(messages)
-
-    } catch (error) {
-      throw new Error(error)
     }
   }
   // fetch admin info so user can send messages
@@ -68,12 +65,12 @@ const Messages = () => {
   const toggleFlag = async (message) => {
     try {
       await axiosDB.patch("/messages/flag", message)
-      const updatedMailbox = [...messages]
+      const updatedMessageHeadNodes = [...messageHeadNodes]
       // replace message in state with updated message with appropriate flag for both collapsed/expanded message
-      const messageIndex = updatedMailbox.findIndex(currentMessage => currentMessage._id === message._id)
-      updatedMailbox[messageIndex] = { ...updatedMailbox[messageIndex], flag: !updatedMailbox[messageIndex].flag}
-      setMessages(updatedMailbox)
-      setExpandedMessage(updatedMailbox[messageIndex])
+      const messageIndex = updatedMessageHeadNodes.findIndex(currentMessage => currentMessage._id === message._id)
+      updatedMessageHeadNodes[messageIndex] = { ...updatedMessageHeadNodes[messageIndex], flag: !updatedMessageHeadNodes[messageIndex].flag}
+      setMessageHeadNodes(updatedMessageHeadNodes)
+      setExpandedConversation(updatedMessageHeadNodes[messageIndex])
     } catch (error) {
       throw new Error(error)
     }
@@ -82,12 +79,12 @@ const Messages = () => {
   const markMessageRead = async (message) => {
     try {
       await axiosDB.patch("/messages/read", message)
-      const updatedMailbox = [...messages]
+      const updatedMailbox = [...messageHeadNodes]
       // replace message in state with updated message with appropriate read status
       const messageIndex = updatedMailbox.findIndex(currentMessage => currentMessage._id === message._id)
       updatedMailbox[messageIndex] = { ...updatedMailbox[messageIndex], read: true}
-      setMessages(updatedMailbox)
-      setExpandedMessage(updatedMailbox[messageIndex])
+      setMessageHeadNodes(updatedMailbox)
+      setExpandedConversation(updatedMailbox[messageIndex])
 
     } catch (error) {
       throw new Error(error)
@@ -97,12 +94,12 @@ const Messages = () => {
   const markMessageUnread = async (message) => {
     try {
       await axiosDB.patch("/messages/unread", message)
-      const updatedMailbox = [...messages]
+      const updatedMailbox = [...messageHeadNodes]
       // replace message in state with updated message with appropriate read status
       const messageIndex = updatedMailbox.findIndex(currentMessage => currentMessage._id === message._id)
       updatedMailbox[messageIndex] = { ...updatedMailbox[messageIndex], read: false}
-      setMessages(updatedMailbox)
-      setExpandedMessage(updatedMailbox[messageIndex])
+      setMessageHeadNodes(updatedMailbox)
+      setExpandedConversation(updatedMailbox[messageIndex])
     } catch (error) {
       throw new Error(error)
     }
@@ -139,12 +136,11 @@ const Messages = () => {
         <Toolbar />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
 
-
           <Stack flexDirection="row">
             {
               // Create new message icon is hidden in mobile when message is expanded
               // Back button is only displayed in mobile when message is expanded
-              !mobileExpanded && !showCreateMessageForm &&
+              !showCreateMessageForm &&
               <IconButton
                 onClick={()=>setShowCreateMessageForm(prevState => !prevState)}
                 sx={{ fontSize: "32px"}}
@@ -154,19 +150,29 @@ const Messages = () => {
             }
 
           </Stack>
+          {
+            showCreateMessageForm &&
+            <Grid item xs={12} md={8}>
+              <NewMessageForm
+                close={()=>setShowCreateMessageForm(false)}
+                addressBook={addressBook}
+                getMessages={getMessages}
+              />
+            </Grid>
+          }
+
 
           <Grid container position="relative">
             <Grid item xs={12} md={4} sx={{ overflowY: "scroll", height: "100vh" }}>
               {
-              messages.length > 0 ?
-              messages.map(message =>
+              messageHeadNodes.length > 0 ?
+              messageHeadNodes.map(message =>
                 <MessageCollapsed
                   key={message._id}
-                  message={message}
-                  setExpandedMessage={setExpandedMessage}
+                  messageHead={message}
+                  setExpandedConversation={setExpandedConversation}
                   markMessageRead={markMessageRead}
                   toggleFlag={toggleFlag}
-                  showExpanded={()=>{}}
                   userID={user.id}
                   closeReply={()=>setShowCreateReply(false)}
                 />
@@ -177,29 +183,18 @@ const Messages = () => {
             </Grid>
 
             {
-            showCreateMessageForm &&
-            <Grid item xs={12} md={8}>
-              <NewMessageForm
-                close={()=>setShowCreateMessageForm(false)}
-                addressBook={addressBook}
-                getMessages={getMessages}
-              />
-            </Grid>
-            }
-            {
-            expandedMessage && !showCreateMessageForm ?
+            expandedConversation && !showCreateMessageForm ?
             <Grid item xs={12} md={7} sx={{ overflowY: "scroll", height: "100vh" }}>
               <MessageExpanded
-                message={expandedMessage}
-                messages={messages}
+                expandedConversation={expandedConversation}
+                messages={messageHeadNodes}
                 toggleFlag={toggleFlag}
                 userID={user.id}
                 markMessageUnread={markMessageUnread}
                 showCreateReply={showCreateReply}
                 setShowCreateReply={setShowCreateReply}
                 getMessages={getMessages}
-                setMobileExpanded={setMobileExpanded}
-                setExpandedMessage={setExpandedMessage}
+                setExpandedMessage={setExpandedConversation}
               />
             </Grid>
             :

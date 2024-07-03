@@ -5,7 +5,17 @@ import { axiosDB } from "../../utilities/axios.js";
 import {useEffect, useRef, useState} from "react";
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
-const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnread, showCreateReply, setShowCreateReply, setMobileExpanded, getMessages }) => {
+const MessageExpanded = ({
+	expandedConversation,
+	messages,
+	toggleFlag,
+	userID,
+	markMessageUnread,
+	showCreateReply,
+	setShowCreateReply,
+	setExpandedMessage,
+	getMessages
+}) => {
 
 	const [currentConversation, setCurrentConversation] = useState([])
 	const [otherUser, setOtherUser] = useState(null)
@@ -25,17 +35,17 @@ const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnr
 	}
 
 	const getOtherUser = () => {
-		if (message.sender._id === userID) {
-			setOtherUser(message.recipient)
+		if (expandedConversation.sender._id === userID) {
+			setOtherUser(expandedConversation.recipient)
 		} else {
-			setOtherUser(message.sender)
+			setOtherUser(expandedConversation.sender)
 		}
 	}
 
 	const deleteMessage = async () => {
 		try {
-			await axiosDB.delete(`/messages/${message._id}`)
-			const updatedConversation = currentConversation.filter(item => item._id !== message._id)
+			await axiosDB.delete(`/messages/${expandedConversation._id}`)
+			const updatedConversation = currentConversation.filter(item => item._id !== expandedConversation._id)
 			setCurrentConversation(updatedConversation)
 		} catch (error) {
 			throw new Error(error)
@@ -43,10 +53,10 @@ const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnr
 	}
 
 	useEffect(() => {
-		fetchCurrentConversation(message._id)
+		fetchCurrentConversation(expandedConversation._id)
 		getOtherUser()
 		return () => setCurrentConversation([])
-	}, [message])
+	}, [expandedConversation])
 
 
 /*
@@ -71,11 +81,10 @@ const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnr
 	return (
 		<Box sx={{ px: 3 }}>
 			{<MessageActions
-				message={message}
+				message={expandedConversation}
 				reply={()=>setShowCreateReply(true)}
 				toggleFlag={toggleFlag}
 				markMessageUnread={markMessageUnread}
-				setMobileExpanded={setMobileExpanded}
 			/>}
 			<Box>
 				{currentConversation?.length > 0 &&
@@ -96,12 +105,13 @@ const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnr
 				</Grid>
 				}
 				<ReplyMessageForm
-					message={message}
+					message={expandedConversation}
 					otherUser={otherUser}
 					closeReply={()=>setShowCreateReply(false)}
 					getMessages={getMessages}
 					setCurrentConversation={setCurrentConversation}
 					currentConversation={currentConversation}
+					setExpandedMessage={setExpandedMessage}
 				/>
 			</Box>
 		</Box>

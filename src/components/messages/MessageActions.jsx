@@ -47,12 +47,12 @@ const MessageActions = ({ message, reply, toggleFlag, markMessageUnread, setMobi
 					<IoTrashOutline />
 				</IconButton>
 
-				{
+				{/*
 				message.read &&
 				<IconButton onClick={()=>markMessageUnread(message)}>
 					<CiUnread />
 				</IconButton>
-				}
+				*/}
 			</ButtonGroup>
 
 		</Stack>

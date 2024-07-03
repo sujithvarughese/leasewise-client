@@ -8,25 +8,24 @@ import { Typography } from '@mui/material'
 import Stack from '@mui/material/Stack'
 import { useManagementProvider } from '../../context/management-context.jsx'
 import { useMessagingProvider } from '../../context/messaging-context.jsx'
-const MessageCollapsed = ({ message, setExpandedMessage, markMessageRead, showExpanded, userID, closeReply }) => {
+const MessageCollapsed = ({
+	messageHead,
+	setExpandedConversation,
+	markMessageRead,
+	showExpanded,
+	userID,
+	closeReply
+}) => {
 
-	const { sender, recipient, subject, body, read, flag } = message
+	const { sender, recipient, subject, body, read, flag } = messageHead
 
-	const { setCurrentMessage } = useManagementProvider()
-
-	const currentDate = new Date(message.date)
+	const currentDate = new Date(messageHead.date)
 	const date = currentDate.toLocaleString('en-US',{ year:'numeric', month:'short', day:'numeric', timeZone: 'UTC' })
 	const time = currentDate.toLocaleTimeString("en-US")
 
 	const selectMessage = async () => {
-		if (sender._id === userID) {
-			setCurrentMessage(message, recipient._id)
-		} else {
-			setCurrentMessage(message, sender._id)
-		}
-		setExpandedMessage(message)
-		markMessageRead(message)
-		showExpanded()
+		setExpandedConversation(messageHead)
+		markMessageRead(messageHead)
 		closeReply()
 	}
 

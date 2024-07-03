@@ -7,7 +7,17 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useState } from 'react'
 import IconButton from '@mui/material/IconButton'
 
-const MessageContents = ({ senderID, lastName, firstName, otherUser, date, subject, body, headNode, deleteMessage }) => {
+const MessageContents = ({
+  senderID,
+  lastName,
+  firstName,
+  otherUser,
+  date,
+  subject,
+  body,
+  headNode,
+  deleteMessage
+}) => {
 
     const { showUnauthorizedAlert } = useAuthProvider()
 
@@ -20,7 +30,7 @@ const MessageContents = ({ senderID, lastName, firstName, otherUser, date, subje
 
     const handleDeleteMessage = () => {
       showUnauthorizedAlert()
-      // deleteMessage()
+    //  deleteMessage()
     }
 
     return (
