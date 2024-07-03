@@ -3,7 +3,6 @@ import useAxios from '../hooks/useAxios.js'
 
 const initialState = {
   account: "",
-  role: "",
   user: null
 }
 const authReducer = (state, action) => {

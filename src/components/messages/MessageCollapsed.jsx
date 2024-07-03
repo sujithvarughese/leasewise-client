@@ -28,7 +28,7 @@ const MessageCollapsed = ({ message, setExpandedMessage, markMessageRead, showEx
 			sx={{
 				"&:hover": {
 					bgcolor: "gray",
-					cursor: "pointer"
+					cursor: "pointer",
 				}
 			}}
 			onClick={() => {

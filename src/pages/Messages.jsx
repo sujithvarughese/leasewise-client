@@ -19,20 +19,18 @@ import Stack from '@mui/material/Stack'
 
 const Messages = () => {
   // messages = { inbox, outbox }	// message = { sender: { lastName, firstName, _id }, recipient, subject, body, read, flag, date, previousMessage
-  const messages = useLoaderData()
+  const data = useLoaderData()
   const { user } = useAuthProvider()
 
-  const [messagesState, setMessagesState] = useState(messages)
-  const [currentMailbox, setCurrentMailbox] = useState([])
-  const [myIncoming, setMyIncoming] = useState([])
-  const [myOutgoing, setMyOutgoing] = useState([])
-  const [myMessages, setMyMessages] = useState([])
-  const [currentLink, setCurrentLink] = useState("all")
+  const [messages, setMessages] = useState(data)
   const [showCreateMessageForm, setShowCreateMessageForm] = useState(false)
   const [addressBook, setAddressBook] = useState([])
   const [expandedMessage, setExpandedMessage] = useState(null)
   const [mobileExpanded, setMobileExpanded] = useState(false)
   const [showCreateReply, setShowCreateReply] = useState(false)
+
+
+
   // fetch address book for admin
   const getUserList = async () => {
     try {
@@ -45,12 +43,11 @@ const Messages = () => {
     }
   }
   const getMessages = async () => {
-
     try {
       // retrieve all messages where sender or recipient matches using req.user info that is stored at login
       const response = await axiosDB("/messages")
       const { messages } = response.data
-      setMessagesState(messages)
+      setMessages(messages)
 
     } catch (error) {
       throw new Error(error)
@@ -70,11 +67,11 @@ const Messages = () => {
   const toggleFlag = async (message) => {
     try {
       await axiosDB.patch("/messages/flag", message)
-      const updatedMailbox = [...currentMailbox]
+      const updatedMailbox = [...messages]
       // replace message in state with updated message with appropriate flag for both collapsed/expanded message
       const messageIndex = updatedMailbox.findIndex(currentMessage => currentMessage._id === message._id)
       updatedMailbox[messageIndex] = { ...updatedMailbox[messageIndex], flag: !updatedMailbox[messageIndex].flag}
-      setCurrentMailbox(updatedMailbox)
+      setMessages(updatedMailbox)
       setExpandedMessage(updatedMailbox[messageIndex])
     } catch (error) {
       throw new Error(error)
@@ -84,11 +81,11 @@ const Messages = () => {
   const markMessageRead = async (message) => {
     try {
       await axiosDB.patch("/messages/read", message)
-      const updatedMailbox = [...currentMailbox]
+      const updatedMailbox = [...messages]
       // replace message in state with updated message with appropriate read status
       const messageIndex = updatedMailbox.findIndex(currentMessage => currentMessage._id === message._id)
       updatedMailbox[messageIndex] = { ...updatedMailbox[messageIndex], read: true}
-      setCurrentMailbox(updatedMailbox)
+      setMessages(updatedMailbox)
       setExpandedMessage(updatedMailbox[messageIndex])
 
     } catch (error) {
@@ -99,11 +96,11 @@ const Messages = () => {
   const markMessageUnread = async (message) => {
     try {
       await axiosDB.patch("/messages/unread", message)
-      const updatedMailbox = [...currentMailbox]
+      const updatedMailbox = [...messages]
       // replace message in state with updated message with appropriate read status
       const messageIndex = updatedMailbox.findIndex(currentMessage => currentMessage._id === message._id)
       updatedMailbox[messageIndex] = { ...updatedMailbox[messageIndex], read: false}
-      setCurrentMailbox(updatedMailbox)
+      setMessages(updatedMailbox)
       setExpandedMessage(updatedMailbox[messageIndex])
     } catch (error) {
       throw new Error(error)
@@ -119,15 +116,11 @@ const Messages = () => {
       getAdminInfo()
     }
     // conversations will be messages in which the most recent message in the conversation is either to or from the user
-    const conversations = messagesState.filter(message => message.headNode && (message.recipient._id === user.id || message.sender._id === user.id))
-    const incoming = messagesState.filter(message => message.recipient._id === user.id)
-    const outgoing = messagesState.filter(message => message.sender._id === user.id)
-    setCurrentMailbox(conversations)
-    setMyMessages(conversations)
-    setMyIncoming(incoming)
-    setMyOutgoing(outgoing)
+    const conversations = messages.filter(message => message.headNode && (message.recipient._id === user.id || message.sender._id === user.id))
+    setMessages(conversations)
     window.scrollTo(0, 0)
-  }, [messagesState, user.isAdmin, user.id]);
+  }, [user.isAdmin, user.id]);
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -160,44 +153,13 @@ const Messages = () => {
               </IconButton>
             }
 
-            <Stack flexDirection="row" justifyContent="flex-end" width={1}>
-                <Button
-                  onClick= {()=> {
-                    setExpandedMessage(null)
-                    setCurrentMailbox(myMessages)
-                    setCurrentLink("all")
-                  }
-                  }>All</Button>
-
-
-                <Button
-                  onClick= {()=> {
-                    setExpandedMessage(null)
-                    setCurrentMailbox(myIncoming)
-                    setCurrentLink("incoming")
-                  }
-                  }>Incoming</Button>
-
-
-
-                <Button
-                  onClick={() => {
-                    setExpandedMessage(null)
-                    setCurrentMailbox(myOutgoing)
-                    setCurrentLink("outgoing")
-                  }
-                  }>Outgoing</Button>
-
-
-            </Stack>
-
           </Stack>
 
           <Grid container position="relative">
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} sx={{ overflowY: "scroll", height: "100vh" }}>
               {
-              currentMailbox.length > 0 ?
-              currentMailbox.map(message =>
+              messages.length > 0 ?
+              messages.map(message =>
               <MessageCollapsed
                 key={message._id}
                 message={message}
@@ -225,10 +187,10 @@ const Messages = () => {
             }
             {
             expandedMessage && !showCreateMessageForm ?
-            <Grid item xs={12} md={7} sx={{ position: "fixed", right: 0, width: "100%" }}>
+            <Grid item xs={12} md={7} sx={{ overflowY: "scroll", height: "100vh" }}>
               <MessageExpanded
                 message={expandedMessage}
-                messages={messages}
+                messages={data}
                 toggleFlag={toggleFlag}
                 userID={user.id}
                 markMessageUnread={markMessageUnread}
@@ -259,8 +221,8 @@ export const messagesLoader = async () => {
   try {
     // retrieve all messages where sender or recipient matches using req.user info that is stored at login
     const response = await axiosDB("/messages")
-    const { messages } = response.data
-    return messages
+    const { messages: data } = response.data
+    return data
   } catch (error) {
     throw new Error(error)
   }

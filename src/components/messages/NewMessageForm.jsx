@@ -24,11 +24,14 @@ const NewMessageForm = ({ close, addressBook, getMessages }) => {
 */
   const navigate = useNavigate()
 
-  const handleSubmit = async (values, actions) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const data = { ...Object.fromEntries(formData)}
+    console.log(data)
     try {
-      console.log(values)
       // add sender info before passing to server
-      const msg = await createMessage({ ...values, sender: user.userID })
+      const msg = await createMessage({ ...data, sender: user.userID })
       // navigate back to messages to update messages display
       if (msg === 'success') {
         setButtonText("Sent!")
@@ -42,8 +45,6 @@ const NewMessageForm = ({ close, addressBook, getMessages }) => {
       }, 1000)
     } catch (error) {
       throw new Error(error)
-    } finally {
-      actions.resetForm()
     }
   }
 

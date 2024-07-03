@@ -1,5 +1,5 @@
 import classes from "./styles/ReplyMessageForm.module.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { axiosDB } from "../../utilities/axios.js";
 import { TfiClose } from "react-icons/tfi";
@@ -10,74 +10,58 @@ import { Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import MessageForm from '../forms/MessageForm.jsx'
 import { Textarea } from '@mui/joy'
+import useSubmit from '../../hooks/useSubmit.js'
 
 const ReplyMessageForm = ({ message, closeReply, getMessages }) => {
 
 	const { date } = message
-	const { user } = useAuthProvider()
-	// recipient is initially set to first name in address book (user has only one name in address book so default to admin)
-	const [body, setBody] = useState("")
+	const { user, account } = useAuthProvider()
+	const { response, error, loading, submitForm } = useSubmit()
 	const [buttonText, setButtonText] = useState("Send")
-	const handleChange = (e) => {
-		setBody(e.target.value);
-	}
 
 	const navigate = useNavigate()
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		// add sender info before passing to server
-		try {
-			const msg = await replyMessage({
-				sender: user.id,
-				recipient: message.sender._id,
-				subject: message.subject,
-				body: body,
-				previousMessage: message._id
-			})
-			if (msg === 'success') {
-				setButtonText("Sent!")
-				setBody("")
-			} else {
-				setButtonText("Error")
-			}
-			await getMessages()
-			setTimeout(() => {
-				// navigate back to messages to update messages display
-				navigate("/messages");
-				closeReply()
-			}, 1000)
-		} catch (error) {
-			throw new Error(error)
+		const formData = new FormData(e.currentTarget)
+		const data = { ...Object.fromEntries(formData) }
+
+		const msg = {
+			sender: user.id,
+			recipient: message.sender._id,
+			subject: message.subject,
+			body: data.body,
+			previousMessage: message._id
 		}
+		submitForm({ method: "POST", url: "/messages", requestConfig: msg })
 	}
 
+	useEffect(() => {
+		console.log(response)
+	}, [response])
 	return (
 		<div className={classes.container}>
 			<Card>
 				<form onSubmit={handleSubmit}>
-					<div className={classes.form}>
-						<Textarea
-							name="body"
-							placeholder="Create Message"
-							minRows={2}
-							sx={{
-								border: "none",
-								'--Textarea-focusedInset': 'var(--any, )',
-								'--Textarea-focusedThickness': '0.25rem',
-								'--Textarea-focusedHighlight': 'rgba(13,110,253,.25)',
-								'&::before': {
-									transition: 'box-shadow .15s ease-in-out',
-								},
-								'&:focus-within': {
-									borderColor: '#86b7fe',
-								},
-							}}
-						/>
-						<div className={classes.button}>
-							<Button type="submit">{buttonText}</Button>
-						</div>
-					</div>
+					<Textarea
+						name="body"
+						placeholder="Create Message"
+						minRows={2}
+						sx={{
+							border: "none",
+							'--Textarea-focusedInset': 'var(--any, )',
+							'--Textarea-focusedThickness': '0.25rem',
+							'--Textarea-focusedHighlight': 'rgba(13,110,253,.25)',
+							'&::before': {
+								transition: 'box-shadow .15s ease-in-out',
+							},
+							'&:focus-within': {
+								borderColor: '#86b7fe',
+							},
+						}}
+					/>
+
+						<Button type="submit">{buttonText}</Button>
 				</form>
 			</Card>
 		</div>

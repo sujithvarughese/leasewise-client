@@ -19,6 +19,7 @@ const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnr
 	useEffect(() => {
 		const previousMessagesArray = []
 		let currentMessage = message
+		previousMessagesArray.push(currentMessage)
 		while (currentMessage.previousMessage) {
 			const previousMessage = messages.find(message => message._id === currentMessage.previousMessage)
 			previousMessagesArray.push(previousMessage)
@@ -32,7 +33,7 @@ const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnr
 	}, [message])
 
 	return (
-		<Box sx={{ overflowY: "scroll", px: 3 }}>
+		<Box sx={{ px: 3 }}>
 			{<MessageActions
 				message={message}
 				reply={()=>setShowCreateReply(true)}
@@ -53,14 +54,7 @@ const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnr
 						subject={previousMessage.subject}
 						body={previousMessage.body}
 					/>).reverse()}
-					<MessageContents
-						lastName={sender.lastName}
-						firstName={sender.firstName}
-						senderID={sender._id}
-						date={date}
-						subject={subject}
-						body={body}
-					/>
+
 				</Grid>
 				}
 				<ReplyMessageForm

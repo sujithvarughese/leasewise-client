@@ -36,9 +36,6 @@ const DemoButton = ({ closeDrawer }) => {
   }, [response])
 
 
-
-
-
   return (
     <>
       <Formik
@@ -60,25 +57,7 @@ const DemoButton = ({ closeDrawer }) => {
 
       </Formik>
 
-      <Formik
-        initialValues={{ email: "", password: ""}}
-        validationSchema={loginSchema}
-        onSubmit={handleSubmit}
-      >
-        {props => (
-          <Button
-            sx={{ width: '100%', display: { sm: '', md: 'none' } }}
-            color="secondary"
-            variant="outlined"
-            onClick={()=>{
-              closeDrawer()
-              handleSubmit(credentials, props)
-            }}
-          >
-            Tour
-          </Button>
-        )}
-      </Formik>
+
     </>
   )
 }
