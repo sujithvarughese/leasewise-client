@@ -79,11 +79,12 @@ const PrivateNavbar = () => {
           </Typography>
 
           <Stack flexDirection="row" justifyContent="flex-end" width="100%">
-            <IconButton color="inherit">
+
+            {/*<IconButton color="inherit">
               <Badge badgeContent={numUnreadMessages} color="secondary">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton>*/}
 
             <MenuItem>
               <Button color="secondary" variant="contained" sx={{ width: '100%' }} onClick={signOutAndNavigateHome}>
