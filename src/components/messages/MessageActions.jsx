@@ -13,7 +13,7 @@ import { ButtonGroup, Typography } from '@mui/material'
 
 const MessageActions = ({ message, reply, toggleFlag, markMessageUnread, setMobileExpanded }) => {
 
-	const { user } = useAuthProvider()
+	const { user, showUnauthorizedAlert } = useAuthProvider()
 	const { date, sender, recipient, subject, body, read, flag } = message
 
 	return (
@@ -43,7 +43,7 @@ const MessageActions = ({ message, reply, toggleFlag, markMessageUnread, setMobi
 					{ flag ? <TiFlag /> : <TiFlagOutline />}
 				</IconButton>
 
-				<IconButton onClick={()=>console.log("Unauthorized to delete!")}>
+				<IconButton onClick={()=>showUnauthorizedAlert()}>
 					<IoTrashOutline />
 				</IconButton>
 
