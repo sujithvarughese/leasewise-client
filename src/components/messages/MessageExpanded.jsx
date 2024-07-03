@@ -5,17 +5,39 @@ import { axiosDB } from "../../utilities/axios.js";
 import {useEffect, useRef, useState} from "react";
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
+const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnread, showCreateReply, setShowCreateReply, setMobileExpanded, getMessages }) => {
 
-const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnread, showCreateReply, setShowCreateReply, getMessages, setMobileExpanded }) => {
+	const [currentConversation, setCurrentConversation] = useState(null)
+	const [otherUser, setOtherUser] = useState(null)
 
-	const { date, sender, recipient, subject, body } = message
+	useEffect(() => {
+		getMessages()
+	}, [currentConversation])
 
-	const [previousMessages, setPreviousMessages] = useState([])
+	const fetchCurrentConversation = async (messageID) => {
+		try {
+			const response = await axiosDB(`/messages/previous/${messageID}`)
+			const { previousMessages } = response.data
+			setCurrentConversation(previousMessages)
+		} catch (error) {
+			throw new Error(error)
+		}
+	}
+	const getOtherUser = () => {
+		if (message.sender._id === userID) {
+			setOtherUser(message.recipient._id)
+		} else {
+			setOtherUser(message.sender._id)
+		}
+	}
+	console.log(otherUser)
+	useEffect(() => {
+		fetchCurrentConversation(message._id)
+		getOtherUser()
+	}, [message])
 
-	const currentMessageRef = useRef()
 
-
-
+/*
 	useEffect(() => {
 		const previousMessagesArray = []
 		let currentMessage = message
@@ -32,6 +54,8 @@ const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnr
 		}
 	}, [message])
 
+	*/
+
 	return (
 		<Box sx={{ px: 3 }}>
 			{<MessageActions
@@ -42,9 +66,9 @@ const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnr
 				setMobileExpanded={setMobileExpanded}
 			/>}
 			<Box>
-				{previousMessages.length > 0 &&
+				{currentConversation?.length > 0 &&
 				<Grid display="grid" gap={2}>
-					{previousMessages.map(previousMessage =>
+					{currentConversation?.map(previousMessage =>
 					<MessageContents
 						key={previousMessage._id}
 						lastName={previousMessage.sender.lastName}
@@ -59,8 +83,11 @@ const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnr
 				}
 				<ReplyMessageForm
 					message={message}
+					otherUser={otherUser}
 					closeReply={()=>setShowCreateReply(false)}
 					getMessages={getMessages}
+					setCurrentConversation={setCurrentConversation}
+					currentConversation={currentConversation}
 				/>
 			</Box>
 		</Box>

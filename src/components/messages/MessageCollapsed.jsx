@@ -6,13 +6,29 @@ import {useState} from "react";
 import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
 import Stack from '@mui/material/Stack'
+import { useManagementProvider } from '../../context/management-context.jsx'
+import { useMessagingProvider } from '../../context/messaging-context.jsx'
 const MessageCollapsed = ({ message, setExpandedMessage, markMessageRead, showExpanded, userID, closeReply }) => {
 
 	const { sender, recipient, subject, body, read, flag } = message
 
+	const { setCurrentMessage } = useManagementProvider()
+
 	const currentDate = new Date(message.date)
 	const date = currentDate.toLocaleString('en-US',{ year:'numeric', month:'short', day:'numeric', timeZone: 'UTC' })
 	const time = currentDate.toLocaleTimeString("en-US")
+
+	const selectMessage = async () => {
+		if (sender._id === userID) {
+			setCurrentMessage(message, recipient._id)
+		} else {
+			setCurrentMessage(message, sender._id)
+		}
+		setExpandedMessage(message)
+		markMessageRead(message)
+		showExpanded()
+		closeReply()
+	}
 
 	return (
 		// selecting anywhere on collapsed message will open expanded message, and mark as read
@@ -31,12 +47,7 @@ const MessageCollapsed = ({ message, setExpandedMessage, markMessageRead, showEx
 					cursor: "pointer",
 				}
 			}}
-			onClick={() => {
-				setExpandedMessage(message)
-				markMessageRead(message)
-				showExpanded()
-				closeReply()
-			}}
+			onClick={selectMessage}
 		>
 			{/* icons dynamically render to show flag and read status */}
 			<Stack>

@@ -16,11 +16,13 @@ import NewMessageForm from '../components/messages/NewMessageForm.jsx'
 import IconButton from '@mui/material/IconButton'
 import { Typography } from '@mui/material'
 import Stack from '@mui/material/Stack'
+import { useManagementProvider } from '../context/management-context.jsx'
 
 const Messages = () => {
   // messages = { inbox, outbox }	// message = { sender: { lastName, firstName, _id }, recipient, subject, body, read, flag, date, previousMessage
   const data = useLoaderData()
   const { user } = useAuthProvider()
+
 
   const [messages, setMessages] = useState(data)
   const [showCreateMessageForm, setShowCreateMessageForm] = useState(false)
@@ -198,6 +200,7 @@ const Messages = () => {
                 setShowCreateReply={setShowCreateReply}
                 getMessages={getMessages}
                 setMobileExpanded={setMobileExpanded}
+                setExpandedMessage={setExpandedMessage}
               />
             </Grid>
             :

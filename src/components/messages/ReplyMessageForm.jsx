@@ -12,7 +12,7 @@ import MessageForm from '../forms/MessageForm.jsx'
 import { Textarea } from '@mui/joy'
 import useSubmit from '../../hooks/useSubmit.js'
 
-const ReplyMessageForm = ({ message, closeReply, getMessages }) => {
+const ReplyMessageForm = ({ message, otherUser, closeReply, getMessages, setCurrentConversation, currentConversation }) => {
 
 	const { date } = message
 	const { user, account } = useAuthProvider()
@@ -28,7 +28,7 @@ const ReplyMessageForm = ({ message, closeReply, getMessages }) => {
 
 		const msg = {
 			sender: user.id,
-			recipient: message.sender._id,
+			recipient: otherUser,
 			subject: message.subject,
 			body: data.body,
 			previousMessage: message._id
@@ -37,8 +37,12 @@ const ReplyMessageForm = ({ message, closeReply, getMessages }) => {
 	}
 
 	useEffect(() => {
-		console.log(response)
+		if (response?.msg === "success") {
+			const updatedConversation = [response.message, ...currentConversation]
+			setCurrentConversation(updatedConversation)
+		}
 	}, [response])
+
 	return (
 		<div className={classes.container}>
 			<Card>

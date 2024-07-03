@@ -18,6 +18,7 @@ import {
 } from './'
 import { ManagementProvider } from './context/management-context.jsx'
 import AccountingUnit from './pages/AccountingUnit.jsx'
+import { MessagingProvider } from './context/messaging-context.jsx'
 
 const App = () => {
 
@@ -72,7 +73,7 @@ const App = () => {
 
   return (
     <ManagementProvider>
-      <RouterProvider router={managementRouter} />
+        <RouterProvider router={managementRouter} />
     </ManagementProvider>
 
   )
