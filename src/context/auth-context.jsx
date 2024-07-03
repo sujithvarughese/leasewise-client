@@ -1,9 +1,11 @@
 import {createContext, useContext, useReducer} from "react";
 import useAxios from '../hooks/useAxios.js'
+import { duration } from '@mui/material'
 
 const initialState = {
   account: "",
-  user: null
+  user: null,
+  unauthorizedAlertShown: false,
 }
 const authReducer = (state, action) => {
   if (action.type === "SIGN_IN_USER") {
@@ -27,6 +29,18 @@ const authReducer = (state, action) => {
       ...initialState,
     }
   }
+  if (action.type === "SHOW_UNAUTHORIZED_ALERT") {
+    return {
+      ...state,
+      unauthorizedAlertShown: true,
+    }
+  }
+  if (action.type === "CLOSE_UNAUTHORIZED_ALERT") {
+    return {
+      ...state,
+      unauthorizedAlertShown: false,
+    }
+  }
 }
 const AuthProvider = ({ children }) => {
 
@@ -42,6 +56,16 @@ const AuthProvider = ({ children }) => {
     dispatch({ type: "SIGN_OUT_USER" })
   }
 
+  const showUnauthorizedAlert = (duration = 5000) => {
+    setTimeout(() => {
+      dispatch({ type: "CLOSE_UNAUTHORIZED_ALERT"})
+    }, duration)
+    dispatch({ type: "SHOW_UNAUTHORIZED_ALERT" })
+  }
+
+  const closeUnauthorizedAlert = () => {
+    dispatch({ type: "CLOSE_UNAUTHORIZED_ALERT"})
+  }
 
 
   return (
@@ -49,7 +73,9 @@ const AuthProvider = ({ children }) => {
       ...authState,
       signInUser,
       signUpUser,
-      signOutUser
+      signOutUser,
+      showUnauthorizedAlert,
+      closeUnauthorizedAlert
     }}>
       {children}
     </AuthContext.Provider>

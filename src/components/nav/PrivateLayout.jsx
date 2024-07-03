@@ -7,20 +7,22 @@ import { axiosDB } from '../../utilities/axios.js'
 import { useManagementProvider } from '../../context/management-context.jsx'
 import Loading from '../Loading.jsx'
 import Footer from './Footer.jsx'
+import UnauthorizedAlert from '../ui/UnauthorizedAlert.jsx'
 
 const PrivateLayout = () => {
 
   const { messagesLoader } = useLoaderData()
   const navigation = useNavigation()
 
-
+  const { unauthorizedAlertShown } = useAuthProvider()
 
   const navigate = useNavigate()
 
-
+  console.log(unauthorizedAlertShown)
   return (
 
       <Box display="flex">
+        {unauthorizedAlertShown &&  <UnauthorizedAlert /> }
         <PrivateNavbar />
         <Box
           component="main"

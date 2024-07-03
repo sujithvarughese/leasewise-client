@@ -9,12 +9,19 @@ import IconButton from '@mui/material/IconButton'
 
 const MessageContents = ({ senderID, lastName, firstName, otherUser, date, subject, body, headNode, deleteMessage }) => {
 
+    const { showUnauthorizedAlert } = useAuthProvider()
+
     const currentDate = new Date(date)
     const dateStr = currentDate.toLocaleString('en-US',{ year:'numeric', month:'short', day:'numeric', timeZone: 'UTC' })
     const time = currentDate.toLocaleTimeString("en-US")
     const { user } = useAuthProvider()
 
     const [isHovering, setIsHovering] = useState(false)
+
+    const handleDeleteMessage = () => {
+      showUnauthorizedAlert()
+      // deleteMessage()
+    }
 
     return (
         <Paper
@@ -35,7 +42,7 @@ const MessageContents = ({ senderID, lastName, firstName, otherUser, date, subje
                 </Typography>
                 {isHovering &&
                   <IconButton
-                    onClick={deleteMessage}
+                    onClick={handleDeleteMessage}
                     sx={{ p: 0}}>
                     <DeleteForeverIcon  sx={{ height: "20px"}}/>
                   </IconButton>}
