@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Outlet, useNavigate, useNavigation } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
 import MuiAppBar from '@mui/material/AppBar'
@@ -33,12 +33,13 @@ import Loading from '../Loading.jsx'
 import { LinearProgress } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Stack from '@mui/material/Stack'
+import { useMessagingProvider } from '../../context/messaging-context.jsx'
 
 
 
 
 
-const PrivateNavbar = ({ numUnreadMessages }) => {
+const PrivateNavbar = () => {
 
   const { signOutUser } = useAuthProvider()
   const [open, setOpen] = useState(false);
@@ -57,8 +58,10 @@ const PrivateNavbar = ({ numUnreadMessages }) => {
     toggleDrawer(false)
     setHeading(name)
     navigate(url)
-
   }
+
+  const { numUnreadMessages } = useMessagingProvider()
+
 
   return (
     <Box>

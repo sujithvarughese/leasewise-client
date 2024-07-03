@@ -7,7 +7,7 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnread, showCreateReply, setShowCreateReply, setMobileExpanded, getMessages }) => {
 
-	const [currentConversation, setCurrentConversation] = useState(null)
+	const [currentConversation, setCurrentConversation] = useState([])
 	const [otherUser, setOtherUser] = useState(null)
 
 	useEffect(() => {
@@ -23,18 +23,29 @@ const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnr
 			throw new Error(error)
 		}
 	}
+
 	const getOtherUser = () => {
 		if (message.sender._id === userID) {
-			setOtherUser(message.recipient._id)
+			setOtherUser(message.recipient)
 		} else {
-			setOtherUser(message.sender._id)
+			setOtherUser(message.sender)
 		}
 	}
-	console.log(userID)
-	console.log(otherUser)
+
+	const deleteMessage = async () => {
+		try {
+			await axiosDB.delete(`/messages/${message._id}`)
+			const updatedConversation = currentConversation.filter(item => item._id !== message._id)
+			setCurrentConversation(updatedConversation)
+		} catch (error) {
+			throw new Error(error)
+		}
+	}
+
 	useEffect(() => {
 		fetchCurrentConversation(message._id)
 		getOtherUser()
+		return () => setCurrentConversation([])
 	}, [message])
 
 
@@ -69,17 +80,19 @@ const MessageExpanded = ({ message, messages, toggleFlag, userID, markMessageUnr
 			<Box>
 				{currentConversation?.length > 0 &&
 				<Grid display="grid" gap={2}>
-					{currentConversation?.map(previousMessage =>
+					{currentConversation?.map(message =>
 					<MessageContents
-						key={previousMessage._id}
-						lastName={previousMessage.sender.lastName}
-						firstName={previousMessage.sender.firstName}
-						senderID={previousMessage.sender._id}
-						date={previousMessage.date}
-						subject={previousMessage.subject}
-						body={previousMessage.body}
+						key={message._id}
+						lastName={message.sender.lastName}
+						firstName={message.sender.firstName}
+						senderID={message.sender._id}
+						date={message.date}
+						subject={message.subject}
+						body={message.body}
+						headNode={message.headNode}
+						otherUser={otherUser}
+						deleteMessage={deleteMessage}
 					/>).reverse()}
-
 				</Grid>
 				}
 				<ReplyMessageForm

@@ -73,7 +73,9 @@ const App = () => {
 
   return (
     <ManagementProvider>
+      <MessagingProvider>
         <RouterProvider router={managementRouter} />
+      </MessagingProvider>
     </ManagementProvider>
 
   )

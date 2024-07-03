@@ -28,17 +28,19 @@ const ReplyMessageForm = ({ message, otherUser, closeReply, getMessages, setCurr
 
 		const msg = {
 			sender: user.id,
-			recipient: otherUser,
+			recipient: otherUser._id,
 			subject: message.subject,
 			body: data.body,
 			previousMessage: message._id
 		}
 		submitForm({ method: "POST", url: "/messages", requestConfig: msg })
+		e.currentTarget.reset()
 	}
 
 	useEffect(() => {
 		if (response?.msg === "success") {
 			const updatedConversation = [response.message, ...currentConversation]
+
 			setCurrentConversation(updatedConversation)
 		}
 	}, [response])

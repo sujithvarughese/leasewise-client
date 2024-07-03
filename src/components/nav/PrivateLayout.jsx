@@ -12,28 +12,16 @@ const PrivateLayout = () => {
 
   const { messagesLoader } = useLoaderData()
   const navigation = useNavigation()
-  //const { messages, setState } = useManagementProvider()
 
 
 
-  const unreadCount = messagesLoader.reduce((acc, message) => {
-    if (!message.read) {
-      return acc + 1
-    }
-    return acc
-  }, 0)
-
-/*
   const navigate = useNavigate()
-  useEffect(() => {
-    navigate("/")
-  }, [user])
-*/
+
 
   return (
 
       <Box display="flex">
-        <PrivateNavbar numUnreadMessages={unreadCount}/>
+        <PrivateNavbar />
         <Box
           component="main"
           sx={{

@@ -81,7 +81,7 @@ const UpcomingPayments = ({ expenses }) => {
         </TableHead>
         <TableBody>
           {upcomingExpenses.map((expense) => (
-            <TableRow key={expense.id}>
+            <TableRow key={expense._id}>
               <TableCell>{expense.dateDue.substring(0, 10)}</TableCell>
               <TableCell>{expense.category[0].toUpperCase() + expense.category.substring(1)}</TableCell>
               <TableCell sx={{ display: {xs: "none", sm: "revert" }}}>{expense.companyName}</TableCell>

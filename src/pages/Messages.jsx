@@ -32,7 +32,6 @@ const Messages = () => {
   const [showCreateReply, setShowCreateReply] = useState(false)
 
 
-
   // fetch address book for admin
   const getUserList = async () => {
     try {
@@ -109,17 +108,16 @@ const Messages = () => {
     }
   }
 
+
+
   useEffect(() => {
     // determine which address book to get based on role (we don't want to give tenant access to other user data)
     // addr book returned from backend as array of objects { text: "lastName, firstName", value: user._id }
-    if (user.isAdmin) {
+    if (user.role === "management") {
       getUserList()
     } else {
       getAdminInfo()
     }
-    // conversations will be messages in which the most recent message in the conversation is either to or from the user
-    const conversations = messages.filter(message => message.headNode && (message.recipient._id === user.id || message.sender._id === user.id))
-    setMessages(conversations)
     window.scrollTo(0, 0)
   }, [user.isAdmin, user.id]);
 
@@ -162,16 +160,17 @@ const Messages = () => {
               {
               messages.length > 0 ?
               messages.map(message =>
-              <MessageCollapsed
-                key={message._id}
-                message={message}
-                setExpandedMessage={setExpandedMessage}
-                markMessageRead={markMessageRead}
-                toggleFlag={toggleFlag}
-                showExpanded={()=>{}}
-                userID={user.id}
-                closeReply={()=>setShowCreateReply(false)}
-              />)
+                <MessageCollapsed
+                  key={message._id}
+                  message={message}
+                  setExpandedMessage={setExpandedMessage}
+                  markMessageRead={markMessageRead}
+                  toggleFlag={toggleFlag}
+                  showExpanded={()=>{}}
+                  userID={user.id}
+                  closeReply={()=>setShowCreateReply(false)}
+                />
+              )
               :
               <Typography textAlign="center">No Messages in this Mailbox</Typography>
               }
@@ -192,7 +191,7 @@ const Messages = () => {
             <Grid item xs={12} md={7} sx={{ overflowY: "scroll", height: "100vh" }}>
               <MessageExpanded
                 message={expandedMessage}
-                messages={data}
+                messages={messages}
                 toggleFlag={toggleFlag}
                 userID={user.id}
                 markMessageUnread={markMessageUnread}

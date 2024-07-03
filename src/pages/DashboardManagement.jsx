@@ -16,6 +16,7 @@ import { useEffect } from 'react'
 import { axiosDB } from '../utilities/axios.js'
 import { useLoaderData } from 'react-router-dom'
 import PieChartExpenses from '../components/dashboard/PieChartExpenses.jsx'
+import { useMessagingProvider } from '../context/messaging-context.jsx'
 
 function Copyright(props) {
   return (
@@ -36,13 +37,10 @@ const DashboardManagement = () => {
   const { expenses, incomes, mortgages } = useLoaderData()
   const { setState } = useManagementProvider()
 
+
   useEffect(() => {
     setState({ expenses: expenses, incomes: incomes, mortgages: mortgages })
   }, [])
-
-
-
-
 
   return (
       <Box sx={{ display: 'flex' }}>
