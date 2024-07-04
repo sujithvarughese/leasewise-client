@@ -82,14 +82,16 @@ const PrivateNavbar = () => {
             <MenuIcon />
           </IconButton>
 
-          <NavLink to="/">
+
+          <Button variant="text" to="/" onClick={() => setHeadingAndNavigate("Dashboard", "/")}>
             <img
               src={logo}
               style={logoStyle}
               alt="logo of sitemark"
             />
+          </Button>
 
-          </NavLink>
+
 
           <Stack flexDirection="row" justifyContent="flex-end" width="100%">
 

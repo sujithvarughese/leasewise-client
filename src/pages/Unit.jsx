@@ -62,7 +62,7 @@ const Unit = () => {
       <UnitTabs unitIncomes={unitIncomes} unitExpenses={unitExpenses} unitMortgages={unitMortgages}/>
 
 
-      <ButtonGroup sx={{ display: "flex", justifyContent: "space-around", m: 3}}>
+      <ButtonGroup sx={{ display: "flex", flexDirection: { xs: "column", sm: "row"}, gap: 2, justifyContent: "space-around", my: 3}}>
         <Button variant="contained" onClick={() => setShowCreateMortgageForm(!showCreateMortgageForm)}>Create Mortgage</Button>
         {showCreateMortgageForm && <CreateMortgageForm id={id} open={showCreateMortgageForm} onClose={() => setShowCreateMortgageForm(false)}/>}
         <Button variant="contained" onClick={() => setShowCreateExpenseForm(!showCreateExpenseForm)}>Create Expense</Button>

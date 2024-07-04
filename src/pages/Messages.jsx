@@ -29,6 +29,7 @@ const Messages = () => {
   const [addressBook, setAddressBook] = useState([])
   const [expandedConversation, setExpandedConversation] = useState(null)
   const [showCreateReply, setShowCreateReply] = useState(false)
+  const [showExpanded, setShowExpanded] = useState(false)
 
   const getMessages = async () => {
     try {
@@ -119,97 +120,217 @@ const Messages = () => {
   }, [user.isAdmin, user.id]);
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <Box
-        component="main"
-        sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
-          flexGrow: 1,
-          height: '100vh',
-          overflow: 'auto',
-        }}
-      >
-        <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+    <>
+      <Box sx={{ display: { xs: "none", sm: "flex" } }}>
+        <CssBaseline />
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === 'light'
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: '100vh',
+            overflow: 'auto',
+          }}
+        >
+          <Toolbar />
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
 
-          <Stack flexDirection="row">
+            <Stack flexDirection="row">
+              {
+                // Create new message icon is hidden in mobile when message is expanded
+                // Back button is only displayed in mobile when message is expanded
+                !showCreateMessageForm &&
+                <IconButton
+                  onClick={()=>setShowCreateMessageForm(prevState => !prevState)}
+                  sx={{ fontSize: "32px"}}
+                >
+                  <BiMessageSquareEdit />
+                </IconButton>
+              }
+
+            </Stack>
             {
-              // Create new message icon is hidden in mobile when message is expanded
-              // Back button is only displayed in mobile when message is expanded
-              !showCreateMessageForm &&
-              <IconButton
-                onClick={()=>setShowCreateMessageForm(prevState => !prevState)}
-                sx={{ fontSize: "32px"}}
-              >
-                <BiMessageSquareEdit />
-              </IconButton>
+              showCreateMessageForm &&
+              <Grid item xs={12} md={8}>
+                <NewMessageForm
+                  close={()=>setShowCreateMessageForm(false)}
+                  addressBook={addressBook}
+                  getMessages={getMessages}
+                />
+              </Grid>
             }
 
-          </Stack>
-          {
-            showCreateMessageForm &&
-            <Grid item xs={12} md={8}>
-              <NewMessageForm
-                close={()=>setShowCreateMessageForm(false)}
-                addressBook={addressBook}
-                getMessages={getMessages}
-              />
-            </Grid>
-          }
 
+            <Grid container position="relative">
+              <Grid item xs={12} md={4} sx={{ overflowY: "scroll", height: "100vh" }}>
+                {
+                  messageHeadNodes.length > 0 ?
+                    messageHeadNodes.map(message =>
+                      <MessageCollapsed
+                        key={message._id}
+                        messageHead={message}
+                        setExpandedConversation={setExpandedConversation}
+                        markMessageRead={markMessageRead}
+                        toggleFlag={toggleFlag}
+                        userID={user.id}
+                        closeReply={()=>setShowCreateReply(false)}
 
-          <Grid container position="relative">
-            <Grid item xs={12} md={4} sx={{ overflowY: "scroll", height: "100vh" }}>
+                      />
+                    )
+                    :
+                    <Typography textAlign="center">No Messages in this Mailbox</Typography>
+                }
+              </Grid>
+
               {
-              messageHeadNodes.length > 0 ?
-              messageHeadNodes.map(message =>
-                <MessageCollapsed
-                  key={message._id}
-                  messageHead={message}
-                  setExpandedConversation={setExpandedConversation}
-                  markMessageRead={markMessageRead}
-                  toggleFlag={toggleFlag}
-                  userID={user.id}
-                  closeReply={()=>setShowCreateReply(false)}
-                />
-              )
-              :
-              <Typography textAlign="center">No Messages in this Mailbox</Typography>
+                expandedConversation && !showCreateMessageForm ?
+                  <Grid item xs={12} md={7} sx={{ overflowY: "scroll", height: "100vh" }}>
+                    <MessageExpanded
+                      expandedConversation={expandedConversation}
+                      messages={messageHeadNodes}
+                      toggleFlag={toggleFlag}
+                      userID={user.id}
+                      markMessageUnread={markMessageUnread}
+                      showCreateReply={showCreateReply}
+                      setShowCreateReply={setShowCreateReply}
+                      getMessages={getMessages}
+                      setExpandedMessage={setExpandedConversation}
+                      closeExpanded={() => setShowExpanded(false)}
+
+                    />
+                  </Grid>
+                  :
+                  <Grid item xs={12} md={8}>
+                    <Typography variant="h3" textAlign="center" py={16}>
+                      No Message Selected
+                    </Typography>
+                  </Grid>
               }
             </Grid>
 
-            {
-            expandedConversation && !showCreateMessageForm ?
-            <Grid item xs={12} md={7} sx={{ overflowY: "scroll", height: "100vh" }}>
-              <MessageExpanded
-                expandedConversation={expandedConversation}
-                messages={messageHeadNodes}
-                toggleFlag={toggleFlag}
-                userID={user.id}
-                markMessageUnread={markMessageUnread}
-                showCreateReply={showCreateReply}
-                setShowCreateReply={setShowCreateReply}
-                getMessages={getMessages}
-                setExpandedMessage={setExpandedConversation}
-              />
-            </Grid>
-            :
-            <Grid item xs={12} md={8}>
-              <Typography variant="h3" textAlign="center" py={16}>
-                No Message Selected
-              </Typography>
-            </Grid>
-            }
-          </Grid>
+          </Container>
+        </Box>
 
-        </Container>
       </Box>
 
-    </Box>
+
+      <Box sx={{ display: { xs: "flex", sm: "none" } }}>
+        <CssBaseline />
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === 'light'
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: '100vh',
+            overflow: 'auto',
+          }}
+        >
+          <Toolbar />
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+
+            <Stack flexDirection="row" justifyContent="space-between">
+              {
+                expandedConversation &&
+                <Box display={{ xs: "flex", lg: "none" }}>
+                  <IconButton onClick={() => setExpandedConversation(null)}><TfiControlBackward /></IconButton>
+                </Box>
+              }
+
+              {
+                // Create new message icon is hidden in mobile when message is expanded
+                // Back button is only displayed in mobile when message is expanded
+                !showCreateMessageForm &&
+                <IconButton
+                  onClick={()=>setShowCreateMessageForm(prevState => !prevState)}
+                  sx={{ fontSize: "32px"}}
+                >
+                  <BiMessageSquareEdit />
+                </IconButton>
+              }
+
+            </Stack>
+            {
+              showCreateMessageForm &&
+              <Grid item xs={12} md={8}>
+                <NewMessageForm
+                  close={()=>setShowCreateMessageForm(false)}
+                  addressBook={addressBook}
+                  getMessages={getMessages}
+                />
+              </Grid>
+            }
+
+
+            <Grid container position="relative">
+              {
+                expandedConversation ?
+                  <>
+                    {
+                      expandedConversation && !showCreateMessageForm ?
+                        <Grid item xs={12} md={7} sx={{ overflowY: "scroll", height: "100vh" }}>
+                          <MessageExpanded
+                            expandedConversation={expandedConversation}
+                            messages={messageHeadNodes}
+                            toggleFlag={toggleFlag}
+                            userID={user.id}
+                            markMessageUnread={markMessageUnread}
+                            showCreateReply={showCreateReply}
+                            setShowCreateReply={setShowCreateReply}
+                            getMessages={getMessages}
+                            setExpandedMessage={setExpandedConversation}
+                            closeExpanded={() => setShowExpanded(false)}
+
+                          />
+                        </Grid>
+                        :
+                        <Grid item xs={12} md={8}>
+                          <Typography variant="h3" textAlign="center" py={16}>
+                            No Message Selected
+                          </Typography>
+                        </Grid>
+                    }
+                  </>
+                  :
+                  <Grid item xs={12} md={4} sx={{ overflowY: "scroll", height: "100vh" }}>
+                    {
+                      messageHeadNodes.length > 0 ?
+                        messageHeadNodes.map(message =>
+                          <MessageCollapsed
+                            key={message._id}
+                            messageHead={message}
+                            setExpandedConversation={setExpandedConversation}
+                            markMessageRead={markMessageRead}
+                            toggleFlag={toggleFlag}
+                            userID={user.id}
+                            closeReply={()=>setShowCreateReply(false)}
+
+                          />
+                        )
+                        :
+                        <Typography textAlign="center">No Messages in this Mailbox</Typography>
+                    }
+                  </Grid>
+              }
+
+
+
+
+
+            </Grid>
+
+          </Container>
+        </Box>
+
+      </Box>
+
+    </>
+
 
   );
 };

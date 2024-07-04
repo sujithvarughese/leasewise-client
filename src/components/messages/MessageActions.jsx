@@ -11,7 +11,7 @@ import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import { ButtonGroup, Typography } from '@mui/material'
 
-const MessageActions = ({ message, reply, toggleFlag, markMessageUnread, setMobileExpanded }) => {
+const MessageActions = ({ message, toggleFlag  }) => {
 
 	const { user, showUnauthorizedAlert } = useAuthProvider()
 	const { date, sender, recipient, subject, body, read, flag } = message
@@ -24,10 +24,6 @@ const MessageActions = ({ message, reply, toggleFlag, markMessageUnread, setMobi
 			p={1}
 		>
 			<Box>
-				<Box display={{ xs: "flex", lg: "none" }}>
-					<IconButton onClick={()=>setMobileExpanded(false)}><TfiControlBackward /></IconButton>
-				</Box>
-
 				<Stack flexDirection="row">
 					<Typography>Subject:</Typography>
 					<Typography

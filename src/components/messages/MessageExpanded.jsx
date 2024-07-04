@@ -14,7 +14,8 @@ const MessageExpanded = ({
 	showCreateReply,
 	setShowCreateReply,
 	setExpandedMessage,
-	getMessages
+	getMessages,
+	closeExpanded
 }) => {
 
 	const [currentConversation, setCurrentConversation] = useState([])
@@ -85,6 +86,7 @@ const MessageExpanded = ({
 				reply={()=>setShowCreateReply(true)}
 				toggleFlag={toggleFlag}
 				markMessageUnread={markMessageUnread}
+				closeExpanded={closeExpanded}
 			/>}
 			<Box>
 				{currentConversation?.length > 0 &&
