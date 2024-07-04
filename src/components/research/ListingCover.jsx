@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
-import ListingDetails from './ListingDetails.jsx'
+import ListingDetails from '../../pages/ListingDetails.jsx'
 import useSubmit from '../../hooks/useSubmit.js'
+import { useNavigate } from 'react-router-dom'
 
 const ListingCover = ({
   propertyId,
@@ -17,10 +18,10 @@ const ListingCover = ({
   listPrice
 }) => {
 
-  const [showDetails, setShowDetails] = useState(false)
   const [listingDetails, setListingDetails] = useState(null)
   const { response, error, loading, submitForm } = useSubmit()
 
+  const navigate = useNavigate()
 
   const handleClick = () => {
     submitForm({ method: "GET", url: `/research/listings/${propertyId}`, requestConfig: null })
@@ -29,12 +30,18 @@ const ListingCover = ({
   useEffect(() => {
     if (response) {
       setListingDetails(response.home)
-      setListingDetails(true)
     }
   }, [response])
 
+  useEffect(() => {
+    if (listingDetails) {
+      navigate(`/listings/${propertyId}`,
+        { state: { address, city, state, zipCode, bedrooms, bathrooms, listPrice, streetViewImage, ...listingDetails }})
+    }
+  }, [listingDetails])
+
   return (
-    <>
+
       <Box component="button" onClick={handleClick}>
         <Box component="img" src={primaryImage}></Box>
 
@@ -47,20 +54,8 @@ const ListingCover = ({
 
       </Box>
 
-      {showDetails &&
-        <ListingDetails
-          closeDetails={() => setShowDetails(false)}
-          address={address}
-          city={city}
-          state={state}
-          zipCode={zipCode}
-          bedrooms={bedrooms}
-          bathrooms={bathrooms}
-          listPrice={listPrice}
-          streetViewImage={streetViewImage}
-          {...listingDetails}
-        />}
-    </>
+
+
 
 
   )

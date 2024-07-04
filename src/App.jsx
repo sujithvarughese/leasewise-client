@@ -21,6 +21,8 @@ import AccountingUnit from './pages/AccountingUnit.jsx'
 import { MessagingProvider } from './context/messaging-context.jsx'
 import { ThemeProvider } from '@mui/material'
 import theme from './theme.js'
+import ListingDetails from './pages/ListingDetails.jsx'
+import Listings from './pages/Listings.jsx'
 
 const App = () => {
 
@@ -53,6 +55,8 @@ const App = () => {
         { path: "/research", element: <Research /> },
         { path: "/accounting", element: <Accounting />, loader: accountingLoader },
         { path: "/accounting/:id", element: <AccountingUnit />, loader: accountingLoader },
+        { path: "/listings", element: <Listings /> },
+        { path: "/listings/:id", element: <ListingDetails /> },
           /*errorElement: <Error />,
           children: [
             { index: true, element: <FinancesTotal />, loader: financialSummaryLoader },

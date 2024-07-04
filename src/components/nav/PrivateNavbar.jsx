@@ -183,6 +183,11 @@ const managementLinks = [
     icon: <DataThresholdingIcon />,
     url: "/research"
   },
+  {
+    name: "Listings",
+    icon: <DataThresholdingIcon />,
+    url: "/listings"
+  },
 ]
 
 const tenantLinks = [
