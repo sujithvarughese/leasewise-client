@@ -12,6 +12,7 @@ import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
+import Listings from '../components/research/Listings.jsx'
 const Research = () => {
 
   const [counties, setCounties] = useState([])
@@ -91,6 +92,10 @@ const Research = () => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
+
+
+
+
       <Box
         component="main"
         sx={{
@@ -104,6 +109,12 @@ const Research = () => {
         }}
       >
         <Toolbar />
+
+        <Container>
+          <Listings />
+        </Container>
+
+
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           <Typography variant="h5">
             Search for Fair Market Rent Values:
