@@ -19,6 +19,8 @@ import {
 import { ManagementProvider } from './context/management-context.jsx'
 import AccountingUnit from './pages/AccountingUnit.jsx'
 import { MessagingProvider } from './context/messaging-context.jsx'
+import { ThemeProvider } from '@mui/material'
+import theme from './theme.js'
 
 const App = () => {
 
@@ -72,11 +74,12 @@ const App = () => {
   }
 
   return (
-    <ManagementProvider>
-      <MessagingProvider>
-        <RouterProvider router={managementRouter} />
-      </MessagingProvider>
-    </ManagementProvider>
+    <ThemeProvider theme={theme}>
+      <ManagementProvider>
+          <RouterProvider router={managementRouter} />
+      </ManagementProvider>
+    </ThemeProvider>
+
 
   )
 }

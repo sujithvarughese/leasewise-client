@@ -19,7 +19,6 @@ import { unitLoader } from './pages/Unit.jsx'
 // COMPONENTS
 
 // accounting
-import FinancesMobileTable from './components/accounting/financials-total/FinancesMobileTable.jsx'
 import FinancesTotalCalculated from './components/accounting/financials-total/FinancesTotalCalculated.jsx'
 import FinancesTotalUnitValues from './components/accounting/financials-total/FinancesTotalUnitValues.jsx'
 
@@ -80,7 +79,6 @@ export {
   unitsLoader,
   unitLoader,
 
-  FinancesMobileTable,
   FinancesTotalCalculated,
   FinancesTotalUnitValues,
 

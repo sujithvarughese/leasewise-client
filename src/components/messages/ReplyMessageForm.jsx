@@ -9,8 +9,10 @@ import { Form } from 'formik'
 import { Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import MessageForm from '../forms/MessageForm.jsx'
-import { Textarea } from '@mui/joy'
+//import { Textarea } from '@mui/joy'
 import useSubmit from '../../hooks/useSubmit.js'
+import TextField from '@mui/material/TextField'
+import Box from '@mui/material/Box'
 
 const ReplyMessageForm = ({
 	message,
@@ -58,25 +60,18 @@ const ReplyMessageForm = ({
 		<div className={classes.container}>
 			<Card>
 				<form onSubmit={handleSubmit}>
-					<Textarea
+					<TextField
+						multiline
+						rows={4}
+						variant="outlined"
 						name="body"
 						placeholder="Create Message"
 						minRows={2}
-						sx={{
-							border: "none",
-							'--Textarea-focusedInset': 'var(--any, )',
-							'--Textarea-focusedThickness': '0.25rem',
-							'--Textarea-focusedHighlight': 'rgba(13,110,253,.25)',
-							'&::before': {
-								transition: 'box-shadow .15s ease-in-out',
-							},
-							'&:focus-within': {
-								borderColor: '#86b7fe',
-							},
-						}}
+						maxRows={4}
+						fullWidth
 					/>
+					<Button type="submit">{buttonText}</Button>
 
-						<Button type="submit">{buttonText}</Button>
 				</form>
 			</Card>
 		</div>
@@ -84,14 +79,6 @@ const ReplyMessageForm = ({
 	);
 };
 
-const replyMessage = async (message) => {
-	try {
-		const response = await axiosDB.post("/messages", message)
-		const { msg } = response.data
-		return msg
-	} catch (error) {
-		throw new Error(error)
-	}
-}
+
 
 export default ReplyMessageForm;

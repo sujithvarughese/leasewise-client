@@ -18,7 +18,6 @@ const PrivateLayout = () => {
 
   const navigate = useNavigate()
 
-  console.log(unauthorizedAlertShown)
   return (
 
       <Box display="flex">

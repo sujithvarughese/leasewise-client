@@ -14,11 +14,13 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import { useManagementProvider } from '../context/management-context.jsx'
+import { useAuthProvider } from '../context/auth-context.jsx'
 
 const Units = () => {
 	// units = [{ unit }, {},...]
 	const units = useLoaderData()
 
+	const { showUnauthorizedAlert } = useAuthProvider()
 	// set in global state
 	const { setState } = useManagementProvider()
 	useEffect(() => {
@@ -79,7 +81,7 @@ const Units = () => {
 
 
 							<Button
-								onClick={()=>setShowCreateUnitForm(!showCreateUnitForm)}
+								onClick={()=>showUnauthorizedAlert()}
 							>
 								{!showCreateUnitForm ? "Create Unit" : "Hide Form"}</Button>
 					</Stack>

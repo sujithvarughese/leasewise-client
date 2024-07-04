@@ -139,7 +139,7 @@ const PublicNavbar = () => {
                   <Button color="primary" variant="contained" size="small" component="a" href="/sign-up">
                     Sign up
                   </Button>
-                  <DemoButton setOpen={setOpen}/>
+                  <DemoButton />
                 </>
               }
             </Box>
@@ -198,7 +198,7 @@ const PublicNavbar = () => {
                           </Button>
                         </MenuItem>
                         <MenuItem>
-                          <DemoButton closeDrawer={() => setOpen(false)}/>
+                          <DemoButton />
                         </MenuItem>
                       </>
                     }

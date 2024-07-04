@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { axiosDB } from "../utilities/axios.js";
 import { useLoaderData } from "react-router-dom";
-import { FinancesTotalCalculated, FinancesTotalUnitValues, FinancesMobileTable } from "../"
+import { FinancesTotalCalculated, FinancesTotalUnitValues } from "../"
 import { totalProfit, convertToUSD } from "../utilities/financeCalculations.js";
 import { useManagementProvider } from '../context/management-context.jsx'
-import { FormControl, Select, TableContainer, Typography } from '@mui/material'
+import { FormControl, InputLabel, Select, TableContainer, Typography } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
 import CssBaseline from '@mui/material/CssBaseline'
 import Toolbar from '@mui/material/Toolbar'
@@ -54,6 +54,7 @@ const Accounting = () => {
     setUnitFinances(updatedList)
   }
 
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -71,12 +72,25 @@ const Accounting = () => {
       >
         <Toolbar />
         <Container sx={{ mt: 4, mb: 4 }}>
-          <Typography variant="h4">Accounting</Typography>
 
-          {/*<StyledSelect name="term" label="Term"
-                        options={[{ label: "Monthly", value: 1 }, { label: "Annual", value: 12 }]}
-                        minWidth={120}
-          />*/}
+          <Box>
+            <FormControl>
+              <InputLabel>Term</InputLabel>
+              <Select name="term"
+                      label="Term"
+                      value={setSelectedTerm.label}
+                      sx={{ minWidth: 120 }}
+                      onChange={(e) => setSelectedTerm(e.target.value)}
+
+              >
+                <MenuItem value={1}>Monthly</MenuItem>
+                <MenuItem value={12}>Annual</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+
+
+
 
           <TableContainer component={Paper} sx={{ my: 2 }}>
             <Table aria-label="simple-table">

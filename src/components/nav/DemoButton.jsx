@@ -1,24 +1,24 @@
 import Button from '@mui/material/Button'
 import { Formik } from 'formik'
 import { loginSchema } from '../../utilities/authSchemas.js'
-import useAxios from '../../hooks/useAxios.js'
 import { useAuthProvider } from '../../context/auth-context.jsx'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import useSubmit from '../../hooks/useSubmit.js'
 
 const credentials = {
   email: import.meta.env.VITE_ADMIN_LOGIN,
   password: import.meta.env.VITE_ADMIN_PASSWORD
 }
 
-const DemoButton = ({ closeDrawer }) => {
+const DemoButton = () => {
 
   const { signInUser } = useAuthProvider()
-  const { response, error, loading, submitData } = useAxios()
+  const { response, error, loading, submitForm } = useSubmit()
   const navigate = useNavigate()
   const handleSubmit = async (values, actions) => {
     try {
-      await submitData({
+      await submitForm({
         method: "post",
         url: "/auth/login",
         requestConfig: values
@@ -57,7 +57,22 @@ const DemoButton = ({ closeDrawer }) => {
 
       </Formik>
 
-
+      <Formik
+        initialValues={{ email: "", password: ""}}
+        validationSchema={loginSchema}
+        onSubmit={handleSubmit}
+      >
+        {props => (
+          <Button
+            sx={{ width: '100%', display: { sm: '', md: 'none' } }}
+            color="secondary"
+            variant="outlined"
+            onClick={()=>{handleSubmit(credentials, props)}}
+          >
+            Tour
+          </Button>
+        )}
+      </Formik>
     </>
   )
 }

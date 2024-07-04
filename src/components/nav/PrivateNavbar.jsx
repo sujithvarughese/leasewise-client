@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Outlet, useNavigate, useNavigation } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate, useNavigation } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
 import MuiAppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -34,9 +34,12 @@ import { LinearProgress } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Stack from '@mui/material/Stack'
 import { useMessagingProvider } from '../../context/messaging-context.jsx'
-
-
-
+import logo from "../../assets/images/landing/logos/lease-wise-logo.png"
+const logoStyle = {
+  width: '48px',
+  height: 'auto',
+  cursor: 'pointer',
+};
 
 
 const PrivateNavbar = () => {
@@ -56,6 +59,7 @@ const PrivateNavbar = () => {
   }
 
   const [heading, setHeading] = useState("Dashboard")
+
   const setHeadingAndNavigate = (name, url) => {
     toggleDrawer(false)
     setHeading(name)
@@ -70,13 +74,22 @@ const PrivateNavbar = () => {
       <CssBaseline />
       <AppBar>
         <Toolbar>
-          <IconButton color="inherit" aria-label="open drawer" onClick={() => toggleDrawer(true)} sx={{ display: { sm: 'none' }}}>
+          <IconButton
+            color="inherit" aria-label="open drawer"
+            onClick={() => toggleDrawer(true)}
+            sx={{ display: { sm: 'none' }}}
+          >
             <MenuIcon />
           </IconButton>
 
-          <Typography component="h1" variant="h6" color="inherit" sx={{ flexGrow: 1, display: { xs: 'none', sm: "initial" } }}>
-            {heading}
-          </Typography>
+          <NavLink to="/">
+            <img
+              src={logo}
+              style={logoStyle}
+              alt="logo of sitemark"
+            />
+
+          </NavLink>
 
           <Stack flexDirection="row" justifyContent="flex-end" width="100%">
 
@@ -100,14 +113,17 @@ const PrivateNavbar = () => {
         </Box>
       </AppBar>
 
-      <Box display={{ xs: "none", sm: "initial"}}>
+      <Box display={{ xs: "none", sm: "initial"}} >
         <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', px: 1 }} />
         <List component="nav">
           {managementLinks.map(link =>
-            <ListItemButton key={link.name} onClick={() => setHeadingAndNavigate(link.name, link.url)}>
-              <ListItemIcon>{link.icon}</ListItemIcon>
-              <ListItemText primary={link.name} sx={{ display: { xs: "none", md: "initial" }}}/>
-            </ListItemButton>
+            <Box key={link.name} bgcolor={ heading === link.name ? "dodgerblue" : ""}>
+              <ListItemButton onClick={() => setHeadingAndNavigate(link.name, link.url)}>
+                <ListItemIcon>{link.icon}</ListItemIcon>
+                <ListItemText primary={link.name} sx={{ display: { xs: "none", md: "initial" }}}/>
+              </ListItemButton>
+            </Box>
+
           )}
         </List>
       </Box>
@@ -164,7 +180,7 @@ const managementLinks = [
     name: "Research",
     icon: <DataThresholdingIcon />,
     url: "/research"
-  }
+  },
 ]
 
 const tenantLinks = [

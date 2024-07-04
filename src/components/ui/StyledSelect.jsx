@@ -5,7 +5,7 @@ const StyledSelect = ({ name, label, options, ...props }) => {
   return (
     <FormControl sx={props}>
       <InputLabel id={name}>{label}</InputLabel>
-      <Select name={name} id={name} {...props}>
+      <Select name={name} id={name} {...props} on>
         {options?.map(option =>
           <MenuItem key={option} value={option.value}>
             {option.label}

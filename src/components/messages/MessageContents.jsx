@@ -54,7 +54,7 @@ const MessageContents = ({
                   <IconButton
                     onClick={handleDeleteMessage}
                     sx={{ p: 0}}>
-                    <DeleteForeverIcon  sx={{ height: "20px"}}/>
+                    <DeleteForeverIcon  sx={{ height: "16px"}}/>
                   </IconButton>}
               </Stack>
 
