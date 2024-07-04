@@ -1,9 +1,9 @@
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { useEffect, useState } from 'react'
-import useSubmit from '../hooks/useSubmit.js'
+import useSubmit from '../../hooks/useSubmit.js'
 import Box from '@mui/material/Box'
-import ListingCover from '../components/research/ListingCover.jsx'
+import ListingCover from './ListingCover.jsx'
 import Container from '@mui/material/Container'
 import CssBaseline from '@mui/material/CssBaseline'
 import Toolbar from '@mui/material/Toolbar'
@@ -17,7 +17,6 @@ const Listings = () => {
   const { response, error, loading, submitForm } = useSubmit()
 
 
-
   const handleSubmit = (e) => {
     e.preventDefault()
     submitForm({ method: "POST", url: "/research/listings", requestConfig: { zipCode }})
@@ -25,7 +24,8 @@ const Listings = () => {
 
   useEffect(() => {
     if (response) {
-      setListings(response.homes)
+      const updatedHomes = response.homes.filter(home => !!home.address)
+      setListings(updatedHomes)
     }
   }, [response])
 

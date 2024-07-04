@@ -21,7 +21,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" mt={1}>
       {'Copyright © '}
-      <Link href="https://mui.com/">LeaseWise&nbsp;</Link>
+      <Link href="">LeaseWise&nbsp;</Link>
       {new Date().getFullYear()}
     </Typography>
   );

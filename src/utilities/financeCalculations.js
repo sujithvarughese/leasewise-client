@@ -4,6 +4,7 @@ const convertToUSD = (number) => {
 	return  number.toLocaleString('en-US', {
 		style: 'currency',
 		currency: 'USD',
+		maximumFractionDigits: 0,
 	})
 }
 
