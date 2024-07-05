@@ -4,6 +4,7 @@ import { ImageList, ImageListItem, Modal, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import { convertToUSD } from '../../utilities/financeCalculations.js'
 import Link from '@mui/material/Link'
+import Stack from '@mui/material/Stack'
 
 const ListingDetails = ({
   propertyId,
@@ -33,32 +34,37 @@ const ListingDetails = ({
   return (
     <Modal open={showDetails} onClose={closeDetails}>
       <Box sx={style}>
-        <Typography>{address}</Typography>
-        <Typography>{city}, {state} {zipCode}</Typography>
-        <Typography>{bedrooms} bed, {bathrooms} bath</Typography>
-        <Typography>{convertToUSD(listPrice)}</Typography>
-        <Typography>Built in {yearBuilt}</Typography>
-        <Typography>Listed on {listDateString}</Typography>
-        <Typography>Last sold for {convertToUSD(lastSoldPrice)} on {lastSoldDateString}</Typography>
-        <Link href={link} target="_blank" rel="noreferrer">More Information</Link>
-        <ImageList cols={3}>
-          {photos?.map((item, index) => (
-            <ImageListItem key={index}>
-              <img src={item} alt="photo"/>
-            </ImageListItem>
-          ))}
-        </ImageList>
-        <Typography>{description}</Typography>
+        <Box sx={{ position: "relative" }}>
+          <Typography variant="h4" textAlign="center">{address}</Typography>
+          <Typography variant="h6" textAlign="center">{city}, {state} {zipCode}</Typography>
 
-        <>
-          <Typography>Google Street View</Typography>
-          <Box component="img" src={streetViewImage} alt="photo" />
-        </>
+          <Box  textAlign="center" justifyContent="space-around" py={3}>
+              <Typography>{bedrooms} bed, {bathrooms} bath</Typography>
+              <Typography>Built in {yearBuilt}</Typography>
+          </Box>
+
+          <Box sx={{ position: { lg: "absolute" }, top: 0, right: 0, textAlign: { xs: "center", lg: "right"} }}>
+            <Typography variant="h6">List Price: <span style={{ fontWeight: 700 }}>{convertToUSD(listPrice)}</span></Typography>
+            <Typography>Listed on {listDateString}</Typography>
+            <Typography>Last sold for {convertToUSD(lastSoldPrice)} on {lastSoldDateString}</Typography>
+          </Box>
+
+          <Typography py={3}>{description}</Typography>
+          <Link href={link} target="_blank" rel="noreferrer">More Information</Link>
+          <ImageList cols={3}>
+            {photos?.map((item, index) => (
+              <ImageListItem key={index}>
+                <img src={item} alt="photo"/>
+              </ImageListItem>
+            ))}
+          </ImageList>
 
 
-
-
-
+          <>
+            <Typography>Google Street View</Typography>
+            <Box component="img" src={streetViewImage} alt="photo" />
+          </>
+        </Box>
       </Box>
 
     </Modal>

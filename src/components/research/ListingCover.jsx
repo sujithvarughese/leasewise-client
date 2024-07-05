@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Typography } from '@mui/material'
+import { CardActionArea, CardMedia, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import ListingDetails from './ListingDetails.jsx'
 import useSubmit from '../../hooks/useSubmit.js'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Paper from '@mui/material/Paper'
 
 const ListingCover = ({
   propertyId,
@@ -35,17 +38,25 @@ const ListingCover = ({
 
   return (
     <>
-      <Box component="button" onClick={handleClick}>
-        <Box component="img" src={primaryImage}></Box>
+      <Paper elevation={16} variant="outlined" component="button" onClick={handleClick} sx={{  width: 240 }}>
+        <CardActionArea>
+          <CardMedia component="img" image={primaryImage} height={140}></CardMedia>
 
-        <Box>
-          <Typography>{address}</Typography>
-          <Typography>{city}, {state} {zipCode}</Typography>
-        </Box>
-        <Typography>{bedrooms} bedrooms {bathrooms} bathrooms</Typography>
-        <Typography>${listPrice}</Typography>
+          <CardContent>
+            <Box>
+              <Typography height={60} gutterBottom variant="h5">{address}</Typography>
+              <Typography variant="body1" >{city}, {state} {zipCode}</Typography>
+            </Box>
+            <Typography variant="body2">{bedrooms} bedrooms {bathrooms} bathrooms</Typography>
+            <Typography variant="subtitle2">List Price: ${listPrice}</Typography>
+          </CardContent>
 
-      </Box>
+        </CardActionArea>
+
+
+
+
+      </Paper>
 
       {showDetails &&
         <ListingDetails

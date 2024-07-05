@@ -90,31 +90,11 @@ const Fmr = () => {
   }
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-
-
-
-
-      <Box
-        component="main"
-        sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
-          flexGrow: 1,
-          height: '100vh',
-          overflow: 'auto',
-        }}
-      >
+    <Box>
         <Toolbar />
+        <Container sx={{ textAlign: "center" }}>
 
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <Typography variant="h5">
-            Search for Fair Market Rent Values:
-          </Typography>
-
+          <Typography variant="h5">Search for Fair Market Rent Values:</Typography>
           <Box>
             <FormControl sx={{ m: 1, minWidth: 120}}>
               <InputLabel htmlFor="state" id="state">State</InputLabel>
@@ -212,11 +192,8 @@ const Fmr = () => {
               </Table>
             </TableContainer>
           }
-
-
-
         </Container>
-      </Box>
+
     </Box>
 
 

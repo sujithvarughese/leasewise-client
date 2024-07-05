@@ -8,6 +8,9 @@ import Container from '@mui/material/Container'
 import CssBaseline from '@mui/material/CssBaseline'
 import Toolbar from '@mui/material/Toolbar'
 import { useNavigate } from 'react-router-dom'
+import { Label } from '@mui/icons-material'
+import { Typography } from '@mui/material'
+import Stack from '@mui/material/Stack'
 
 const Listings = () => {
 
@@ -33,21 +36,28 @@ const Listings = () => {
   return (
     <Box>
       <Toolbar />
-      <Container>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            type="text"
-            name="zipCode"
-            value={zipCode}
-            label="Zip Code"
-            variant="outlined"
-            onChange={(e) => setZipCode(e.target.value)}
-          />
-          <Button type="submit">Submit</Button>
-        </form>
+      <Container sx={{ textAlign: "center"}}>
+        <Box paddingBottom={3}>
+          <form onSubmit={handleSubmit}>
+            <Stack flexDirection="row" justifyContent="center" alignItems="center" gap={3}>
+              <Typography variant="h5">Search MLS Listings: </Typography>
+              <TextField
+                type="text"
+                name="zipCode"
+                value={zipCode}
+                label="Zip Code"
+                variant="outlined"
+                onChange={(e) => setZipCode(e.target.value)}
+              />
+              <Button type="submit">Submit</Button>
+            </Stack>
+
+
+          </form>
+        </Box>
+
 
         {listings?.map((listing, index) => <ListingCover key={index} {...listing}/>)}
-
       </Container>
 
     </Box>
