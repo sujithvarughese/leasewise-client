@@ -17,10 +17,12 @@ const useSubmit = () => {
         ...requestConfig,
       })
       setResponse(res.data)
+      console.log(res)
       return true
     } catch (err) {
       setError(err.message)
-      console.log(err.message)
+      console.log("Error2")
+      console.log(err)
     } finally {
       setLoading(false)
     }
