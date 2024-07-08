@@ -25,7 +25,6 @@ const DemoButton = () => {
       })
       navigate("/")
     } catch (err) {
-      console.log("Error1")
       console.log(error)
     } finally {
       actions.resetForm()

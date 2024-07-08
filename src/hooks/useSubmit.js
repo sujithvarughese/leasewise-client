@@ -12,13 +12,11 @@ const useSubmit = () => {
     setError("")
     setLoading(true)
     const { method, url, requestConfig } = configObject
-    console.log(requestConfig)
     try {
       const res = await axiosDB[method.toLowerCase()]( url, {
         ...requestConfig,
       })
       setResponse(res.data)
-      console.log(res)
       return true
     } catch (err) {
       setError(err.message)
