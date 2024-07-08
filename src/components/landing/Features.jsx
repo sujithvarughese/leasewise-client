@@ -13,30 +13,33 @@ import DevicesRoundedIcon from '@mui/icons-material/DevicesRounded';
 import EdgesensorHighRoundedIcon from '@mui/icons-material/EdgesensorHighRounded';
 import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';
 
+
+
+
 const items = [
   {
     icon: <ViewQuiltRoundedIcon />,
     title: 'Dashboard',
     description:
       'Get all your info in real-time including upcoming expenses and tenant notifications right on the dashboard.',
-    imageLight: 'url("/static/images/templates/templates-images/dash-light.png")',
-    imageDark: 'url("/static/images/templates/templates-images/dash-dark.png")',
+    imageLight: 'url("/static/images/dashboard.png")',
+    imageDark: 'url("/static/images/dashboard.png")',
   },
   {
     icon: <EdgesensorHighRoundedIcon />,
     title: 'Mobile integration',
     description:
       'Full mobile application with direct messaging capability and automatic rent receipt generation .',
-    imageLight: 'url("/static/images/mobile-light.png")',
-    imageDark: 'url("/static/images/mobile-dark.png")',
+    imageLight: 'url("/static/images/desktop_and_mobile.png")',
+    imageDark: 'url("/static/images/desktop_and_mobile.png")',
   },
   {
     icon: <DevicesRoundedIcon />,
     title: 'Available on all platforms',
     description:
       'Available on all platforms, including web, iOS, and Android.',
-    imageLight: 'url("/static/images/devices-light.png")',
-    imageDark: 'url("/static/images/devices-dark.png")',
+    imageLight: 'url("/static/images/desktop_mobile2.png")',
+    imageDark: 'url("/static/images/desktop_and_mobile2.png")',
   },
 ];
 
@@ -257,6 +260,7 @@ const Features = () => {
                 width: 420,
                 height: 500,
                 backgroundSize: 'contain',
+                backgroundRepeat: "no-repeat",
                 backgroundImage: (theme) =>
                   theme.palette.mode === 'light'
                     ? items[selectedItemIndex].imageLight
