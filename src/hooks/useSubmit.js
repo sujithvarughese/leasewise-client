@@ -12,7 +12,6 @@ const useSubmit = () => {
     setError("")
     setLoading(true)
     const { method, url, requestConfig } = configObject
-    console.log(configObject)
     try {
       const res = await axiosDB[method.toLowerCase()]( url, {
         ...requestConfig,
