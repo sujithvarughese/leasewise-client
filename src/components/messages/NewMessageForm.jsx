@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
-import { ButtonGroup, FormControl, Input, Select, Typography } from '@mui/material'
+import {ButtonGroup, FormControl, Input, Select, TextareaAutosize, Typography} from '@mui/material'
 import Button from '@mui/material/Button'
 import StyledSelect from '../ui/StyledSelect.jsx'
 import TextField from '@mui/material/TextField'
@@ -54,11 +54,12 @@ const NewMessageForm = ({ close, addressBook, getMessages }) => {
         <Stack>
           <StyledSelect name="recipient" label="To:" options={addressBook} />
           <TextField name="subject" label="Subject" />
-          <Textarea
+          <TextareaAutosize
             id="body"
             name="body"
             placeholder="Type new message here..."
-            minRows="15"
+            minRows={15}
+            maxRows={15}
             sx={{
               '--Textarea-focusedInset': 'var(--any, )',
               '--Textarea-focusedThickness': '0.25rem',

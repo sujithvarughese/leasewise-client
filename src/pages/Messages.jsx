@@ -46,7 +46,6 @@ const Messages = () => {
     try {
       const response = await axiosDB("/auth/getUserList")
       const { userList } = response.data
-      console.log(userList)
       setAddressBook(userList)
     } catch (error) {
       console.log(error);
@@ -137,7 +136,7 @@ const Messages = () => {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-
+            {/*
             <Stack flexDirection="row">
               {
                 // Create new message icon is hidden in mobile when message is expanded
@@ -152,6 +151,7 @@ const Messages = () => {
               }
 
             </Stack>
+            */}
             {
               showCreateMessageForm &&
               <Grid item xs={12} md={8}>
