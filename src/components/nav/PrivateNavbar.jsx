@@ -51,11 +51,13 @@ const PrivateNavbar = () => {
   };
   const navigate = useNavigate()
   const navigation = useNavigation()
+
   const signOutAndNavigateHome = () => {
+    navigate("/")
     setTimeout(() => {
       signOutUser()
-    }, 150)
-    navigate("/")
+    }, 200)
+
   }
 
   const [heading, setHeading] = useState("Dashboard")

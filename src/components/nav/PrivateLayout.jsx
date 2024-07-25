@@ -14,9 +14,9 @@ const PrivateLayout = () => {
   const { messagesLoader } = useLoaderData()
   const navigation = useNavigation()
 
-  const { unauthorizedAlertShown } = useAuthProvider()
-
+  const { unauthorizedAlertShown, user } = useAuthProvider()
   const navigate = useNavigate()
+
 
   return (
 
