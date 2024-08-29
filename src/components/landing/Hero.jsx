@@ -71,6 +71,7 @@ const Hero = () => {
           >
             Make self-managing rentals simple.
           </Typography>
+          {/*
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
             alignSelf="center"
@@ -94,13 +95,17 @@ const Hero = () => {
               Sign Up Now
             </Button>
           </Stack>
+           */}
+          {/*
           <Typography variant="caption" textAlign="center" sx={{ opacity: 0.8 }}>
             By clicking &quot;Sign Up Now&quot; you agree to our&nbsp;
             <Link href={TOS}  target="_blank" rel="noreferrer" color="primary">
               Terms & Conditions
             </Link>
           </Typography>
+          */}
         </Stack>
+
         <Box
           id="image"
           sx={(theme) => ({

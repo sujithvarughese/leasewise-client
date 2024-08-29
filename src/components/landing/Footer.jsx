@@ -20,13 +20,90 @@ const logoStyle = {
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" mt={1}>
-      {'Copyright © '}
-      <Link href="">LeaseWise&nbsp;</Link>
+      {'Copyright © Sujith Varughese '}
       {new Date().getFullYear()}
     </Typography>
   );
 }
+
 const Footer = () => {
+  return (
+    <Container
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: { xs: 4, sm: 8 },
+        py: { xs: 8, sm: 10 },
+        textAlign: { sm: 'center', md: 'left' },
+      }}
+    >
+    <Box sx={{ width: { xs: '100%', sm: '60%' } }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          pt: { xs: 4, sm: 8 },
+          width: '100%',
+          borderTop: '1px solid',
+          borderColor: 'divider',
+        }}
+      >
+        <div>
+          <Box sx={{ ml: '-15px' }}>
+            <img
+              src={logo}
+              style={logoStyle}
+              alt="logo of sitemark"
+            />
+          </Box>
+          <Link color="text.secondary" href={tos}>
+            Terms of Service
+          </Link>
+          <Copyright />
+        </div>
+        <Stack
+          direction="row"
+          justifyContent="left"
+          spacing={1}
+          useFlexGap
+          sx={{
+            color: 'text.secondary',
+          }}
+        >
+          <IconButton
+            color="inherit"
+            href="https://github.com"
+            aria-label="GitHub"
+            sx={{ alignSelf: 'center' }}
+          >
+            <FacebookIcon />
+          </IconButton>
+          <IconButton
+            color="inherit"
+            href="https://x.com"
+            aria-label="X"
+            sx={{ alignSelf: 'center' }}
+          >
+            <TwitterIcon />
+          </IconButton>
+          <IconButton
+            color="inherit"
+            href="https://www.linkedin.com"
+            aria-label="LinkedIn"
+            sx={{ alignSelf: 'center' }}
+          >
+            <LinkedInIcon />
+          </IconButton>
+        </Stack>
+      </Box>
+
+    </Box>
+    </Container>
+  )
+}
+
+const _Footer = () => {
   return (
     <Container
       sx={{

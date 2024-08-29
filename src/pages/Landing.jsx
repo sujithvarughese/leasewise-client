@@ -12,8 +12,8 @@ const Landing = () => {
       <Magazines />
       <Features />
       {/* <Testimonials /> */}
-      <Highlights />
-      <Pricing />
+      {/* <Highlights /> */}
+      {/* <Pricing /> */}
       <Footer />
     </>
 

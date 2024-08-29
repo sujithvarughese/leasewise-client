@@ -106,7 +106,7 @@ const PublicNavbar = () => {
                 />
 
               </NavLink>
-
+              {/*
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                 {links.map(link => {
                   return (
@@ -121,8 +121,8 @@ const PublicNavbar = () => {
                     </MenuItem>
                   )
                 })}
-
               </Box>
+              */}
             </Box>
             <Box
               sx={{
