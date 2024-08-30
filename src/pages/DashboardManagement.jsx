@@ -10,13 +10,15 @@ import { convertToUSD, calculateProfit } from "../utilities/financeCalculations.
 
 import Chart from '../components/dashboard/Chart';
 import Deposits from '../components/dashboard/Deposits.jsx';
-import UpcomingPayments from '../components/dashboard/UpcomingPayments.jsx';
+import RecentExpenses from '../components/dashboard/RecentExpenses.jsx';
 import { useManagementProvider } from '../context/management-context.jsx'
 import { useEffect } from 'react'
 import { axiosDB } from '../utilities/axios.js'
 import { useLoaderData } from 'react-router-dom'
 import PieChartExpenses from '../components/dashboard/PieChartExpenses.jsx'
 import { useMessagingProvider } from '../context/messaging-context.jsx'
+import Listings from '../components/research/Listings.jsx'
+import { Research } from '../index.js'
 
 function Copyright(props) {
   return (
@@ -58,7 +60,9 @@ const DashboardManagement = () => {
           }}
         >
           <Toolbar />
+          <Research />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+
             <Grid container spacing={3}>
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
@@ -86,10 +90,10 @@ const DashboardManagement = () => {
                   <Deposits incomes={incomes} expenses={expenses}/>
                 </Paper>
               </Grid>
-              {/* Recent UpcomingPayments */}
+              {/* Recent RecentExpenses */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <UpcomingPayments expenses={expenses}/>
+                  <RecentExpenses expenses={expenses}/>
                 </Paper>
               </Grid>
             </Grid>

@@ -47,6 +47,7 @@ const Fmr = () => {
   // after user selects county, fetch a list of zip codes(if metro county) with FMR list
   const getZipCodeList = (county) => {
     setCounty(county.text)
+    console.log(county)
     setZip("")
     const fetchData = async () => {
       try {
@@ -58,8 +59,13 @@ const Fmr = () => {
         } else {
           const zipCodes = response.data.data.basicdata
           // form will only display zip codes to user once state array is populated
-          setFmrByZip(zipCodes)
-          console.log(zipCodes)
+          if (zipCodes.length > 0) {
+            setFmrByZip(zipCodes)
+            console.log(zipCodes)
+          } else {
+            setFmrData(zipCodes)
+          }
+
         }
       } catch (error) {
         console.log(error);

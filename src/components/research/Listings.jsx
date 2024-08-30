@@ -9,8 +9,10 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Toolbar from '@mui/material/Toolbar'
 import { useNavigate } from 'react-router-dom'
 import { Label } from '@mui/icons-material'
-import { Typography } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Fade, Typography } from '@mui/material'
 import Stack from '@mui/material/Stack'
+import { LoadingButton } from '@mui/lab'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const Listings = () => {
 
@@ -49,15 +51,33 @@ const Listings = () => {
                 variant="outlined"
                 onChange={(e) => setZipCode(e.target.value)}
               />
-              <Button type="submit">Submit</Button>
+              <LoadingButton loading={loading} type="submit">Submit</LoadingButton>
             </Stack>
 
 
           </form>
         </Box>
 
+        {listings &&
+        <Accordion
+          defaultExpanded
+          slotProps={{ transition: { timeout: 100 } }}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+          >
+            MLS Listings
+          </AccordionSummary>
+          <AccordionDetails>
+            {listings?.map((listing, index) =>
+              <ListingCover key={index} {...listing}/>)}
+          </AccordionDetails>
+        </Accordion>
+        }
 
-        {listings?.map((listing, index) => <ListingCover key={index} {...listing}/>)}
+
       </Container>
 
     </Box>

@@ -26,7 +26,7 @@ const CreateIncomeForm = ({ id, open, onClose }) => {
     const data = { ...Object.fromEntries(formData), unit: id }
     submitForm({ method: "POST", url: "/incomes", requestConfig: data } )
     // e.currentTarget.reset()
-    console.log(data)
+    onClose()
   }
 
   return (

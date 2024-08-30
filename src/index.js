@@ -27,7 +27,7 @@ import FinancesTotalUnitValues from './components/accounting/financials-total/Fi
 import Charts from "./components/dashboard/Chart.jsx"
 import Deposits from './components/dashboard/Deposits.jsx'
 import Title from './components/dashboard/Title.jsx'
-import UpcomingPayments from './components/dashboard/UpcomingPayments.jsx'
+import RecentExpenses from './components/dashboard/RecentExpenses.jsx'
 
 //landing
 import Features from './components/landing/Features.jsx'
@@ -85,7 +85,7 @@ export {
   Charts,
   Deposits,
   Title,
-  UpcomingPayments,
+  RecentExpenses,
 
   Features,
   Footer,

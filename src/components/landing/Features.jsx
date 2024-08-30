@@ -257,8 +257,8 @@ const Features = () => {
             <Box
               sx={{
                 m: 'auto',
-                width: 420,
-                height: 500,
+                width: "100%",
+                height: 400,
                 backgroundSize: 'contain',
                 backgroundRepeat: "no-repeat",
                 backgroundImage: (theme) =>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { CardActionArea, CardMedia, Typography } from '@mui/material'
+import { CardActionArea, CardMedia, LinearProgress, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import ListingDetails from './ListingDetails.jsx'
 import useSubmit from '../../hooks/useSubmit.js'
@@ -49,12 +49,9 @@ const ListingCover = ({
             </Box>
             <Typography variant="body2">{bedrooms} bedrooms {bathrooms} bathrooms</Typography>
             <Typography variant="subtitle2">List Price: ${listPrice}</Typography>
+            {loading && <LinearProgress />}
           </CardContent>
-
         </CardActionArea>
-
-
-
 
       </Paper>
 

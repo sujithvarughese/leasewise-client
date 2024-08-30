@@ -180,11 +180,7 @@ const managementLinks = [
     icon: <ForumIcon />,
     url: "/messages"
   },
-  {
-    name: "Research",
-    icon: <DataThresholdingIcon />,
-    url: "/research"
-  },
+
 
 ]
 
