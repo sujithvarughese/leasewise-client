@@ -40,6 +40,7 @@ const MessageCollapsed = ({
 			padding={1}
 			borderRadius={1}
 			gap={1}
+			bgcolor="inherit"
 			sx={{
 				"&:hover": {
 					bgcolor: "gray",
