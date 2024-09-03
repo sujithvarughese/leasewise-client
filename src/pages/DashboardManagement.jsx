@@ -46,7 +46,6 @@ const DashboardManagement = () => {
 
   return (
       <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
         <Box
           component="main"
           sx={{
@@ -59,8 +58,12 @@ const DashboardManagement = () => {
             overflow: 'auto',
           }}
         >
-          <Toolbar />
-          <Research />
+          <Grid item xs={12} margin={3}>
+            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+              <Research />
+            </Paper>
+          </Grid>
+
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
 
             <Grid container spacing={3}>

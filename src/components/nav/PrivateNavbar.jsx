@@ -121,7 +121,7 @@ const PrivateNavbar = () => {
         <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', px: 1 }} />
         <List component="nav">
           {managementLinks.map(link =>
-            <Box key={link.name} bgcolor={ heading === link.name ? "dodgerblue" : ""}>
+            <Box key={link.name} bgcolor={ heading === link.name ? "dodgerblue" : "" } borderRadius="6px">
               <ListItemButton onClick={() => setHeadingAndNavigate(link.name, link.url)}>
                 <ListItemIcon>{link.icon}</ListItemIcon>
                 <ListItemText primary={link.name} sx={{ display: { xs: "none", md: "initial" }}}/>
