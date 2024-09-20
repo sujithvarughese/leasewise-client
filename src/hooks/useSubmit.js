@@ -11,6 +11,7 @@ const useSubmit = () => {
     setResponse(null)
     setError("")
     setLoading(true)
+    console.log(configObject)
     const { method, url, requestConfig } = configObject
     try {
       const res = await axiosDB[method.toLowerCase()]( url, {
@@ -20,7 +21,6 @@ const useSubmit = () => {
       return true
     } catch (err) {
       setError(err.message)
-      console.log("Error2")
       console.log(err)
     } finally {
       setLoading(false)

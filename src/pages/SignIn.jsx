@@ -10,6 +10,10 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { useAuthProvider } from '../context/auth-context.jsx'
+import useSubmit from '../hooks/useSubmit.js'
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const Copyright = (props) => {
   return (
@@ -26,14 +30,36 @@ const Copyright = (props) => {
 
 const SignIn = () => {
 
-  const handleSubmit = (event) => {
+  const { signInUser } = useAuthProvider()
+  const { response, error, loading, submitForm } = useSubmit()
+  const navigate = useNavigate()
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+    try {
+      await submitForm({
+        method: "post",
+        url: "/auth/login",
+        requestConfig: {
+          email: data.get('email'),
+          password: data.get('password'),
+        }
+      })
+    } catch (err) {
+      console.log(error)
+    } finally {
+      data.set("email", "")
+      data.set("password", "")
+    }
+  }
+
+  useEffect(() => {
+    if (response) {
+      signInUser(response.data)
+      navigate("/")
+    }
+  }, [response])
 
   return (
     <Container component="main" maxWidth="xs">
