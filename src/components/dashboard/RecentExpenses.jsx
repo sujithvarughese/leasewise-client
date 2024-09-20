@@ -7,6 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
 import { convertToUSD } from '../../utilities/financeCalculations.js'
+import Paper from '@mui/material/Paper'
 
 const RecentExpenses = ({ expenses }) => {
 
@@ -14,7 +15,7 @@ const RecentExpenses = ({ expenses }) => {
 
 
   return (
-    <React.Fragment>
+    <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
       <Title>Payments</Title>
       <Table>
         <TableHead>
@@ -38,7 +39,7 @@ const RecentExpenses = ({ expenses }) => {
           ))}
         </TableBody>
       </Table>
-    </React.Fragment>
+    </Paper>
   );
 }
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { PieChart } from '@mui/x-charts/PieChart';
 import { Typography } from '@mui/material'
 import Title from './Title';
+import Paper from '@mui/material/Paper'
 
 const PieChartExpenses = ({ expenses }) => {
 
@@ -22,10 +23,17 @@ const PieChartExpenses = ({ expenses }) => {
   }
 
   return (
-    <>
+    <Paper
+      sx={{
+        p: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        height: 240,
+      }}
+    >
       <Title>Expenses</Title>
       <PieChart series={[{ data: createData() },]} />
-    </>
+    </Paper>
 
   )
 }

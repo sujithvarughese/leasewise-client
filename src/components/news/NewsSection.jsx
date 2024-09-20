@@ -8,6 +8,7 @@ import useSubmit from '../../hooks/useSubmit.js'
 import Stack from '@mui/material/Stack'
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import Paper from '@mui/material/Paper'
 
 const NewsSection = ({ articles }) => {
 
@@ -31,37 +32,40 @@ const NewsSection = ({ articles }) => {
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 4
+      items: 3
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 3
+      items: 2
     }
   };
   return (
-    <Box display="flex">
-      <Container>
 
+    <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
         <h3>Latest Real Estate News</h3>
         <Carousel
           additionalTransfrom={0}
           arrows
           autoPlaySpeed={3000}
           centerMode={false}
-          className=""
-          containerClass="container"
-          dotListClass=""
-          draggable
           focusOnSelect={false}
           infinite={false}
-          itemClass=""
           keyBoardControl
           minimumTouchDrag={80}
           pauseOnHover
           renderArrowsWhenDisabled={false}
           renderButtonGroupOutside={false}
           renderDotsOutside={false}
-          responsive={responsive}>
+          responsive={responsive}
+          rewind={false}
+          rewindWithAnimation={false}
+          rtl={false}
+          shouldResetAutoplay
+          showDots={false}
+          sliderClass=""
+          slidesToSlide={1}
+          swipeable
+        >
           {articles.map((article, index) =>
             <NewsTile
               key={index}
@@ -73,9 +77,9 @@ const NewsSection = ({ articles }) => {
             />
           )}
         </Carousel>
-      </Container>
+    </Paper>
 
-    </Box>
+
   )
 }
 

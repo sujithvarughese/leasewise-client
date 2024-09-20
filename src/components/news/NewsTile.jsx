@@ -14,25 +14,32 @@ const NewsTile = ({ source, title, url, urlToImage, date }) => {
   const year = date.substring(0,4)
 
   return (
-    <Paper elevation={16} sx={{ border: "none"}}>
-
+    <Paper elevation={16} sx={{ border: "none", margin: "6px", height: "240px", borderRadius: "8px"}}>
       <Box>
         <Image
           src={urlToImage}
           alt="image"
 
           height={120}
-          sx={{ borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }}
+          sx={{ borderTopLeftRadius: "8px", borderTopRightRadius: "8px" }}
         />
       </Box>
 
-      <Box>
+      <Box p={1}>
         <Typography textAlign="left" fontWeight={700}>{source}</Typography>
-        <Link href={url} target="_blank" rel="noreferrer"textAlign="left">{title.substring(0, 40)}</Link>
-        <Typography
-          textAlign="left"
-          color="gray"
-        >{monthString[month - 1]} {day}, {year}</Typography>
+        <Typography textAlign="left" color="gray" fontSize={12}>{monthString[month - 1]} {day}, {year}</Typography>
+        <Link href={url} target="_blank" rel="noreferrer" textAlign="left">
+          <Typography
+            fontSize={14}
+            sx={{
+              display: '-webkit-box',
+              overflow: 'hidden',
+              WebkitBoxOrient: 'vertical',
+              WebkitLineClamp: 3,
+            }}
+          >{title}</Typography>
+        </Link>
+
       </Box>
     </Paper>
   )

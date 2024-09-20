@@ -1,7 +1,7 @@
 import Toolbar from '@mui/material/Toolbar'
 import Box from '@mui/material/Box'
 import CssBaseline from '@mui/material/CssBaseline'
-import Fmr from '../components/research/Fmr.jsx'
+import Fmr from '../research/Fmr.jsx'
 import TabContext from '@mui/lab/TabContext'
 import TabList from '@mui/lab/TabList'
 import { Tab } from '@mui/material'
@@ -11,10 +11,11 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import TableBody from '@mui/material/TableBody'
-import { convertToUSD } from '../utilities/financeCalculations.js'
+import { convertToUSD } from '../../utilities/financeCalculations.js'
 import React, { useState } from 'react'
 import Container from '@mui/material/Container'
-import Listings from '../components/research/Listings.jsx'
+import Listings from '../research/Listings.jsx'
+import Paper from '@mui/material/Paper'
 
 const Research = () => {
 
@@ -23,9 +24,7 @@ const Research = () => {
     setValue(newValue);
   };
   return (
-    <Box sx={{ display: "flex" }}>
-      <Container>
-
+      <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <TabList onChange={handleChange} aria-label="research tabs">
@@ -42,15 +41,8 @@ const Research = () => {
             <Fmr />
           </TabPanel>
 
-
         </TabContext>
-      </Container>
-
-
-
-
-    </Box>
-
+      </Paper>
 
   );
 };
