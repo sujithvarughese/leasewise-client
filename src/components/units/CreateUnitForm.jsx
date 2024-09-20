@@ -23,7 +23,7 @@ const initialState = {
 const CreateUnitForm = ({ cancel }) => {
 
 	const [values, setValues] = useState(initialState)
-	const [buttonText, setButtonText] = useState("Create UnitCoverListMode")
+	const [buttonText, setButtonText] = useState("Create Unit")
 	const handleChange = (e) => {
 		setValues({ ...values, [e.target.name]: e.target.value });
 	}
@@ -61,7 +61,7 @@ const CreateUnitForm = ({ cancel }) => {
 		<div className={classes.container}>
 		<Modal open={() => {}} closeFn={cancel}>
 		<Card>
-		<Form onSubmit={handleSubmit} title="Create UnitCoverListMode">
+		<Form onSubmit={handleSubmit} title="Create Unit">
 			<div className={classes.form}>
 				<div className={classes.addressLine1}>
 					<Input

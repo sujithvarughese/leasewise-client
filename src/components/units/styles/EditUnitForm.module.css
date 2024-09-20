@@ -1,13 +1,5 @@
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-.address {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
+
+
 .addressLine1 {
     display: grid;
     gap: 0.5rem;

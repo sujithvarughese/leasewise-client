@@ -14,13 +14,15 @@ import CreateIncomeForm from '../components/forms/CreateIncomeForm.jsx'
 import CreateMortgageForm from '../components/forms/CreateMortgageForm.jsx'
 import { useState } from 'react'
 import UnitTabs from '../components/units/UnitTabs.jsx'
+import EditUnitForm from '../components/units/EditUnitForm.jsx'
+import { useAuthProvider } from '../context/auth-context.jsx'
 
 const Unit = () => {
 
   const { state: id } = useLocation()
 
   const { units, expenses, incomes, mortgages } = useManagementProvider()
-
+  const { showUnauthorizedAlert } = useAuthProvider()
 
   const unitDetails = units?.find(unit => unit._id === id)
   const unitExpenses = expenses?.filter(expense => expense.unit === id)
@@ -30,6 +32,7 @@ const Unit = () => {
   const [showCreateExpenseForm, setShowCreateExpenseForm] = useState(false)
   const [showCreateIncomeForm, setShowCreateIncomeForm] = useState(false)
   const [showCreateMortgageForm, setShowCreateMortgageForm] = useState(false)
+  const [showEditUnitForm, setShowEditUnitForm] = useState(false)
 
 
   return (
@@ -57,6 +60,8 @@ const Unit = () => {
         </Stack>
       </Stack>
 
+      <Button variant="contained" onClick={() => showUnauthorizedAlert()}>Edit Unit</Button>
+      {showEditUnitForm && <EditUnitForm id={id} open={showEditUnitForm} onClose={() => setShowEditUnitForm(false)}/>}
 
 
       <UnitTabs unitIncomes={unitIncomes} unitExpenses={unitExpenses} unitMortgages={unitMortgages}/>
