@@ -25,8 +25,7 @@ const Research = () => {
   return (
     <Box sx={{ display: "flex" }}>
       <Container>
-        <CssBaseline />
-        <Toolbar />
+
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <TabList onChange={handleChange} aria-label="research tabs">

@@ -19,6 +19,7 @@ import PieChartExpenses from '../components/dashboard/PieChartExpenses.jsx'
 import { useMessagingProvider } from '../context/messaging-context.jsx'
 import Listings from '../components/research/Listings.jsx'
 import { Research } from '../index.js'
+import NewsSection from '../components/news/NewsSection.jsx'
 
 function Copyright(props) {
   return (
@@ -36,7 +37,7 @@ function Copyright(props) {
 const DashboardManagement = () => {
   window.scrollTo(0, 0)
 
-  const { expenses, incomes, mortgages } = useLoaderData()
+  const { expenses, incomes, mortgages, filteredArticles } = useLoaderData()
   const { setState } = useManagementProvider()
 
 
@@ -58,6 +59,12 @@ const DashboardManagement = () => {
             overflow: 'auto',
           }}
         >
+          <Grid item xs={12} marginTop={3}>
+            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+              <NewsSection articles={filteredArticles}/>
+            </Paper>
+          </Grid>
+
           <Grid item xs={12} margin={3}>
             <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
               <Research />
@@ -115,7 +122,9 @@ export const dashboardLoader = async () => {
     const { incomes } = response.data
     response = await axiosDB("/mortgages")
     const { mortgages } = response.data
-    return { expenses, incomes, mortgages }
+    response = await axiosDB("/news")
+    const { filteredArticles } = response.data
+    return { expenses, incomes, mortgages, filteredArticles }
   } catch (error) {
     throw new Error(error)
   }
