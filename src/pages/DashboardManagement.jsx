@@ -59,6 +59,8 @@ const DashboardManagement = () => {
             overflow: 'auto',
           }}
         >
+          <CssBaseline />
+          <Toolbar />
           <Grid item xs={12} marginTop={3}>
             <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
               <NewsSection articles={filteredArticles}/>

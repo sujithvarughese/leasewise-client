@@ -15,11 +15,12 @@ const NewsTile = ({ source, title, url, urlToImage, date }) => {
 
   return (
     <Paper elevation={16} sx={{ border: "none"}}>
+
       <Box>
         <Image
           src={urlToImage}
           alt="image"
-          width={160}
+
           height={120}
           sx={{ borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }}
         />
