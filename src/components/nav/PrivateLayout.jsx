@@ -20,7 +20,7 @@ const PrivateLayout = () => {
 
   return (
 
-      <Box display="flex" maxWidth="lg" margin="auto">
+      <Box display="flex" maxWidth="xl" margin="auto">
         {unauthorizedAlertShown &&  <UnauthorizedAlert /> }
         <PrivateNavbar />
         <Box

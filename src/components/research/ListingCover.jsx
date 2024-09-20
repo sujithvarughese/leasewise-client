@@ -38,9 +38,26 @@ const ListingCover = ({
 
   return (
     <>
-      <Paper elevation={16} variant="outlined" component="button" onClick={handleClick} sx={{  width: 240 }}>
+      <Paper
+        elevation={16}
+        component="button"
+        onClick={handleClick}
+        sx={{
+          width: 240,
+          border: "none",
+          margin: "10px",
+          borderRadius: "8px"
+      }}
+      >
         <CardActionArea>
-          <CardMedia component="img" image={primaryImage} height={140}></CardMedia>
+          <CardMedia
+            component="img"
+            image={primaryImage}
+            height={140}
+            sx={{
+              borderRadius: "8px"
+            }}
+          ></CardMedia>
 
           <CardContent>
             <Box>
