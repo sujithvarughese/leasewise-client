@@ -66,7 +66,7 @@ const PrivateNavbar = () => {
     navigate("/")
     setTimeout(() => {
       signOutUser()
-    }, 200)
+    }, 400)
 
   }
 
