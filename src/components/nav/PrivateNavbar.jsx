@@ -44,8 +44,18 @@ const logoStyle = {
 
 const PrivateNavbar = () => {
 
-  const { signOutUser } = useAuthProvider()
+  const { signOutUser, role} = useAuthProvider()
   const [open, setOpen] = useState(false);
+  const [links, setLinks] = useState([])
+
+  useEffect(() => {
+    if (role === "management") {
+      setLinks(managementLinks)
+    } else {
+      setLinks(tenantLinks)
+    }
+  }, [role])
+
   const toggleDrawer = (newOpen) => {
     setOpen(newOpen);
   };
@@ -84,7 +94,6 @@ const PrivateNavbar = () => {
             <MenuIcon />
           </IconButton>
 
-
           <Button variant="text" to="/" onClick={() => setHeadingAndNavigate("Dashboard", "/")}>
             <img
               src={logo}
@@ -93,23 +102,13 @@ const PrivateNavbar = () => {
             />
           </Button>
 
-
-
           <Stack flexDirection="row" justifyContent="flex-end" width="100%">
-
-            {/*<IconButton color="inherit">
-              <Badge badgeContent={numUnreadMessages} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>*/}
-
             <MenuItem>
               <Button color="secondary" variant="contained" sx={{ width: '100%' }} onClick={signOutAndNavigateHome}>
                 Log Out
               </Button>
             </MenuItem>
           </Stack>
-
         </Toolbar>
 
         <Box width="100%">
@@ -120,14 +119,13 @@ const PrivateNavbar = () => {
       <Box display={{ xs: "none", sm: "initial"}} >
         <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', px: 1 }} />
         <List component="nav">
-          {managementLinks.map(link =>
+          {links.map(link =>
             <Box key={link.name} bgcolor={ heading === link.name ? "dodgerblue" : "" } borderRadius="6px">
               <ListItemButton onClick={() => setHeadingAndNavigate(link.name, link.url)}>
                 <ListItemIcon>{link.icon}</ListItemIcon>
                 <ListItemText primary={link.name} sx={{ display: { xs: "none", md: "initial" }}}/>
               </ListItemButton>
             </Box>
-
           )}
         </List>
       </Box>
@@ -143,7 +141,7 @@ const PrivateNavbar = () => {
           </Box>
 
           <List component="nav" sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, }}>
-            {managementLinks.map(link =>
+            {links.map(link =>
               <ListItemButton key={link.name} onClick={() => setHeadingAndNavigate(link.name, link.url)}>
                 <ListItemIcon>{link.icon}</ListItemIcon>
                 <ListItemText primary={link.name}/>
@@ -194,12 +192,7 @@ const tenantLinks = [
     name: "Messages",
     icon: <ForumIcon />,
     url: "messages"
-  },
-  {
-    name: "Payments",
-    icon: <AccountBalanceIcon />,
-    url: "payments"
-  },
+  }
 ]
 
 export default PrivateNavbar

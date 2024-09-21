@@ -25,6 +25,7 @@ const Units = () => {
 	const { setState } = useManagementProvider()
 	useEffect(() => {
 		setState({ units: units })
+		console.log(units)
 	}, []);
 
 	// state to trigger show create unit form

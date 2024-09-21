@@ -3,6 +3,7 @@ import { duration } from '@mui/material'
 
 const initialState = {
   account: "",
+  role: "",
   user: null,
   unauthorizedAlertShown: false,
 }
@@ -43,7 +44,7 @@ const authReducer = (state, action) => {
 }
 const AuthProvider = ({ children }) => {
 
-  const [authState, dispatch] = useReducer(authReducer, initialState)
+  const [state, dispatch] = useReducer(authReducer, initialState)
 
   const signInUser = (data) => {
     dispatch({ type: "SIGN_IN_USER", payload: data })
@@ -69,7 +70,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{
-      ...authState,
+      ...state,
       signInUser,
       signUpUser,
       signOutUser,

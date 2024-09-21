@@ -21,6 +21,8 @@ import AccountingUnit from './pages/AccountingUnit.jsx'
 import { MessagingProvider } from './context/messaging-context.jsx'
 import { ThemeProvider } from '@mui/material'
 import theme from './theme.js'
+import { tenantDashboardLoader } from './pages/DashboardTenant.jsx'
+import { TenantProvider } from './context/tenant-context.jsx'
 
 const App = () => {
 
@@ -39,49 +41,60 @@ const App = () => {
     }
   ])
 
-  const managementRouter = createBrowserRouter([
-    {
-      path: "/",
-      element: <PrivateLayout />,
-      loader: signInLoader,
-      errorElement: <Error />,
-      children: [
-        { index: true, element: <DashboardManagement />, loader: dashboardLoader },
-        { path: "/units", element: <Units />, loader: unitsLoader },
-        { path: "/unit/:id", element: <Unit />, loader: unitLoader },
-        { path: "/messages", element: <Messages />, loader: messagesLoader },
-        { path: "/research", element: <Research /> },
-        { path: "/accounting", element: <Accounting />, loader: accountingLoader },
-        { path: "/accounting/:id", element: <AccountingUnit />, loader: accountingLoader },
-          /*errorElement: <Error />,
-          children: [
-            { index: true, element: <FinancesTotal />, loader: financialSummaryLoader },
-            { path: ":id", element: <FinancesUnit />, loader: unitFinancialsLoader },
-          ]
-        }
-        /*
-        { path: "home", element: <MyUnit />, loader: myUnitLoader },
-        { path: "payments", element: <MyPayments /> },
 
-        { path: "admin", element: <AdminAccess />, loader: adminAccessLoader},
-        */
-      ]
-    }
-  ])
+  if (!!user && role === "tenant") {
+    const tenantRouter = createBrowserRouter([
+      {
+        path: "/",
+        element: <PrivateLayout />,
+        //loader: signInLoader,
+        errorElement: <Error />,
+        children: [
+          { index: true, element: <DashboardTenant />, loader: tenantDashboardLoader },
+          { path: "/messages", element: <Messages />, loader: messagesLoader },
+        ]
+      }
+    ])
 
-  if (!user) {
-    return <RouterProvider router={publicRouter} />
+    return (
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={tenantRouter} />
+      </ThemeProvider>
+    )
   }
 
-  return (
-    <ThemeProvider theme={theme}>
-      <ManagementProvider>
+  if (!!user && role === "management") {
+    const managementRouter = createBrowserRouter([
+      {
+        path: "/",
+        element: <PrivateLayout />,
+        //loader: signInLoader,
+        errorElement: <Error />,
+        children: [
+          { index: true, element: <DashboardManagement />, loader: dashboardLoader },
+          { path: "/units", element: <Units />, loader: unitsLoader },
+          { path: "/unit/:id", element: <Unit />, loader: unitLoader },
+          { path: "/messages", element: <Messages />, loader: messagesLoader },
+          { path: "/research", element: <Research /> },
+          { path: "/accounting", element: <Accounting />, loader: accountingLoader },
+          { path: "/accounting/:id", element: <AccountingUnit />, loader: accountingLoader },
+        ]
+      }
+    ])
+
+    return (
+      <ThemeProvider theme={theme}>
+        <ManagementProvider>
           <RouterProvider router={managementRouter} />
-      </ManagementProvider>
-    </ThemeProvider>
+        </ManagementProvider>
+      </ThemeProvider>
+    )
+  }
+
+  return <RouterProvider router={publicRouter} />
 
 
-  )
+
 }
 
 export default App

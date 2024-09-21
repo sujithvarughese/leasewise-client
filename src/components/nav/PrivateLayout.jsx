@@ -11,7 +11,7 @@ import UnauthorizedAlert from '../ui/UnauthorizedAlert.jsx'
 
 const PrivateLayout = () => {
 
-  const { messagesLoader } = useLoaderData()
+  //const { messagesLoader } = useLoaderData()
   const navigation = useNavigation()
 
   const { unauthorizedAlertShown, user } = useAuthProvider()
