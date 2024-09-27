@@ -61,11 +61,9 @@ const Fmr = () => {
           // form will only display zip codes to user once state array is populated
           if (zipCodes.length > 0) {
             setFmrByZip(zipCodes)
-            console.log(zipCodes)
           } else {
             setFmrData(zipCodes)
           }
-
         }
       } catch (error) {
         console.log(error);
