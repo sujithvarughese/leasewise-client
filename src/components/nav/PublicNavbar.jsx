@@ -104,7 +104,6 @@ const PublicNavbar = () => {
                   style={logoStyle}
                   alt="logo of sitemark"
                 />
-
               </NavLink>
               {/*
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

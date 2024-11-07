@@ -38,8 +38,9 @@ const Footer = () => {
         textAlign: { sm: 'center', md: 'left' },
       }}
     >
-    <Box sx={{ width: { xs: '100%', sm: '60%' } }}>
-      <Box
+
+      <Box sx={{ width: { xs: '100%', sm: '60%' } }}>
+        <Box
         sx={{
           display: 'flex',
           justifyContent: 'space-between',

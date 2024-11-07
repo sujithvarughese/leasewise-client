@@ -23,6 +23,8 @@ import { ThemeProvider } from '@mui/material'
 import theme from './theme.js'
 import { tenantDashboardLoader } from './pages/DashboardTenant.jsx'
 import { TenantProvider } from './context/tenant-context.jsx'
+import Box from '@mui/material/Box'
+import Image from 'mui-image'
 
 const App = () => {
 
@@ -91,7 +93,12 @@ const App = () => {
     )
   }
 
-  return <RouterProvider router={publicRouter} />
+  return (
+    <Box>
+
+      <RouterProvider router={publicRouter} />
+    </Box>
+  )
 
 
 

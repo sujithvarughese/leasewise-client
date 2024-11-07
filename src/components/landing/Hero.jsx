@@ -10,6 +10,10 @@ import Typography from '@mui/material/Typography';
 import coverIMG from "../../assets/images/landing/cover.jpeg"
 import TOS from "../../assets/terms-and-conditions.pdf"
 import { useNavigate } from 'react-router-dom'
+import Image from 'mui-image'
+import bgImage from '../../assets/images/landing/leasewise-landing-bg.jpeg'
+import { DemoButton } from '../../index.js'
+import DemoButtonHero from '../nav/DemoButtonHero.jsx'
 const Hero = () => {
 
   const navigate = useNavigate()
@@ -22,21 +26,46 @@ const Hero = () => {
       id="hero"
       sx={(theme) => ({
         width: '100%',
-        backgroundImage:
-          theme.palette.mode === 'light'
-            ? 'linear-gradient(180deg, #CEE5FD, #FFF)'
-            : `linear-gradient(#02294F, ${alpha('#090E10', 0.0)})`,
-        backgroundSize: '100% 20%',
-        backgroundRepeat: 'no-repeat',
+        height: "100vh"
       })}
     >
+      {/*<Box position="absolute" sx={{ opacity: "25%"}}>
+        <Image src={bgImage} alt="bg" />
+      </Box>*/}
+
+      <Box
+          id="image"
+          sx={(theme) => ({
+            zIndex: "-100",
+            position: "absolute",
+            opacity: "90%",
+            mt: -5,
+            alignSelf: 'center',
+            height: "100vh",
+            width: '100%',
+            backgroundImage:'url("/static/images/leasewise-landing-bg.png")',
+            backgroundSize: 'cover',
+            backgroundPosition: "center",
+            borderRadius: '10px',
+            outline: '1px solid',
+            outlineColor:
+              theme.palette.mode === 'light'
+                ? alpha('#BFCCD9', 0.5)
+                : alpha('#9CCCFC', 0.1),
+            boxShadow:
+              theme.palette.mode === 'light'
+                ? `0 0 12px 8px ${alpha('#9CCCFC', 0.2)}`
+                : `0 0 24px 12px ${alpha('#033363', 0.2)}`,
+          })}
+        ></Box>
       <Container
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          zIndex: "1000",
+          display: 'grid',
+          placeItems: "center",
           pt: { xs: 14, sm: 20 },
           pb: { xs: 8, sm: 12 },
+          height: "80vh"
         }}
       >
         <Stack spacing={2} useFlexGap sx={{ width: { xs: '100%', sm: '70%' } }}>
@@ -47,6 +76,7 @@ const Hero = () => {
               flexDirection: { xs: 'column', md: 'row' },
               alignSelf: 'center',
               textAlign: 'center',
+              color: "white"
               // fontSize: 'clamp(3.5rem, 10vw, 4rem)',
             }}
           >
@@ -56,8 +86,7 @@ const Hero = () => {
               variant="h5"
               sx={{
                 // fontSize: 'clamp(3rem, 10vw, 4rem)',
-                color: (theme) =>
-                  theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
+                color:'dodgerblue',
               }}
             >
               MANAGEMENT
@@ -67,46 +96,17 @@ const Hero = () => {
             variant="h3"
             textAlign="center"
             color="text.secondary"
-            sx={{ alignSelf: 'center', width: '100%' }}
+            sx={{ alignSelf: 'center', width: '100%', zIndex: "100", color: "white" }}
           >
             Make self-managing rentals simple.
           </Typography>
-          {/*
-          <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            alignSelf="center"
-            spacing={1}
-            useFlexGap
-            sx={{ pt: 2, width: { xs: '100%', sm: 'auto' } }}
-          >
-            <TextField
-              id="outlined-basic"
-              hiddenLabel
-              size="small"
-              variant="outlined"
-              aria-label="Enter your email address"
-              placeholder="Your email address"
-              inputProps={{
-                autoComplete: 'off',
-                'aria-label': 'Enter your email address',
-              }}
-            />
-            <Button onClick={navigateToSignUp} variant="contained" color="primary">
-              Sign Up Now
-            </Button>
-          </Stack>
-           */}
-          {/*
-          <Typography variant="caption" textAlign="center" sx={{ opacity: 0.8 }}>
-            By clicking &quot;Sign Up Now&quot; you agree to our&nbsp;
-            <Link href={TOS}  target="_blank" rel="noreferrer" color="primary">
-              Terms & Conditions
-            </Link>
-          </Typography>
-          */}
+          <Box sx={{ placeSelf: "center"}}>
+            <DemoButtonHero />
+          </Box>
+
         </Stack>
 
-        <Box
+        {/*<Box
           id="image"
           sx={(theme) => ({
             mt: { xs: 8, sm: 10 },
@@ -126,7 +126,8 @@ const Hero = () => {
                 ? `0 0 12px 8px ${alpha('#9CCCFC', 0.2)}`
                 : `0 0 24px 12px ${alpha('#033363', 0.2)}`,
           })}
-        ></Box>
+        ></Box>*/}
+
       </Container>
     </Box>
   );

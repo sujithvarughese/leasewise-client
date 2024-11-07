@@ -9,6 +9,9 @@ import realtyTimesLogo from "../../assets/images/landing/logos/realty_times.png"
 
 import Stack from "@mui/material/Stack";
 import {Container} from "@mui/material";
+import coverImg from "../../assets/images/landing/cover.jpeg"
+import Image from 'mui-image'
+import Box from '@mui/material/Box'
 
 
 const logos = [forbesLogo, realtorComLogo, wsjLogo, realtyTimesLogo, businessInsiderLogo];
@@ -36,6 +39,9 @@ const Magazines = () => {
           />
         ))}
       </Stack>
+      <Box paddingTop={16}>
+        <Image src={coverImg} alt="cover" />
+      </Box>
     </Container>
   );
 };

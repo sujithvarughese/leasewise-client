@@ -10,8 +10,8 @@ const Landing = () => {
   return (
     <>
       <Hero />
-      <Magazines />
       <Features />
+      <Magazines />
       <Info />
       {/* <Testimonials /> */}
       {/* <Highlights /> */}
