@@ -67,7 +67,6 @@ const PrivateNavbar = () => {
     setTimeout(() => {
       signOutUser()
     }, 500)
-
   }
 
   const [heading, setHeading] = useState("Dashboard")
